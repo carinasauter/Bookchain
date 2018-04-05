@@ -57,13 +57,17 @@ def login():
     return render_template('login.html', title='Log In', form=form)
 
 
-@app.route('')
-
 
 @app.route('/protected')
 @login_required
 def protected():
     return 'Logged in as: ' + current_user.username
+
+
+@app.route('/main')
+@login_required
+def main():
+    return 'this is the main page.'
 
 
 # @app.route('/create_trip', methods=['GET', 'POST'])
