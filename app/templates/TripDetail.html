@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="tripscontainer">
+                
+  <div class="column">
+    <h1><b>Your Trips</b></h1>
+    <div id = "list_todo">
+      <table id="trips">
+        <thead>
+          <tr>
+            <th data-field="Tripname">Tripname</th>
+            <th data-field="Destination">Destination</th>
+            <th>Action</th>
+            <!-- could think about adding who else is going on trip -->
+          </tr>
+        </thead>
+        {% for trip in trips %}
+        <tr>
+          <td>{{ trip[0] }}</td>
+          <td>{{ trip[1] }}</td>
+          <td>
+            <button type="submit" class = "inspect">
+              <div class = "buttonContainer">
+                <img src = "{{ url_for('static', filename='img/MagnifyingGlass.png') }}" alt="InpsectButton">
+              </div>
+            </button>
+            <button type="submit" class = "delete">
+              <div class = "buttonContainer">
+                <img src = "{{ url_for('static', filename='img/DeleteButton.png') }}" alt="DeleteButton">
+              </div>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div id = "addTrip">
+    <a href="{{ url_for('create_trip') }}">Add a Trip</a>
+    </div>
+  </div>
+  <div class="column" id = 'iframecontainer'>
+  </div>
+</div>
+{% endblock %}
+

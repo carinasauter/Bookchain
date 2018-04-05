@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+     <div class="login-form">
+        <div class="form-group ">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username(placeholder = "Username") }}
+                </p>
+                <p>
+                    {{ form.password(placeholder = "Password") }}
+                </p>
+                <p>{{ form.submit(class = "log-btn") }}</p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
