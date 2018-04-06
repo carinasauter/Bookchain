@@ -2,28 +2,14 @@
   <head>
     <title>The Amazing Travel App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icons/favicon.ico') }}">
+
   </head>
   	
 	<body>
-    <div id = 'headline'>
-      {% if current_user.is_authenticated %}
-      <button id='home'  onclick="window.location.href='{{ url_for( 'index') }}';" type="button">home
-      </button>
-      <button id='logout'  onclick="window.location.href='{{ url_for( 'logout') }}';" type="button">logout
-      </button>
-      {% else %}
-      <button id='signup'  onclick="window.location.href='{{ url_for( 'signup') }}';" type="button">signup</button>
-      <button id='login' onclick="window.location.href='{{ url_for( 'login') }}';" type="action">login</button>
-      {% endif %}
-    </div>
     {% block content %}{% endblock %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    {{ message }}
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
   </body>
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
