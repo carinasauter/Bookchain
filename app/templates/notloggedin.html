@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="header">
+</div>
+<div id="form_shape">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <form class="col s9">
+                <div class="row">
+                    <div class="input-field col">
+                        <i class="material-icons prefix">account_circle</i>
+                        {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
+                    </div>
+                </div>
+                {% block email %}{% endblock %}
+                <div class="row">
+                    <div class="input-field col">
+                        <i class="material-icons prefix">lock</i>
+                        {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% block button %} {% endblock %}
+    </form>
+    {% block alternate %}
+    {% endblock %}
+</div>
+{% endblock %}

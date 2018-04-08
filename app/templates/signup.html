@@ -1,23 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
-     <div class="login-form">
-        <div class="form-group ">
-            <form action="" method="post">
-                {{ form.hidden_tag() }}
-                <p>
-                    {{ form.username(placeholder = "Username") }}
-                </p>
-                <p>
-                    {{ form.email(placeholder = "Email") }}
-                </p>
-                <p>
-                    {{ form.password(placeholder = "Password") }}
-                </p>
-                <p>{{ form.submit(class = "log-btn") }}</p>
-            </form>
-        </div>
-    {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-    {% endif %}
+{% extends "notloggedin.html" %}
 
+{% block email %}
+<div class="row">
+    <div class="input-field col">
+        <i class="material-icons prefix">email</i>
+        {{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
+    </div>
+</div>
+{% endblock %}
+
+{% block button %}
+<button class="btn waves-effect waves-light" type="submit" name="action">SIGN UP
+    <i class="material-icons right">send</i>
+</button>
+{% endblock %}
+
+
+{% block alternate %}
+ <p>Already have an account? <a href="{{ url_for('login') }}" title="">Log in</a>  instead. </p>
 {% endblock %}
