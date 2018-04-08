@@ -60,7 +60,7 @@ def login():
         if comparedUser is None or not check_password_hash(comparedUser.password_hash, password):
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        login_user(comparedUser)
+        login_user(comparedUser, remember = form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Log In', form=form)
 

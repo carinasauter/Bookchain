@@ -1,10 +1,30 @@
 {% extends "base.html" %}
-{% block content }
+{% block content %}
 
-<nav>
-	<ul>
-		<li><a href="" title=""></a></li>
-	</ul>
-</nav>
+<div class="navbar-fixed">
+    <nav>
+      	<div class="nav-wrapper">
+      		<a href="#" class="brand-logo left">BookChain</a>
+      		<ul id="nav-mobile" class="right hide-on-med-and-down">
+        		<li><a href="sass.html">Dashboard</a></li>
+        		<li><a href="sass.html">Profile</a></li>
+        		<li><a href="{{ url_for('logout')}}">Logout</a></li>
 
+        		<li>
+        			<form>
+	        			<div class="input-field">
+	          				<input id="search" type="search" placeholder="Find a book" required>
+
+	          				<i class="material-icons">search</i>
+	        			</div>
+	      			</form>
+        		</li>
+      		</ul>
+      	</div>
+    </nav>
+</div>
+
+
+
+{% block page %}{% endblock %}
 {% endblock %}
