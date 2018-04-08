@@ -2,7 +2,7 @@
 
 {% block email %}
 <div class="row">
-    <div class="input-field col">
+    <div class="input-field col s11">
         <i class="material-icons prefix">email</i>
         {{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
     </div>
@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block button %}
+<!-- {{ form.submit(class = "btn waves-effect waves-light") }} -->
 <button class="btn waves-effect waves-light" type="submit" name="action">SIGN UP
     <i class="material-icons right">send</i>
 </button>

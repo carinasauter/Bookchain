@@ -8,14 +8,20 @@ from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+@app.route('/')  
+def hello_world():
+      form = LoginForm()   
+      return render_template('search.html', form = form)  
 
-@app.route('/')
-def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('main'))
-    else:
-        # we should have a landing page for user who have not logged in or signed up
-        return redirect(url_for('login'))
+
+
+# @app.route('/')
+# def index():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('main'))
+#     else:
+#         # we should have a landing page for user who have not logged in or signed up
+#         return redirect(url_for('login'))
 
 
 @app.route('/signup', methods=['GET', 'POST'])

@@ -7,16 +7,16 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <div class="row">
-            <form class="col s9">
+            <form class="col s12">
                 <div class="row">
-                    <div class="input-field col">
+                    <div class="input-field col s11">
                         <i class="material-icons prefix">account_circle</i>
                         {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
                     </div>
                 </div>
                 {% block email %}{% endblock %}
                 <div class="row">
-                    <div class="input-field col">
+                    <div class="input-field col s11">
                         <i class="material-icons prefix">lock</i>
                         {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
                     </div>

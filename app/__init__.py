@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_material import Material
 
 app = Flask(__name__, static_url_path='/static')
+Material(app)
 app.config.from_object('config')
 
 db = SQLAlchemy(app)
