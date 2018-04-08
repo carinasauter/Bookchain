@@ -1,3 +1,4 @@
+
 // $(document).on('click', '.delete', function() {
 // 	var row = $(this).parent().parent();
 // 	var tripname = row.children()[0].innerHTML;

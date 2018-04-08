@@ -19,11 +19,10 @@ from flask_material import Material
 class LoginForm(Form):
 	username = StringField('Username', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
-	submit = SubmitField('LOG IN')
+	remember_me = BooleanField('Remember Me')
 
 
 class SignUpForm(Form):
 	username = StringField('Username', validators=[DataRequired()])
 	email = EmailField('Email', validators = [DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
-	submit = SubmitField('SIGN UP')
