@@ -8,7 +8,6 @@ from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 @app.route('/')
 def index():
     if current_user.is_authenticated:
@@ -18,11 +17,20 @@ def index():
         return redirect(url_for('login'))
 
 
+@app.route('/submit', methods=('GET', 'POST'))
+def submit():
+    form = MyForm()
+    if form.validate_on_submit():
+        return render_template("search.html")
+    return render_template('signup.html')
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
         username = form.username.data
+        print(username)
         email = form.email.data
         password = form.password.data
         user = getUserByUsername(username) #checks if user already exists
@@ -67,7 +75,7 @@ def protected():
 @app.route('/main')
 @login_required
 def main():
-    return 'this is the main page.'
+    return render_template('search.html')
 
 
 # @app.route('/create_trip', methods=['GET', 'POST'])
