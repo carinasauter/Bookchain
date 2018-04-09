@@ -75,7 +75,7 @@ def protected():
 @app.route('/main', methods=['GET'])
 @login_required
 def main():
-    return render_template('search.html')
+    return render_template('register.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
