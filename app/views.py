@@ -17,12 +17,12 @@ def index():
         return redirect(url_for('login'))
 
 
-@app.route('/submit', methods=('GET', 'POST'))
-def submit():
-    form = MyForm()
-    if form.validate_on_submit():
-        return render_template("search.html")
-    return render_template('signup.html')
+# @app.route('/submit', methods=('GET', 'POST'))
+# def submit():
+#     form = MyForm()
+#     if form.validate_on_submit():
+#         return render_template("search.html")
+#     return render_template('signup.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -72,10 +72,25 @@ def protected():
     return 'Logged in as: ' + current_user.username
 
 
-@app.route('/main')
+@app.route('/main', methods=['GET'])
 @login_required
 def main():
     return render_template('search.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+@login_required
+def register():
+    return render_template('register.html')
+
+# @app.route('/main', methods=['POST'])
+# @login_required
+# def main2():
+#     text = request.form['search_query']
+#     print(text)
+#     results = callBooksAPI(text)
+#     print(results.text)
+#     return render_template('searchresults.html')
 
 
 # @app.route('/create_trip', methods=['GET', 'POST'])

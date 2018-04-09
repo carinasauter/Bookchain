@@ -1,8 +1,9 @@
 #header {
     background: url("../img/header.svg") no-repeat center center;
-	height: 47%;
+	height: 50%;
 	width: 100%;
 	margin: auto;
+
 }
 
 #form_shape {
@@ -21,14 +22,26 @@ p {
 
 .container {
 	text-align: center;
+	margin-top: 2%;
 }
 
-#searchbar {
-	margin-top: 5%;
-}
 
 #search {
 	border-bottom-style: solid;
 	border-color: black;
 	border-radius: 1px;
+}
+
+.card img {
+	width: 70px;
+	height: 110px;
+}
+
+.card {
+	height: 130px;
+	overflow: scroll;
+}
+
+textarea.materialize-textarea.valid:focus {
+	color: #0881A3;
 }

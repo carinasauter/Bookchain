@@ -3,7 +3,8 @@ from app import login_manager, db
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import sys
-
+import requests
+import json
 
 class User(UserMixin):
 
@@ -118,11 +119,17 @@ def load_user(id):
 # 		cursor2.execute("DELETE FROM users_on_trips WHERE trip_id = ?", (tripID,))
 # 		connection.commit()
 
-
-
 def create_user(username, email, password_hash):
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
 		cursor.execute("INSERT INTO users (username, email, password_hash) VALUES (?,?,?)",(username, email, password_hash))
 		connection.commit()
+
+
+def callBooksAPI(query):
+	url_base = "https://www.googleapis.com/books/v1/volumes?q="
+	url = url_base + query
+	response = requests.get(url)
+	return response
+
 
