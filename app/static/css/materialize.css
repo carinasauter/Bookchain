@@ -196,7 +196,9 @@
 }
 
 .pink {
-  background-color: #e91e63 !important;
+  /*replaced with our color*/
+  background-color: #FDE9DF !important; 
+
 }
 
 .pink-text {
