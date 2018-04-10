@@ -64,10 +64,15 @@ section {
 }
 
 table {
-    border-collapse: collapse;
+	border-collapse: collapse;
 }
 
 th {
     background-color: #0881A3;
     color: white;
+}
+
+td, th {
+	border-radius: 0px;
+	border-style: none;
 }
