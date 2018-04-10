@@ -1,5 +1,8 @@
 // upon first click of submit the search result and playlist columns are created
 $(document).ready(
+	$("#registerBook").one('click', function() {
+		addTableHeader();
+	}),
     $("#registerBook").on('click', function() {
     	$('#searchResults').empty();
     	$("#header").remove();
@@ -13,8 +16,6 @@ $(document).ready(
 
 
 
-
-
 // Event hander for calling the Google Books API using the user's search query to aid registering a book
 function callAPI(query) {
 	$.get("https://www.googleapis.com/books/v1/volumes?q=" + query,
@@ -24,6 +25,13 @@ function callAPI(query) {
 		},'json'
 	);
 }
+
+
+function addTableHeader() {
+	$("#results").append('<div class="row"><div id="tableHeader" class="col s12 m12 l12">Search Results\
+    </div></div><div id="searchResults"></div>');
+}
+
 
 // parsing the results from the Google Books API and injecting first 20 to HTML
 function parseQuery(data) {
@@ -63,7 +71,7 @@ function parseQuery(data) {
 		<div class='col s3 m3 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
 		</div><div class='col card-content s4 m4 l8 left-align'><p><b>" + title + "</b></p><p>\
 		" + author + "</p><p id='short'>" + short_description + "</p></div><div class='col s4 m4 l2'><button class=\
-		'btn' type='text'>Register</button></div></div></div>"
+		'btn pink black-text' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
 	}
 }

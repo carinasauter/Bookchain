@@ -45,3 +45,12 @@ p {
 textarea.materialize-textarea.valid:focus {
 	color: #0881A3;
 }
+
+#tableHeader {
+	background-color: #0881A3;
+
+}
+
+#tableHeader btn {
+	background-color: #FDE9DF;
+}
