@@ -6,6 +6,10 @@
 
 }
 
+body {
+	font-family: 'Nunito', sans-serif;
+}
+
 #form_shape {
 	border-style: solid;
 	border-color: #FFD6A4;
@@ -84,4 +88,5 @@ th {
 td, th {
 	border-radius: 0px;
 	border-style: none;
+	padding: 10px;
 }
