@@ -45,3 +45,29 @@ p {
 textarea.materialize-textarea.valid:focus {
 	color: #0881A3;
 }
+
+#nav-img {
+	width: 15vw;
+	margin-left: 40px;
+	margin-top: 15px;
+}
+
+.banner-img {
+    display: block;
+    margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+}
+
+section {
+	margin: 40px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #0881A3;
+    color: white;
+}

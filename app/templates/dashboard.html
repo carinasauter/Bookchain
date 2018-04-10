@@ -1,0 +1,80 @@
+{% extends "loggedIn.html" %}
+{% block page %}
+    <head>
+        <title>Bookchain</title>
+    </head>
+    <body>
+       <header>
+           <!-- <div class="banner">
+           <img src="../static/img/header.svg" alt="Bookchain Banner" class="banner-img">
+            </div> -->
+       </header>
+       
+       <section class='books-requests'>
+           <h5>Requests</h5>
+           <table>
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+               <tr>
+                   <th>Title</th>
+                   <th>Requested By</th>
+                   <th>Ship By</th>
+                   <th>Action</th>
+               </tr>
+               <tr>
+                   <td>Harry Potter</td>
+                   <td>Amy</td>
+                   <td>12/12/18</td>
+                   <td>Print Shipping Label</td>
+               </tr>
+           </table>
+       </section>
+       <section class="books-borrowed">
+            <h5>Books I Borrowed</h5>
+            <table>
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Current Location</th>
+                    <th>Available</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Harry Potter2</td>
+                    <td>Reading</td>
+                    <td>Berkeley, CA</td>
+                    <td>Yes</td>
+                    <td>See Details</td>
+                </tr>
+            </table>
+       </section>
+       <section class="books-mybooks">
+            <h5>My Books</h5>
+            <table>
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Current Location</th>
+                    <th>Journey</th>
+                </tr>
+                <tr>
+                    <td>Harry Potter3</td>
+                    <td>On a Journey</td>
+                    <td>Los Angeles, CA</td>
+                    <td>View Journey</td>
+                </tr>
+            </table>
+       </section>
+    </body>
+    {% endblock %}
