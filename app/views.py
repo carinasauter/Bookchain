@@ -139,6 +139,10 @@ def logout():
 def unauthorized_handler():
     return redirect(url_for('login'))
 
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    return render_template('dashboard.html')
+
 
 # @app.route('/create_order/<value>', methods=['GET', 'POST'])
 # def create_order(value):
