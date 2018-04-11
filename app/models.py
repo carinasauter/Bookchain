@@ -8,11 +8,17 @@ import json
 
 class User(UserMixin):
 
-	def __init__(self, id_number, username, email, password_hash):
+	def __init__(self, id_number, username, email, password_hash, full_name, street, city, country, zipcode):
 		self.id = id_number;
 		self.username = username
 		self.email = email
 		self.password_hash = password_hash
+		self.full_name = full_name
+		self.street = street
+		self.city = city
+		self.country = country
+		self.zipcode = zipcode
+
 
 
 """ Takes a username as parameter and checks in the database. If the user exists, 
@@ -28,7 +34,7 @@ def getUserByUsername(query):
 			return None
 		else:
 			row = result[0]
-			user = User(row[0], query, row[2], row[3])
+			user = User(row[0], query, row[2], row[3], row[4], row[5], row[6], row[7], row[8])
 			return user
 
 
@@ -45,7 +51,7 @@ def getUserByID(query):
 			return None
 		else:
 			row = result[0]
-			user = User(query, row[1], row[2], row[3])
+			user = User(query, row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
 			return user
 
 

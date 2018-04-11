@@ -1,19 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="input-field col s11">
-        <i class="material-icons prefix">email</i>
-        {{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
-    </div>
+<div id="form_shape">
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s11">
+                    <i class="material-icons prefix">account_circle</i>
+                    {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
+                </div>
+            </div>
+            <div class="row">
+            	<div class="input-field col s11">
+        		<i class="material-icons prefix">email</i>
+        		{{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
+    		</div>
+			</div>
+            <div class="row">
+                <div class="input-field col s11">
+                    <i class="material-icons prefix">lock</i>
+                    {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+                </div>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">SIGN UP
+    		<i class="material-icons right">send</i>
+		</button>
+    </form>
+     <p>Already have an account? <a href="{{ url_for('login') }}" title="">Log in</a>  instead. </p>
 </div>
 
 
 
-<button class="btn waves-effect waves-light" type="submit">SIGN UP
-    <i class="material-icons right">send</i>
-</button>
 
- <p>Already have an account? <a href="{{ url_for('login') }}" title="">Log in</a>  instead. </p>
+
+
+
+
+
+ 
 
 {% endblock %}
