@@ -14,6 +14,16 @@ $(document).ready(
     })
 )
 
+// upon
+$(document).on('click', '.registerThis', function() {
+	console.log("You want to register this book.");
+	var book_id = $(this).parent().parent();
+	console.log(book_id);
+})
+    // check which column they are part of
+    // var parent_id = $(this).parent().parent()[0].id;
+    // console.log(parent_id);
+    // var completedItem = $(this).parent();
 
 
 // Event hander for calling the Google Books API using the user's search query to aid registering a book
@@ -53,6 +63,16 @@ function parseQuery(data) {
 		} else {
 			author = "not available"
 		}
+		var isbn13 = bookInfo['industryIdentifiers'];
+		if (typeof isbn13 != 'undefined') {
+			isbn13 = isbn13[1];
+			if (typeof isbn13 != "undefined") {
+				isbn13 = isbn13['identifier'];
+			}
+		} else {
+			isbn13 = 'not available';
+		}
+
 		var short_description = bookInfo['description'];
 		if (typeof short_description != 'undefined') {
 			short_description = short_description.substring(0, 300) + "...";
@@ -68,10 +88,10 @@ function parseQuery(data) {
 		}
 		console.log(title, author, thumbnail);
 		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
-		<div class='col s3 m3 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
+		<div class='col s3 m3 l2'><p class= 'hidden'>" + isbn13 + "</p><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
 		</div><div class='col card-content s4 m4 l8 left-align'><p><b>" + title + "</b></p><p>\
-		" + author + "</p><p id='short'>" + short_description + "</p></div><div class='col s4 m4 l2'><button class=\
-		'btn pink black-text' type='text'>Register</button></div></div></div>"
+		// " + author + "</p><p id='short'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
+		class='btn registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
 	}
 }
