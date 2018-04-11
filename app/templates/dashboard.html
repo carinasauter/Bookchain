@@ -1,22 +1,14 @@
-{% extends "loggedIn.html" %}
-{% block page %}
-    <head>
-        <title>Bookchain</title>
-    </head>
-    <body>
-       <header>
-           <!-- <div class="banner">
-           <img src="../static/img/header.svg" alt="Bookchain Banner" class="banner-img">
-            </div> -->
-       </header>
-       
-       <section class='books-requests'>
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col l12 left-align">
+       <section class='books-requests '>
            <h5>Requests</h5>
            <table>
-                <col width="200">
-                <col width="200">
-                <col width="200">
-                <col width="200">
+                <col width="25%">
+                <col width="25%">
+                <col width="25%">
+                <col width="25%">
                <tr>
                    <th>Title</th>
                    <th>Requested By</th>
@@ -24,7 +16,7 @@
                    <th>Action</th>
                </tr>
                <tr>
-                   <td>Harry Potter</td>
+                   <td><a href="{{ url_for('book')}}">HTML5 and CSS3 For Dummies</a></td>
                    <td>Amy</td>
                    <td>12/12/18</td>
                    <td>Print Shipping Label</td>
@@ -34,11 +26,11 @@
        <section class="books-borrowed">
             <h5>Books I Borrowed</h5>
             <table>
-                <col width="150">
-                <col width="150">
-                <col width="150">
-                <col width="150">
-                <col width="150">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
                 <tr>
                     <th>Title</th>
                     <th>Status</th>
@@ -58,10 +50,10 @@
        <section class="books-mybooks">
             <h5>My Books</h5>
             <table>
-                <col width="200">
-                <col width="200">
-                <col width="200">
-                <col width="200">
+                <col width="25%">
+                <col width="25%">
+                <col width="25%">
+                <col width="25%">
                 <tr>
                     <th>Title</th>
                     <th>Status</th>
@@ -76,5 +68,7 @@
                 </tr>
             </table>
        </section>
-    </body>
+    </div> 
+       </div>    
+
     {% endblock %}

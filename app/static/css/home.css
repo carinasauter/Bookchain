@@ -24,9 +24,11 @@ p {
 	font-size: 12;
 }
 
+/* below style is not effective */
 .container {
-	text-align: center;
-	margin-top: 2%;
+	/* text-align: center; */
+	/* margin-top: 2%; */
+	width: 85%;
 }
 
 

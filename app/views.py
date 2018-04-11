@@ -143,6 +143,9 @@ def unauthorized_handler():
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/book')
+def book():
+    return render_template('book.html')
 
 # @app.route('/create_order/<value>', methods=['GET', 'POST'])
 # def create_order(value):
