@@ -29,9 +29,14 @@ def signup():
     form = SignUpForm()
     if form.validate_on_submit():
         username = form.username.data
-        print(username)
         email = form.email.data
         password = form.password.data
+        full_name = form.full_name.data
+        street = form.street.data
+        city = form.city.data
+        state = form.state.data
+        country = form.country.data
+        zipcode = form.zipcode.data
         user = getUserByUsername(username) #checks if user already exists
         if user is not None:
             # in this case user with this username exists already
@@ -39,9 +44,9 @@ def signup():
             return render_template('signup.html', title = "Sign Up", form = form)
         # in case it does not exist
         password_hash = generate_password_hash(password)
-        create_user(username, email, password_hash) # creates user in database
+        create_user(username, email, password_hash, full_name, street, city, state, country, zipcode) # creates user in database
         userID = getUserID(username)
-        user = User(userID, username, email, password_hash)
+        user = User(userID, username, email, password_hash, full_name, street, city, state, country, zipcode)
         login_user(user)
         return redirect(url_for('index'))
     return render_template('signup.html', title = "Sign Up", form = form)
@@ -90,11 +95,10 @@ def registerbook():
     thumbnail = request.form['thumbnail']
     short_description = request.form['short_description']
     registeredBy = current_user.username
-    location = "Berkeley, CA"
-    currentReader = None
     status = 'available'
-    registerBookInDatabase(title, author, thumbnail, short_description, \
-        registeredBy, location, currentReader, status)
+    bookID = registerBookInDatabase(title, author, thumbnail, short_description, \
+        registeredBy, status)
+    addBookToUser(current_user.username, bookID, 'uploader')
     return 'Received!'
 
 # @app.route('/main', methods=['POST'])

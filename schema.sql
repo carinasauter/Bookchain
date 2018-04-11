@@ -4,7 +4,13 @@ CREATE TABLE users (
     user_id integer PRIMARY KEY,
     username text not null,
     email text not null,
-    password_hash text not null
+    password_hash text not null,
+    full_name text not null,
+    street text not null,
+    city text not null,
+    state text not null,
+    country text not null,
+    zipcode integer not null
 );
 
 drop table if exists books;
@@ -14,9 +20,7 @@ CREATE TABLE books (
     author text not null,
     thumbnail text,
     short_description text,
-    current_location text not null,
     uploader text not null,
-    current_reader text,
     status text not null
 );
 

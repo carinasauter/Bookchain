@@ -20,6 +20,16 @@ body {
 	border-radius: 10px;
 }
 
+#form_shape_signup {
+	border-style: solid;
+	border-color: #FFD6A4;
+	border-width: 2.5px;
+	width: 500px;
+	margin: auto;
+	text-align: center;
+	border-radius: 10px;
+}
+
 p {
 	font-size: 12;
 }

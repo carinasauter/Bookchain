@@ -15,9 +15,7 @@ $(document).ready(
 
 // upon
 $(document).on('click', '.registerThis', function() {
-	console.log("You want to register this book.");
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	console.log(bookID);
 	callAPI(bookID, sendToBackend);
 })
 

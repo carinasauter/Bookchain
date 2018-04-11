@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="form_shape">
+<div id="form_shape_signup">
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <div class="col s12">
@@ -21,6 +21,34 @@
                 <div class="input-field col s11">
                     <i class="material-icons prefix">lock</i>
                     {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+                </div>
+            </div>
+            <br>
+            <p>Shipping Information</p>
+			<div class="row">
+                <div class="input-field col s11">
+                    {{ form.full_name(placeholder = "Full Name", class ="materialize-textarea") }}
+                </div>
+            </div>
+        	<div class="row">
+                <div class="input-field col s11">
+                    {{ form.street(placeholder = "Street address", class ="materialize-textarea") }}
+                </div>
+            </div>
+        	<div class="row">
+                <div class="input-field col s6">
+                    {{ form.city(placeholder = "City", class ="materialize-textarea") }}
+                </div>
+                 <div class="input-field col s2">
+                    {{ form.state(placeholder = "State", class ="materialize-textarea") }}
+                </div>
+                <div class="input-field col s4">
+                    {{ form.zipcode(placeholder = "Zipcode", class ="materialize-textarea") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s11">
+                    {{ form.country(placeholder = "Country", class ="materialize-textarea") }}
                 </div>
             </div>
         </div>

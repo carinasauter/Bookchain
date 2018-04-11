@@ -8,7 +8,7 @@ import json
 
 class User(UserMixin):
 
-	def __init__(self, id_number, username, email, password_hash, full_name, street, city, country, zipcode):
+	def __init__(self, id_number, username, email, password_hash, full_name, street, city, state, country, zipcode):
 		self.id = id_number;
 		self.username = username
 		self.email = email
@@ -16,9 +16,9 @@ class User(UserMixin):
 		self.full_name = full_name
 		self.street = street
 		self.city = city
+		self.state = state
 		self.country = country
 		self.zipcode = zipcode
-
 
 
 """ Takes a username as parameter and checks in the database. If the user exists, 
@@ -34,7 +34,7 @@ def getUserByUsername(query):
 			return None
 		else:
 			row = result[0]
-			user = User(row[0], query, row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+			user = User(row[0], query, row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 			return user
 
 
@@ -51,7 +51,7 @@ def getUserByID(query):
 			return None
 		else:
 			row = result[0]
-			user = User(query, row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+			user = User(query, row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 			return user
 
 
@@ -125,19 +125,34 @@ def load_user(id):
 # 		cursor2.execute("DELETE FROM users_on_trips WHERE trip_id = ?", (tripID,))
 # 		connection.commit()
 
-def create_user(username, email, password_hash):
+def create_user(username, email, password_hash, full_name, street, city, state, country, zipcode):
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
-		cursor.execute("INSERT INTO users (username, email, password_hash) VALUES (?,?,?)",(username, email, password_hash))
+		cursor.execute("INSERT INTO users (username, email, password_hash, full_name, street,\
+		city, state, country, zipcode) VALUES (?,?,?,?,?,?,?,?,?)",(username, email, password_hash, \
+		full_name, street, city, state, country, zipcode))
 		connection.commit()
 
 def registerBookInDatabase(title, author, thumbnail, short_description, \
-        registeredBy, location, currentReader, status):
+        registeredBy, status):
+	with sql.connect('database.db') as connection:
+		cursor1 = connection.cursor()
+		cursor2 = connection.cursor()
+		cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description,\
+		uploader, status) VALUES (?,?,?,?,?,?)",(title, author, thumbnail, \
+		short_description, registeredBy, status))
+		cursor2.execute("SELECT LAST_INSERT_ROWID()")
+		bookID = cursor2.fetchall()
+		bookID = bookID[0][0]
+		connection.commit()
+		return bookID
+
+
+def addBookToUser(userinfo, book_id, relationship):
+	user_id = getUserID(userinfo)
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
-		cursor.execute("INSERT INTO books (title, author, thumbnail, short_description, current_location,\
-			uploader, current_reader, status) VALUES (?,?,?,?,?,?,?,?)",(title, author, thumbnail, \
-				short_description, location, registeredBy, currentReader, status))
+		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
 		connection.commit()
 
 
