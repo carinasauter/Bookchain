@@ -38,4 +38,4 @@ Thumbs.db
 
 # Other #
 #########
-___pycache__
+*__pycache*
