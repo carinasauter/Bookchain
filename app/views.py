@@ -13,7 +13,6 @@ def index():
     if current_user.is_authenticated:
         return redirect(url_for('main'))
     else:
-        # we should have a landing page for user who have not logged in or signed up
         return redirect(url_for('login'))
 
 
@@ -78,10 +77,25 @@ def main():
     return render_template('register.html')
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET'])
 @login_required
 def register():
     return render_template('register.html')
+
+@app.route('/registerBook', methods=['POST'])
+@login_required
+def registerbook():
+    title = request.form['title']
+    author = request.form['author']
+    thumbnail = request.form['thumbnail']
+    short_description = request.form['short_description']
+    registeredBy = current_user.username
+    location = "Berkeley, CA"
+    currentReader = None
+    status = 'available'
+    registerBookInDatabase(title, author, thumbnail, short_description, \
+        registeredBy, location, currentReader, status)
+    return 'Received!'
 
 # @app.route('/main', methods=['POST'])
 # @login_required

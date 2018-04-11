@@ -125,11 +125,22 @@ def create_user(username, email, password_hash):
 		cursor.execute("INSERT INTO users (username, email, password_hash) VALUES (?,?,?)",(username, email, password_hash))
 		connection.commit()
 
+def registerBookInDatabase(title, author, thumbnail, short_description, \
+        registeredBy, location, currentReader, status):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		cursor.execute("INSERT INTO books (title, author, thumbnail, short_description, current_location,\
+			uploader, current_reader, status) VALUES (?,?,?,?,?,?,?,?)",(title, author, thumbnail, \
+				short_description, location, registeredBy, currentReader, status))
+		connection.commit()
 
-def callBooksAPI(query):
-	url_base = "https://www.googleapis.com/books/v1/volumes?q="
-	url = url_base + query
-	response = requests.get(url)
-	return response
+
+# def callBooksAPI(query):
+# 	url_base = "https://www.googleapis.com/books/v1/volumes?q="
+# 	url = url_base + query
+# 	response = requests.get(url)
+# 	return response
+
+
 
 

@@ -92,3 +92,7 @@ td, th {
 	border-style: none;
 	padding: 10px;
 }
+
+.hidden {
+	display: none;
+}

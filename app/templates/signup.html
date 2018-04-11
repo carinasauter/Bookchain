@@ -1,21 +1,19 @@
-{% extends "notloggedin.html" %}
+{% extends "base.html" %}
 
-{% block email %}
+{% block content %}
 <div class="row">
     <div class="input-field col s11">
         <i class="material-icons prefix">email</i>
         {{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
     </div>
 </div>
-{% endblock %}
 
-{% block button %}
+
+
 <button class="btn waves-effect waves-light" type="submit">SIGN UP
     <i class="material-icons right">send</i>
 </button>
-{% endblock %}
 
-
-{% block alternate %}
  <p>Already have an account? <a href="{{ url_for('login') }}" title="">Log in</a>  instead. </p>
+
 {% endblock %}

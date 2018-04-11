@@ -9,32 +9,61 @@ $(document).ready(
     	var user_input = $('#search_query').val();
     	$('#search_query').val("");
     	var query = parseInput(user_input)
-    	console.log(query);
-    	callAPI(query);
+    	callAPI(query, parseQuery);
     })
 )
 
 // upon
 $(document).on('click', '.registerThis', function() {
 	console.log("You want to register this book.");
-	var book_id = $(this).parent().parent();
-	console.log(book_id);
+	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	console.log(bookID);
+	callAPI(bookID, sendToBackend);
 })
-    // check which column they are part of
-    // var parent_id = $(this).parent().parent()[0].id;
-    // console.log(parent_id);
-    // var completedItem = $(this).parent();
+
+function sendToBackend(data) {
+	data = data['items'][0];
+	var bookInfo = data['volumeInfo'];
+	var title = bookInfo['title'];
+	var author = bookInfo['authors'];
+	var thumbnail = bookInfo['imageLinks'];
+	if (typeof thumbnail != 'undefined') {
+		thumbnail = thumbnail['smallThumbnail'];
+	} else {
+		thumbnail = "static/img/noImgFound.jpg";
+	}
+	if (typeof author != 'undefined') {
+		author = author[0];
+	} else {
+		author = "not available"
+	}
+	var short_description = bookInfo['description'];
+	if (typeof short_description != 'undefined') {
+		short_description = short_description.substring(0, 300) + "...";
+	} else {
+		short_description = "no description available.";
+	}
+	$.ajax({
+		type: "POST",
+		url: "/registerBook",
+		data: { title: title, author: author, thumbnail: thumbnail, short_description: short_description},
+		dataType: "json",
+	}).done(function( o ) {
+		console.log('done!')
+	});
+}
+
 
 
 // Event hander for calling the Google Books API using the user's search query to aid registering a book
-function callAPI(query) {
+function callAPI(query, whatToDo) {
 	$.get("https://www.googleapis.com/books/v1/volumes?q=" + query,
 		function(data) {
-			console.log(data);
-			parseQuery(data);
+			whatToDo(data);
 		},'json'
 	);
 }
+
 
 
 function addTableHeader() {
@@ -47,32 +76,20 @@ function addTableHeader() {
 function parseQuery(data) {
 	data = data['items'];
 	var num_books = data.length;
-	console.log(num_books);
 	var firstBook = data[0];
 	var bookInfo = firstBook['volumeInfo'];
-	// var user_input = $('#searchbar').val();
 
 	for (i = 0; i < 10; i++) {
 		var currentBook = data[i];
-		console.log(currentBook);
 		var bookInfo = currentBook['volumeInfo'];
 		var title = bookInfo['title'];
 		var author = bookInfo['authors'];
+		var bookID = currentBook['id'];
 		if (typeof author != 'undefined') {
 			author = author[0];
 		} else {
 			author = "not available"
 		}
-		var isbn13 = bookInfo['industryIdentifiers'];
-		if (typeof isbn13 != 'undefined') {
-			isbn13 = isbn13[1];
-			if (typeof isbn13 != "undefined") {
-				isbn13 = isbn13['identifier'];
-			}
-		} else {
-			isbn13 = 'not available';
-		}
-
 		var short_description = bookInfo['description'];
 		if (typeof short_description != 'undefined') {
 			short_description = short_description.substring(0, 300) + "...";
@@ -86,9 +103,8 @@ function parseQuery(data) {
 		} else {
 			thumbnail = "static/img/noImgFound.jpg";
 		}
-		console.log(title, author, thumbnail);
 		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
-		<div class='col s3 m3 l2'><p class= 'hidden'>" + isbn13 + "</p><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
+		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
 		</div><div class='col card-content s4 m4 l8 left-align'><p><b>" + title + "</b></p><p>\
 		// " + author + "</p><p id='short'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
 		class='btn registerThis' type='text'>Register</button></div></div></div>"
