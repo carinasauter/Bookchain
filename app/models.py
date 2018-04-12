@@ -232,5 +232,13 @@ def createAndBuyShipment(to_address, from_address, parcel, customs_info):
 	# print(shipment.postage_label.label_url)
 
 
+# get book uploader - takes book_id and returns user_id
+def getBookUploader(book_id):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("SELECT user_id FROM books_users WHERE book_id=? and relationship=?", (book_id, 'uploader'))
+		result = cursor.fetchall()
+		return result
 
 
