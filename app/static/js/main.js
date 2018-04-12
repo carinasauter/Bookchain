@@ -1,4 +1,5 @@
-// upon first click of submit the search result and playlist columns are created
+// upon first click on finding a book to register the table header is created once and results
+// are rendered every time. Also header is removed.
 $(document).ready(
 	$("#registerBook").one('click', function() {
 		addTableHeader();
@@ -13,7 +14,7 @@ $(document).ready(
     })
 )
 
-// upon
+
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	callAPI(bookID, sendToBackend);
@@ -63,7 +64,7 @@ function callAPI(query, whatToDo) {
 }
 
 
-
+// helper function to add the table header once.
 function addTableHeader() {
 	$("#results").append('<div class="row"><div id="tableHeader" class="col s12 m12 l12">Search Results\
     </div></div><div id="searchResults"></div>');
@@ -99,7 +100,7 @@ function parseQuery(data) {
 		if (typeof thumbnail != 'undefined') {
 			thumbnail = thumbnail['smallThumbnail'];
 		} else {
-			thumbnail = "static/img/noImgFound.jpg";
+			thumbnail = "static/img/noImgFound.jpg"; 
 		}
 		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
 		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
@@ -127,6 +128,24 @@ function imgError(image) {
     image.onerror = "";
     image.src = "/static/img/noImgFound.jpg";
     return true;
+}
+
+
+$(document).on('click', '.labelprint', function() {
+	var requester = "Amy";
+	$.ajax({
+		type: "POST",
+		url: "/printLabel",
+		data: {requester: requester, },
+		dataType: "json"
+	})
+})
+
+
+
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
 }
 
 

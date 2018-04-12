@@ -66,7 +66,7 @@ def login():
             return redirect(url_for('login'))
         login_user(comparedUser, remember = form.remember_me.data)
         return redirect(url_for('index'))
-    return render_template('login.html', title='Log In', form=form)
+    return render_template('login.html', title = 'Log In', form = form)
 
 
 
@@ -100,6 +100,33 @@ def registerbook():
         registeredBy, status)
     addBookToUser(current_user.username, bookID, 'uploader')
     return 'Received!'
+
+
+
+@app.route('/printLabel', methods=['POST'])
+@login_required
+def printLabel():
+    userID = current_user.id
+    requester = request.form['requester']
+    requester = getUserByUsername(requester)
+    shipper = getUserByID(userID)
+    print(shipper.username + " wants to ship a book!")
+    print(requester.username + " wants to receive a book!")
+    from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
+        shipper.state, shipper.zipcode, shipper.country)
+    to_address = createAddress(requester.full_name, requester.street, requester.city, \
+        requester.state, requester.zipcode, requester.country)
+    parcel = createParcel()
+    customsForm = createCustomsForm()
+
+# def createAndBuyShipment(to_address, from_address, parcel, customs_info):
+
+    shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
+    # print(shipment.tracking_code)
+    print(shipment.postage_label.label_url)
+    return redirect(shipment.postage_label.label_url)
+
+
 
 # @app.route('/main', methods=['POST'])
 # @login_required
@@ -176,3 +203,6 @@ def book():
 #         insert_customer_order(value, order_id)
 #         return redirect('/customers')
 #     return render_template('order.html', form = form)
+
+
+

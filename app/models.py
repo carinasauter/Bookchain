@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sys
 import requests
 import json
+import easypost
 
 class User(UserMixin):
 
@@ -161,6 +162,74 @@ def addBookToUser(userinfo, book_id, relationship):
 # 	url = url_base + query
 # 	response = requests.get(url)
 # 	return response
+
+
+# Print shipping label
+easypost.api_key = '3So8pVF6yhYekwW91WrP5g'
+
+def createAddress(full_name, street, city, state, zipcode, country):
+	return easypost.Address.create(verify=["delivery"],name = full_name,\
+		street1 = street, street2 = "", city = city, state = state, zip = zipcode,\
+		country = country)
+
+
+def createParcel():
+	try:
+	    parcel = easypost.Parcel.create(
+	        predefined_package = "Parcel",
+	        weight = 21.2
+	    )
+	except easypost.Error as e:
+	    print(str(e))
+	    if e.param is not None:
+	        print('Specifically an invalid param: %r' % e.param)
+
+	parcel = easypost.Parcel.create(
+	    length = 10.2,
+	    width = 7.8,
+	    height = 4.3,
+	    weight = 21.2
+	)
+	return parcel
+
+# create customs_info form for intl shipping
+def createCustomsForm():
+	customs_item = easypost.CustomsItem.create(
+	    description = "book from BookChain",
+	    hs_tariff_number = 123456,
+	    origin_country = "US",
+	    quantity = 2,
+	    value = 96.27,
+	    weight = 21.1
+	)
+	customs_info = easypost.CustomsInfo.create(
+	    customs_certify = 1,
+	    customs_signer = "Hector Hammerfall",
+	    contents_type = "gift",
+	    contents_explanation = "",
+	    eel_pfc = "NOEEI 30.37(a)",
+	    non_delivery_option = "return",
+	    restriction_type = "none",
+	    restriction_comments = "",
+	    customs_items = [customs_item])
+	return customs_info
+
+
+# create shipment
+def createAndBuyShipment(to_address, from_address, parcel, customs_info):
+	shipment = easypost.Shipment.create(
+	    to_address = to_address,
+	    from_address = from_address,
+	    parcel = parcel,
+	    customs_info = customs_info)
+	shipment.buy(rate = shipment.lowest_rate())
+	return shipment
+
+# buy postage label with one of the rate objects
+
+# alternatively: )
+	# print(shipment.tracking_code)
+	# print(shipment.postage_label.label_url)
 
 
 
