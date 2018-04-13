@@ -139,7 +139,7 @@ def creatingMap():
     for user in users:
         user_info = getUserByID(user)
         lat, lon = getGeocodedAddressFromUser(user_info)
-        data.append([lat, lon])
+        data.append([lon, lat])
     json_data = json.dumps(data)
     return json_data
 
