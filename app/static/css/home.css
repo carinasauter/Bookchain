@@ -55,7 +55,7 @@ p {
 
 .card {
 	height: 130px;
-	overflow: scroll;
+	overflow: hidden;
 }
 
 textarea.materialize-textarea.valid:focus {
@@ -106,3 +106,10 @@ td, th {
 .hidden {
 	display: none;
 }
+
+img {
+	width: 180px;
+	margin-top: 1.52rem;
+}
+
+

@@ -25,9 +25,6 @@ $(document).on('click', '.requestBook', function() {
 	}).done(function( o ) {
 		console.log('done!')
 	});
-
-	// var bookID = $(this).parent().parent().children()[0].innerHTML;
-	// callAPI(bookID, sendToBackend);
 })
 
 $(document).on('click', '.registerThis', function() {
@@ -37,12 +34,13 @@ $(document).on('click', '.registerThis', function() {
 
 function sendToBackend(data) {
 	data = data['items'][0];
+	console.log(data);
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
 	var author = bookInfo['authors'];
 	var thumbnail = bookInfo['imageLinks'];
 	if (typeof thumbnail != 'undefined') {
-		thumbnail = thumbnail['smallThumbnail'];
+		thumbnail = thumbnail['thumbnail'];
 	} else {
 		thumbnail = "static/img/noImgFound.jpg";
 	}
@@ -53,14 +51,19 @@ function sendToBackend(data) {
 	}
 	var short_description = bookInfo['description'];
 	if (typeof short_description != 'undefined') {
-		short_description = short_description.substring(0, 300) + "...";
 	} else {
 		short_description = "no description available.";
+	}
+	var isbn = bookInfo['industryIdentifiers'];
+	if (typeof isbn != 'undefined') {
+		isbn = isbn[0]['identifier']
+	} else {
+		isbn = "";
 	}
 	$.ajax({
 		type: "POST",
 		url: "/registerBook",
-		data: { title: title, author: author, thumbnail: thumbnail, short_description: short_description},
+		data: { title: title, author: author, thumbnail: thumbnail, short_description: short_description, isbn: isbn},
 		dataType: "json",
 	}).done(function( o ) {
 		console.log('done!')
@@ -91,6 +94,7 @@ function parseQuery(data) {
 	data = data['items'];
 	var num_books = data.length;
 	var firstBook = data[0];
+	// console.log(firstBook);
 	var bookInfo = firstBook['volumeInfo'];
 
 	for (i = 0; i < 10; i++) {
@@ -106,23 +110,28 @@ function parseQuery(data) {
 		}
 		var short_description = bookInfo['description'];
 		if (typeof short_description != 'undefined') {
-			short_description = short_description.substring(0, 300) + "...";
 		} else {
 			short_description = "no description available.";
 		}
 
 		var thumbnail = bookInfo['imageLinks'];
 		if (typeof thumbnail != 'undefined') {
-			thumbnail = thumbnail['smallThumbnail'];
+			thumbnail = thumbnail['thumbnail'];
 		} else {
 			thumbnail = "static/img/noImgFound.jpg"; 
 		}
 		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
-		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
-		</div><div class='col card-content s4 m4 l8 left-align'><p><b>" + title + "</b></p><p>\
-		// " + author + "</p><p id='short'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
+		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l1'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
+		</div><div class='col card-content s4 m4 l9 left-align'><p><b>" + title + "</b></p><p>\
+		" + author + "</p><p class = 'line-clamp hide-on-small-only'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
 		class='btn registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
+		var texts = document.getElementsByClassName('line-clamp');
+		// console.log(texts);
+		var len_texts = texts.length;
+		var module = texts[len_texts-1];
+		// console.log(texts[9])
+		$clamp(module, {clamp: 3});
 	}
 }
 
@@ -156,11 +165,24 @@ $(document).on('click', '.labelprint', function() {
 	})
 })
 
-
-
 function openInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
+
+
+// this is hardcoded!
+$(document).on('click', '.addReview', function() {
+	var comment = 'sample comment';
+	var book_id = 6;
+	$.ajax({
+		type: "POST",
+		url: "/addReview",
+		data: {comment: comment, book_id: book_id},
+		dataType: "json"
+	})
+})
+
+
 
 

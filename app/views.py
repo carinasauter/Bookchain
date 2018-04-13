@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from app import app, models, db, login_manager
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, CommentForm
 from .models import *
 from flask_login import current_user, login_user, logout_user
 from app.models import User
@@ -89,9 +89,10 @@ def registerbook():
     author = request.form['author']
     thumbnail = request.form['thumbnail']
     short_description = request.form['short_description']
+    isbn = request.form['isbn']
     registeredBy = current_user.username
     status = 'available'
-    bookID = registerBookInDatabase(title, author, thumbnail, short_description, \
+    bookID = registerBookInDatabase(title, author, thumbnail, short_description, isbn, \
         registeredBy, status)
     addBookToUser(current_user.username, bookID, 'uploader')
     return 'Received!'
@@ -132,6 +133,7 @@ def dashboard():
     return render_template('dashboard.html')
 
 @app.route('/getMap', methods=['GET'])
+@login_required
 def creatingMap():
     book_id = request.args['book_id']
     users = getBookHistory(book_id)
@@ -143,17 +145,35 @@ def creatingMap():
     json_data = json.dumps(data)
     return json_data
 
-@app.route('/book')
-def book():
-    return render_template('book.html')
+
+@app.route('/book/<book_id>', methods=['POST'])
+@login_required
+def book(book_id):
+    form = CommentForm()
+    title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
+    average_rating = getGoodReadsReviews(isbn)
+    review = nyt_reviews(isbn)
+    stops = len(getBookHistory(book_id))
+    if form.validate_on_submit():
+        comment = form.comment.data
+    return render_template('book.html', book_id = book_id, title = title, author = author, \
+        thumbnail = thumbnail, short_description = short_description, uploader = uploader, \
+        location = location, average_rating= average_rating, stops=stops, review = review, form=form)
+
+
+# @app.route('/book')
+# def book():
+#     return render_template('book.html')
 
 @app.route('/acknowledgeReceipt', methods=['POST'])
+@login_required
 def acknowledgingReceipt():
     book_id = request.form['book_id']
     acknowledgeReceipt(book_id)
 
 
 @app.route('/requestBook', methods=['POST'])
+@login_required
 def toRequestBook():
     requester = current_user.id
     book_id = request.form['book_id']
@@ -161,6 +181,16 @@ def toRequestBook():
     if book_haver != requester:
         requestBook(requester, book_id)
     return "requested"
+
+
+@app.route('/addReview', methods=['POST'])
+@login_required
+def addingReview():
+    comment = request.form['comment']
+    book_id = request.form['book_id']
+    user_id = current_user.id
+    addReviewToDB(book_id, user_id, comment)
+    return 'added review'
 
 
 

@@ -1,28 +1,70 @@
 {% extends "base.html" %}
+
+{% block variables %}
+<script type="text/javascript">
+    var book_id = {{ book_id }}
+
+
+
+
+</script>
+{% endblock %}
+
 {% block content %}
-    <div class="row">
-        <div class="col l4">
-            <img src="../static/img/smaple-book.jpg">
+<!-- add valign-wrapper to below row div? -->
+    <div class="row"> 
+        <div class="col l3 center-align">
+            <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this)>
         </div>
-        <div class="col l8 left-align">
-            <h4>HTML5 and CSS for Dummies</h4>
-            <h6>by David Karlins</h6>
-            <p>HTML5 and CSS3 have ushered in an entirely new era in web development and web design. This easy-to-understand full-color guide presents the elements of design and development as equal; therefore, both designers and developers will benefit from learning how to leverage the power behind HTML5 and CSS3. The two-page spreads and helpful insight show you how to use HTML5 and CSS3 in conjunction in order to create websites that possess both powerful function and beautiful design.</p>
-            <h6>Book Owner: @koalaboy </h6>
-            <h6>Current Location: Berkeley, CA </h6>
+        <div class="col l6 left-align">
+            <h4>{{ title }}</h4>
+            <h6>by {{ author }}</h6>
+            <p>{{ short_description }}</p>
+        </div>
+        <div class="col l3 left-align">
+            <h4>Reviews</h4>
+            {% if average_rating != "na" %}
+            <h6> Average Rating: {{average_rating}}</h6>
+            {% endif %}
+            {% if review != "" %}
+            <p><i>"{{review}}" </i><br>- New York Times</p>
+            {% endif %}
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input-field">
+                    {{ form.comment(placeholder = "Please add your review here...", class ="materialize-textarea") }}
+                </div>
+                <button class="btn waves-effect waves-light addReview" type="submit">Add a review</button>
+            </form>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col l3 center-align">
             <a class="primary btn requestBook">Request</a>
         </div>
+        <div class="col l6">
+            <h6>Book Owner: @{{uploader}}<br>Current Location: {{location}} </h6>
+        </div>
+        <div class = "col3">
+        <h6> </h6>
     </div>
+    </div>
+
+
     
-    <div class="row left-align">
+    <div class="row">
         <div class="col l12">
-            <h4> I've traveled to 5 locations!</h4>
+            <!-- add if statement here. -->
+            {% if stops == 1 %}
+            <h4> I'm still at home. </h4>
+            {% else %}
+            <h4> I've traveled to {{stops}} locations!</h4>
+            {% endif %}
         </div>
     </div>
+
     <div class="row">
         <div class="col l4">
-            
-            <!-- <img src="../static/img/book-map.png"> -->
             <div id='map' style='width: 400px; height: 300px;'></div>
         </div>
         <div class="col l8"></div>

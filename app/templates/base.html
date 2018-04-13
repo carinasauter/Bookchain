@@ -1,5 +1,6 @@
 <html>
   <head>
+    {% block variables %}{% endblock %}
     <title>BookChain</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -46,8 +47,10 @@
   </div>
   </body>
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/clamp.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+
   {% block additionallibraries %} {% endblock %}
 </html>
 

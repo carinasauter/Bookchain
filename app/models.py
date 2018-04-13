@@ -81,14 +81,14 @@ def create_user(username, email, password_hash, full_name, street, city, state, 
 		full_name, street, city, state, country, zipcode))
 		connection.commit()
 
-def registerBookInDatabase(title, author, thumbnail, short_description, \
+def registerBookInDatabase(title, author, thumbnail, short_description, isbn, \
         registeredBy, status):
 	with sql.connect('database.db') as connection:
 		cursor1 = connection.cursor()
 		cursor2 = connection.cursor()
-		cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description,\
-		uploader, status) VALUES (?,?,?,?,?,?)",(title, author, thumbnail, \
-		short_description, registeredBy, status))
+		cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description, isbn,\
+		uploader, status) VALUES (?,?,?,?,?,?,?)",(title, author, thumbnail, \
+		short_description, isbn, registeredBy, status))
 		cursor2.execute("SELECT LAST_INSERT_ROWID()")
 		bookID = cursor2.fetchall()
 		bookID = bookID[0][0]
@@ -187,8 +187,7 @@ def getBookHistory(book_id):
 		result = cursor.fetchall()
 		users = []
 		for entry in result:
-			users.append(entry[0])
-		print(users)	
+			users.append(entry[0])	
 		return users
 
 """
@@ -258,4 +257,69 @@ def acknowledgeReceipt(book_id):
 		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
 		connection.commit()
 
+
+"""
+takes a bookID and returns all details about the book
+"""
+# title, author, short_description = getBookDetails(book_id)
+
+def getBookDetails(book_id):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT * FROM books WHERE book_id=?", (book_id)).fetchall()
+		title = result[0][1]
+		author = result[0][2]
+		thumbnail = result[0][3]
+		short_description = result[0][4]
+		isbn = result[0][5]
+		uploader = result[0][6]
+		current_user_id = hasBook(book_id)
+		current_user = getUserByID(current_user_id)
+		# current_user_username = current_user.username
+		location = current_user.city + ", " + current_user.state + ", " + current_user.country
+		return title, author, thumbnail, short_description, isbn, uploader, location
+
+
+
+goodreadsAPIKey = 'FqRCxxgm6LDcmKP3d4MCQ'
+
+
+
+def getGoodReadsReviews(isbn):
+	baseURL = 'https://www.goodreads.com/book/review_counts.json?isbns='
+	query = baseURL + str(isbn) + "&key=" + goodreadsAPIKey
+	result = requests.get(query)
+	if result.text != 'No books match those ISBNs.':
+		result = json.loads(result.text)
+		average_rating = result['books'][0]['average_rating']
+		print("The average rating is:" + str(average_rating))
+		return average_rating
+	print("No average rating has been found")
+	return "na"
+
+
+NYTAPIKey = '3070504f115249fc8eedadaa0089f3c6'
+
+def nyt_reviews(isbn):
+	nYTimesBaseURI = 'http://api.nytimes.com/svc/books/v3/reviews.json?isbn='
+	query = nYTimesBaseURI + str(isbn) + '&api-key=' + NYTAPIKey
+	result = requests.get(query)
+	print(result)
+	if result.status_code == 200:
+		result = json.loads(result.text)
+		print(result)
+		result = result['results']
+		if result != []:
+			result = result[0]['summary']
+			return result
+	return ""
+
+
+def addReviewToDB(book_id, user_id, comment):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(book_id, user_id, comment))
+		connection.commit()
 

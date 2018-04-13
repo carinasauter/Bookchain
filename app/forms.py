@@ -32,3 +32,8 @@ class SignUpForm(Form):
 	state = StringField('State', validators=[DataRequired()])
 	country = StringField('Country', validators=[DataRequired()])
 	zipcode = IntegerField('Zipcode', validators=[DataRequired()])
+
+
+class CommentForm(Form):
+	comment = StringField('Leave a review...', validators=[DataRequired()])
+	

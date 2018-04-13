@@ -20,8 +20,19 @@ CREATE TABLE books (
     author text not null,
     thumbnail text,
     short_description text,
+    isbn integer,
     uploader text not null,
     status text not null
+);
+
+drop table if exists comments;
+CREATE TABLE comments (
+    comment_id integer PRIMARY KEY,
+    book_id integer not null, 
+    user_id integer not null, 
+    comment text not null,
+    FOREIGN KEY(book_id) REFERENCES books (book_id) ON DELETE CASCADE
+    FOREIGN KEY(user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 drop table if exists books_users;
