@@ -206,19 +206,27 @@ def requestBook(user_id, bookID):
 
 
 """
-checks who currently has the book. Takes book_id and returns user_id
+checks who currently has the book The person who has the book is defined as the 
+last person be associated with the book in a relationship that is not 'requester. 
+Takes book_id and returns user_id
 """
 def hasBook(book_id):
 	with sql.connect('database.db') as connection:
 		connection.row_factory = sql.Row
 		cursor = connection.cursor()
-		cursor.execute("SELECT user_id FROM books WHERE book_id=?", (book_id)).fetchall()
-		
+		result = cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship !=?", (book_id, 'requester')).fetchall()
+		return result[-1][0]
+
 
 
 
 googleGeocodingAPIKey = 'AIzaSyAVu5x4ezPVUSr6BEQ8I41BN65R6w8D5uI'
 
+
+"""
+takes a user object and returns the lon and lat for the user's city, state and country.
+Further accuracy not provided due to privacy considerations.
+"""
 def getGeocodedAddressFromUser(user):
 	city = user.city
 	city = city.replace(" ", "+")

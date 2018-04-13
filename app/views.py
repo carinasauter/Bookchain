@@ -74,7 +74,7 @@ def protected():
 @app.route('/main', methods=['GET'])
 @login_required
 def main():
-    return render_template('register.html')
+    return render_template('dashboard.html')
 
 
 @app.route('/register', methods=['GET'])
@@ -155,10 +155,11 @@ def acknowledgingReceipt():
 
 @app.route('/requestBook', methods=['POST'])
 def toRequestBook():
-    user_id = current_user.id
+    requester = current_user.id
     book_id = request.form['book_id']
-    print(book_id)
-    requestBook(user_id, book_id)
+    book_haver = hasBook(book_id)
+    if book_haver != requester:
+        requestBook(requester, book_id)
     return "requested"
 
 
