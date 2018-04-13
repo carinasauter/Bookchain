@@ -1,5 +1,8 @@
 $( document ).ready(function() {
-    var book_id = 6;
+  var current_page = window.location.href;
+  var lst = current_page.split('/');
+  var len_lst = lst.length;
+  var book_id = lst[len_lst-1];
 	$.ajax({
   		url: "/getMap",
   		data: {book_id: book_id, },

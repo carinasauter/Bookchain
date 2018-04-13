@@ -136,10 +136,14 @@ def dashboard():
 @login_required
 def creatingMap():
     book_id = request.args['book_id']
+    print("This is the book ID that's being passed: ")
+    print(book_id)
     users = getBookHistory(book_id)
     data = []
     for user in users:
         user_info = getUserByID(user)
+        print("this is the user whose info is used for the map")
+        print(user_info.username)
         lat, lon = getGeocodedAddressFromUser(user_info)
         data.append([lon, lat])
     json_data = json.dumps(data)
@@ -150,6 +154,7 @@ def creatingMap():
 @login_required
 def book(book_id):
     form = CommentForm()
+    print(book_id)
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
     average_rating = getGoodReadsReviews(isbn)
     review = nyt_reviews(isbn)

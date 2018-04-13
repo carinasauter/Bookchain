@@ -267,7 +267,7 @@ def getBookDetails(book_id):
 	with sql.connect('database.db') as connection:
 		connection.row_factory = sql.Row
 		cursor = connection.cursor()
-		result = cursor.execute("SELECT * FROM books WHERE book_id=?", (book_id)).fetchall()
+		result = cursor.execute("SELECT * FROM books WHERE book_id=?", (book_id,)).fetchall()
 		title = result[0][1]
 		author = result[0][2]
 		thumbnail = result[0][3]
@@ -276,7 +276,6 @@ def getBookDetails(book_id):
 		uploader = result[0][6]
 		current_user_id = hasBook(book_id)
 		current_user = getUserByID(current_user_id)
-		# current_user_username = current_user.username
 		location = current_user.city + ", " + current_user.state + ", " + current_user.country
 		return title, author, thumbnail, short_description, isbn, uploader, location
 
