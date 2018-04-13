@@ -14,6 +14,21 @@ $(document).ready(
     })
 )
 
+$(document).on('click', '.requestBook', function() {
+	var bookID = 6;
+	console.log("requested a book!")
+	$.ajax({
+		type: "POST",
+		url: "/requestBook",
+		data: {book_id: bookID},
+		dataType: "json",
+	}).done(function( o ) {
+		console.log('done!')
+	});
+
+	// var bookID = $(this).parent().parent().children()[0].innerHTML;
+	// callAPI(bookID, sendToBackend);
+})
 
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;

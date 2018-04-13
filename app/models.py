@@ -239,6 +239,54 @@ def getBookUploader(book_id):
 		cursor = connection.cursor()
 		cursor.execute("SELECT user_id FROM books_users WHERE book_id=? and relationship=?", (book_id, 'uploader'))
 		result = cursor.fetchall()
-		return result
+		return result[0][0]
 
+
+"""
+takes a book_id and returns a list of the users in the history of the book.
+Ignores those users that just have relationship 'requester'
+"""
+def getBookHistory(book_id):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (book_id, 'requester'))
+		result = cursor.fetchall()
+		users = []
+		for entry in result:
+			users.append(entry[0])
+		print(users)	
+		return users
+
+"""
+registers a user_id book_id pair in the database. Relationship status is set to 'requester'
+"""
+def requestBook(user_id, book_id):
+	relationship = 'requester'
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
+		connection.commit()
+
+
+googleGeocodingAPIKey = 'AIzaSyAVu5x4ezPVUSr6BEQ8I41BN65R6w8D5uI'
+
+def getGeocodedAddressFromUser(user):
+	city = user.city
+	city = city.replace(" ", "+")
+	state = user.state
+	state = state.replace(" ", "+")
+	country = user.country
+	country = country.replace(" ", "+")
+	googleBaseURL = 'https://maps.googleapis.com/maps/api/geocode/json?address='
+	apiKey = "&key=" + googleGeocodingAPIKey
+	query = googleBaseURL + city + ",+" + state + ",+" + country + apiKey
+	result = requests.get(query)
+	result = json.loads(result.text)
+	result_parsed = result['results'][0]['geometry']['location']
+	print(result_parsed)
+	user_lat = result_parsed['lat']
+	user_lon = result_parsed['lng']
+	return user_lat, user_lon
 

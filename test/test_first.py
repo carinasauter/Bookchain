@@ -1,4 +1,5 @@
-from app/models import *
+import unittest
+
 
 def test_pytest():
     assert True == True

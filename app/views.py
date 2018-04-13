@@ -6,6 +6,9 @@ from flask_login import current_user, login_user, logout_user
 from app.models import User
 from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
+
+
 
 
 @app.route('/')
@@ -14,14 +17,6 @@ def index():
         return redirect(url_for('main'))
     else:
         return redirect(url_for('login'))
-
-
-# @app.route('/submit', methods=('GET', 'POST'))
-# def submit():
-#     form = MyForm()
-#     if form.validate_on_submit():
-#         return render_template("search.html")
-#     return render_template('signup.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -118,61 +113,9 @@ def printLabel():
         requester.state, requester.zipcode, requester.country)
     parcel = createParcel()
     customsForm = createCustomsForm()
-
-# def createAndBuyShipment(to_address, from_address, parcel, customs_info):
-
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
-    # print(shipment.tracking_code)
     print(shipment.postage_label.label_url)
     return redirect(shipment.postage_label.label_url)
-
-
-
-# @app.route('/main', methods=['POST'])
-# @login_required
-# def main2():
-#     text = request.form['search_query']
-#     print(text)
-#     results = callBooksAPI(text)
-#     print(results.text)
-#     return render_template('searchresults.html')
-
-
-# @app.route('/create_trip', methods=['GET', 'POST'])
-# @login_required
-# def create_trip():
-#     form = TripForm()
-#     form.set_choices();
-#     if form.validate_on_submit():
-#         destination = form.destination.data
-#         friend = form.friend.data
-#         tripname = form.tripname.data
-#         insert_trip(tripname, destination)
-#         tripID = lookupLatestTripID()
-#         creatorID = int (current_user.id)
-#         friendID = getUserByUsername(friend).id #might break if not exists! need dropdown
-#         insert_user_trip(tripID, creatorID, friendID)
-#         return redirect('/trip_detail') 
-
-#     return render_template('trips.html', form = form) # this is what gets called without form
-
-
-# @app.route('/trip_detail')
-# @login_required
-# def display_trip():
-#     trips = lookUpTripsForCurrentUser()
-#     return render_template('TripDetail.html', trips = trips)
-
-
-# @app.route('/delete-trip', methods=['GET', 'POST'])
-# @login_required
-# def deleteTrip():
-#     tripname = request.form.get('tripname')
-#     destination = request.form.get('destination')
-#     tripID = lookUpTripID(tripname, destination)
-#     delete_trip(tripID)
-#     return redirect('/trip_detail') 
-
 
 @app.route('/logout')
 @login_required
@@ -188,21 +131,30 @@ def unauthorized_handler():
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/getMap', methods=['GET'])
+def creatingMap():
+    book_id = request.args['book_id']
+    users = getBookHistory(book_id)
+    data = []
+    for user in users:
+        user_info = getUserByID(user)
+        lat, lon = getGeocodedAddressFromUser(user_info)
+        data.append([lat, lon])
+    json_data = json.dumps(data)
+    return json_data
+
 @app.route('/book')
 def book():
     return render_template('book.html')
 
-# @app.route('/create_order/<value>', methods=['GET', 'POST'])
-# def create_order(value):
-#     form = OrderForm()
-#     if form.validate_on_submit():
-#         name_of_part = form.name_of_part.data
-#         manufacturer_of_part = form.manufacturer_of_part.data
-#         insert_order(name_of_part, manufacturer_of_part, value)
-#         order_id = retrieve_order_id()
-#         insert_customer_order(value, order_id)
-#         return redirect('/customers')
-#     return render_template('order.html', form = form)
+
+@app.route('/requestBook', methods=['POST'])
+def toRequestBook():
+    user_id = current_user.id
+    book_id = request.form['book_id']
+    print(book_id)
+    requestBook(user_id, book_id)
+    return "requested"
 
 
 
