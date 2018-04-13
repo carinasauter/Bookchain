@@ -146,7 +146,7 @@ def creatingMap():
     return json_data
 
 
-@app.route('/book/<book_id>', methods=['POST'])
+@app.route('/book/<book_id>', methods=['GET','POST'])
 @login_required
 def book(book_id):
     form = CommentForm()
