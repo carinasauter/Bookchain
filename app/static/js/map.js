@@ -58,8 +58,6 @@ function createMap(data) {
   } else {
     console.log("not longer than 1");
   }
-
-
 }
 
                 

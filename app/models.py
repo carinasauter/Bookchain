@@ -68,63 +68,10 @@ def getUserID(query):
 		result = cursor.fetchall()
 		return result[0][0]
 
-
-"""Gets the users from the database that are not the currently logged in user."""
-# def getAvailableFriends():
-# 	with sql.connect('database.db') as connection:
-# 		connection.row_factory = sql.Row
-# 		cursor = connection.cursor()
-# 		cursor.execute("SELECT username FROM users WHERE username !=?", (current_user.username,))
-# 		result = cursor.fetchall()
-# 		return result
-
 @login_manager.user_loader
 def load_user(id):
      return getUserByID(id)
 
-# def insert_trip(tripname, destination):
-# 	with sql.connect('database.db') as connection:
-# 		cursor = connection.cursor()
-# 		cursor.execute("INSERT INTO trips (tripname, destination) VALUES (?,?)",(tripname, destination))
-# 		connection.commit()
-
-
-# def lookupLatestTripID():
-# 	with sql.connect('database.db') as connection:
-# 		cursor = connection.cursor()
-# 		result = cursor.execute("SELECT trip_id FROM trips ORDER BY trip_id DESC LIMIT 1").fetchall()
-# 		return result[0][0]
-
-# def lookUpTripsForCurrentUser():
-# 	with sql.connect('database.db') as connection:
-# 		cursor = connection.cursor()
-# 		result = cursor.execute("SELECT trips.tripname, trips.destination FROM trips JOIN users_on_trips ON trips.trip_id = users_on_trips.trip_id WHERE users_on_trips.user_id = ?", (current_user.id)).fetchall()
-# 		return result
-
-# def insert_user_trip(trip_id, creator, friend):
-# 	with sql.connect('database.db') as connection:
-# 		cursor1 = connection.cursor()
-# 		cursor2 = connection.cursor()
-# 		# enter creator 
-# 		cursor1.execute("INSERT INTO users_on_trips (user_id, trip_id) VALUES (?,?)",(creator, trip_id))
-# 		# enter friend
-# 		cursor2.execute("INSERT INTO users_on_trips (user_id, trip_id) VALUES (?,?)",(friend, trip_id))
-# 		connection.commit()
-
-# def lookUpTripID(tripName, destiNation):
-# 	with sql.connect('database.db') as connection:
-# 		cursor = connection.cursor()
-# 		result = cursor.execute("SELECT trip_id FROM trips WHERE tripname = ? AND destination = ?", (tripName, destiNation)).fetchall()
-# 		return result[0][0]
-
-# def delete_trip(tripID):
-# 	with sql.connect('database.db') as connection:
-# 		cursor1 = connection.cursor()
-# 		cursor1.execute("DELETE FROM trips WHERE trip_id = ?", (tripID,))
-# 		# hardcoded second delete in!
-# 		cursor2 = connection.cursor()
-# 		cursor2.execute("DELETE FROM users_on_trips WHERE trip_id = ?", (tripID,))
-# 		connection.commit()
 
 def create_user(username, email, password_hash, full_name, street, city, state, country, zipcode):
 	with sql.connect('database.db') as connection:
@@ -155,13 +102,6 @@ def addBookToUser(userinfo, book_id, relationship):
 		cursor = connection.cursor()
 		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
 		connection.commit()
-
-
-# def callBooksAPI(query):
-# 	url_base = "https://www.googleapis.com/books/v1/volumes?q="
-# 	url = url_base + query
-# 	response = requests.get(url)
-# 	return response
 
 
 # Print shipping label
@@ -225,13 +165,6 @@ def createAndBuyShipment(to_address, from_address, parcel, customs_info):
 	shipment.buy(rate = shipment.lowest_rate())
 	return shipment
 
-# buy postage label with one of the rate objects
-
-# alternatively: )
-	# print(shipment.tracking_code)
-	# print(shipment.postage_label.label_url)
-
-
 # get book uploader - takes book_id and returns user_id
 def getBookUploader(book_id):
 	with sql.connect('database.db') as connection:
@@ -261,13 +194,27 @@ def getBookHistory(book_id):
 """
 registers a user_id book_id pair in the database. Relationship status is set to 'requester'
 """
-def requestBook(user_id, book_id):
+def requestBook(user_id, bookID):
 	relationship = 'requester'
 	with sql.connect('database.db') as connection:
 		connection.row_factory = sql.Row
-		cursor = connection.cursor()
-		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
+		cursor1 = connection.cursor()
+		cursor2 = connection.cursor()
+		cursor1.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, bookID, relationship))
+		cursor2.execute("UPDATE books SET status = ? WHERE book_id = ?", ('requested' ,bookID))
 		connection.commit()
+
+
+"""
+checks who currently has the book. Takes book_id and returns user_id
+"""
+def hasBook(book_id):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("SELECT user_id FROM books WHERE book_id=?", (book_id)).fetchall()
+		
+
 
 
 googleGeocodingAPIKey = 'AIzaSyAVu5x4ezPVUSr6BEQ8I41BN65R6w8D5uI'
@@ -289,4 +236,18 @@ def getGeocodedAddressFromUser(user):
 	user_lat = result_parsed['lat']
 	user_lon = result_parsed['lng']
 	return user_lat, user_lon
+
+
+"""
+acknowledges receipt of a book.
+"""
+def acknowledgeReceipt(book_id):
+	relationship = 'reading'
+	user_id = current_user.id
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(user_id, book_id, relationship))
+		connection.commit()
+
 

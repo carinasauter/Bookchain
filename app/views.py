@@ -147,6 +147,11 @@ def creatingMap():
 def book():
     return render_template('book.html')
 
+@app.route('/acknowledgeReceipt', methods=['POST'])
+def acknowledgingReceipt():
+    book_id = request.form['book_id']
+    acknowledgeReceipt(book_id)
+
 
 @app.route('/requestBook', methods=['POST'])
 def toRequestBook():
