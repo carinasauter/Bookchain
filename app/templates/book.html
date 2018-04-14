@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block variables %}
+<!-- this script needs to go here because this is a nice way to pass it a flask variable. -->
 <script type="text/javascript">
-    var book_id = {{ book_id }}
-
-
-
-
+    var blockRequest = {{ blockRequest }};
+    if (blockRequest == 1) {
+        $( ".requestBook").removeClass(".requestBook primary").addClass( "disabled" );
+    }
 </script>
 {% endblock %}
 
@@ -15,6 +15,7 @@
     <div class="row"> 
         <div class="col l3 center-align">
             <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this)>
+            <a class="primary btn requestBook">Request</a>
         </div>
         <div class="col l6 left-align">
             <h4>{{ title }}</h4>
@@ -40,7 +41,6 @@
     </div>
     <div class = "row">
         <div class="col l3 center-align">
-            <a class="primary btn requestBook">Request</a>
         </div>
         <div class="col l6">
             <h6>Book Owner: @{{uploader}}<br>Current Location: {{location}} </h6>

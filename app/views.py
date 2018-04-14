@@ -155,16 +155,21 @@ def creatingMap():
 @login_required
 def book(book_id):
     form = CommentForm()
-    print(book_id)
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
     average_rating = getGoodReadsReviews(isbn)
     review = nyt_reviews(isbn)
     stops = len(getBookHistory(book_id))
+    currentUser = current_user.id
+    haver = hasBook(book_id)
+    blockRequest = 0
+    if int(currentUser) == int(haver):
+        blockRequest = 1
+    print(blockRequest)
     if form.validate_on_submit():
         comment = form.comment.data
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
-        location = location, average_rating= average_rating, stops=stops, review = review, form=form)
+        location = location, average_rating= average_rating, stops=stops, review = review, form=form, blockRequest = blockRequest)
 
 
 # @app.route('/book')
