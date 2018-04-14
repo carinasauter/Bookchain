@@ -165,11 +165,14 @@ def book(book_id):
     if int(currentUser) == int(haver):
         blockRequest = 1
     print(blockRequest)
-    if form.validate_on_submit():
-        comment = form.comment.data
+    # if form.validate_on_submit():
+    #     comment = form.comment.data
+    #     addReviewToDB(book_id, currentUser, comment)
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
         location = location, average_rating= average_rating, stops=stops, review = review, form=form, blockRequest = blockRequest)
+
+@app.route
 
 
 # @app.route('/book')

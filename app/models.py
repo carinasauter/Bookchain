@@ -321,4 +321,3 @@ def addReviewToDB(book_id, user_id, comment):
 		cursor = connection.cursor()
 		cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(book_id, user_id, comment))
 		connection.commit()
-

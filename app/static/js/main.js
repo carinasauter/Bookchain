@@ -185,17 +185,25 @@ function openInNewTab(url) {
 }
 
 
-// this is hardcoded!
 $(document).on('click', '.addReview', function() {
-	var comment = 'sample comment';
-	var book_id = 6;
+	var current_page = window.location.href;
+	var lst = current_page.split('/');
+	var len_lst = lst.length;
+	var book_id = lst[len_lst-1];
+	var comment = $("#comment")[0];
+	var content = comment['value'];
 	$.ajax({
 		type: "POST",
 		url: "/addReview",
-		data: {comment: comment, book_id: book_id},
+		data: {comment: content, book_id: book_id},
 		dataType: "json"
-	})
+	});
+	// $("#comment")[0]['value'].text("");
 })
+
+$(document).ready(function() {
+	$('textarea').characterCounter();
+});
 
 
 
