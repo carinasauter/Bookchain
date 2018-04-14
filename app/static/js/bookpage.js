@@ -103,69 +103,70 @@ $( "#5" ).hover(
   }
 );
 
-$(document).on('click', '#1', function() {
+
+function disableClick() {
+    $('.star').each(function() {
+    this.style.pointerEvents = 'none';
+  })
+}
+
+$(document).one('click', '#1', function() {
   $.ajax({
     type: "POST",
     url: "/addRating",
     data: {rating: 1, book_id: book_id},
     dataType: "json"
   })
-   $("#5").removeClass("grey-text lighten-1");
-    $("#4").removeClass("grey-text lighten-1");
-    $("#3").removeClass("grey-text lighten-1");
-    $("#2").removeClass("grey-text lighten-1");
-    $("#1").addClass( "amber-text" );
-    deactivateHover();
+  $("#1").addClass( "amber-text" );
+  deactivateHover();
+  disableClick();
 })
 
 
-$(document).on('click', '#2', function() {
+$(document).one('click', '#2', function() {
   $.ajax({
     type: "POST",
     url: "/addRating",
     data: {rating: 2, book_id: book_id},
     dataType: "json"
   })
-   $("#5").removeClass("grey-text lighten-1");
-    $("#4").removeClass("grey-text lighten-1");
-    $("#3").removeClass("grey-text lighten-1");
     $("#2").addClass( "amber-text" );
     $("#1").addClass( "amber-text" );
     deactivateHover();
+    disableClick();
 })
 
-$(document).on('click', '#3', function() {
+$(document).one('click', '#3', function() {
   $.ajax({
     type: "POST",
     url: "/addRating",
     data: {rating: 3, book_id: book_id},
     dataType: "json"
   })
-   $("#5").removeClass("grey-text lighten-1");
-    $("#4").removeClass("grey-text lighten-1");
     $("#3").addClass( "amber-text" );
     $("#2").addClass( "amber-text" );
     $("#1").addClass( "amber-text" );
     deactivateHover();
+    disableClick();
 })
 
-$(document).on('click', '#4', function() {
+$(document).one('click', '#4', function() {
   $.ajax({
     type: "POST",
     url: "/addRating",
     data: {rating: 4, book_id: book_id},
     dataType: "json"
   })
-   $("#5").removeClass("grey-text lighten-1");
     $("#4").addClass( "amber-text" );
     $("#3").addClass( "amber-text" );
     $("#2").addClass( "amber-text" );
     $("#1").addClass( "amber-text" );
     deactivateHover();
+    disableClick();
 })
 
 
-$(document).on('click', '#5', function() {
+$(document).one('click', '#5', function() {
   $.ajax({
     type: "POST",
     url: "/addRating",
@@ -178,6 +179,7 @@ $(document).on('click', '#5', function() {
     $("#2").addClass( "amber-text" );
     $("#1").addClass( "amber-text" );
     deactivateHover();
+    disableClick();
 })
 
 function deactivateHover() {

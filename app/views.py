@@ -168,19 +168,38 @@ def getUser():
 @login_required
 def book(book_id):
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
-    # average_rating = getGoodReadsReviews(isbn)
+    average_rating = getAverageRating(book_id)
     review = nyt_reviews(isbn)
     comments = getBookComments(book_id)
     stops = len(getBookHistory(book_id))
     currentUser = current_user.id
     haver = hasBook(book_id)
+    userRating = getBookRating(book_id, currentUser)
+    print("userRating:")
+    print(userRating)
     blockRequest = 0
     if int(currentUser) == int(haver):
         blockRequest = 1
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
-        location = location, average_rating= 2.34, stops=stops, review = review, blockRequest = blockRequest, \
-        comments = comments)
+        location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \
+        comments = comments, userRating = userRating)
+
+
+
+@app.route('/user/<user_id>', methods=['GET','POST'])
+@login_required
+def profile(user_id):
+    profileUser = getUserByID(user_id)
+    # comments = getBookComments(book_id)
+    currentUser_id = current_user.id
+    currentUser = getUserByID(currentUser_id)
+    uploadedBooks = getBooksUploadedByUser(user_id)
+    # haver = hasBook(book_id)
+    return render_template('profile.html')
+
+
+
 
 
 @app.route('/acknowledgeReceipt', methods=['POST'])
@@ -213,7 +232,6 @@ def addingReview():
 @app.route('/addRating', methods=['POST'])
 @login_required
 def addingRating():
-    print("received rating registration request")
     rating = request.form['rating']
     book_id = request.form['book_id']
     user_id = current_user.id

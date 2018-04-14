@@ -1,11 +1,30 @@
 {% extends "base.html" %}
 
 {% block variables %}
-<!-- this script needs to go here because this is a nice way to pass it a flask variable. -->
+<!-- this script needs to go here because this is a nice way to assess flask variables. -->
 <script type="text/javascript">
     var blockRequest = {{ blockRequest }};
     if (blockRequest == 1) {
-        $( ".requestBook").removeClass(".requestBook primary").addClass( "disabled" );
+        $( ".requestBook").addClass( "disabled" );
+    }
+    var userRating = {{ userRating }};
+    console.log(userRating);
+    if (userRating != 0) {
+        $( "#1").removeClass("grey-text lighten-1").addClass( "amber-text" );
+        $(".star").unbind('mouseenter mouseleave');
+        $('.star').each(function() { this.style.pointerEvents = 'none';})
+    }
+    if (userRating > 1) {
+        $( "#2").removeClass("grey-text lighten-1").addClass( "amber-text" );
+    }
+    if (userRating > 2) {
+        $( "#3").removeClass("grey-text lighten-1").addClass( "amber-text" );
+    }
+    if (userRating > 3) {
+        $( "#4").removeClass("grey-text lighten-1").addClass( "amber-text" );
+    }
+    if (userRating == 5) {
+        $( "#5").removeClass("grey-text lighten-1").addClass( "amber-text" );
     }
 </script>
 {% endblock %}
@@ -13,14 +32,16 @@
 {% block content %}
 <!-- add valign-wrapper to below row div? -->
     <div class="row"> 
-        <div class="col l3 center-align">
+        <div class="col s12 m6 l3 center-align">
             <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this)>
-            <a class="primary btn requestBook">Request</a>
+            <br>
+            <a class="btn requestBook">Request</a>
         </div>
-        <div class="col l6 left-align">
+        <div class="col l6 m6 s12 left-align">
             <h4>{{ title }}</h4>
             <h6>by {{ author }}</h6>
             <p>{{ short_description }}</p>
+             <h6>Book Owner: @{{uploader}}<br>Current Location: {{location}} </h6>
         </div>
         <div class="col l3 left-align">
             <h4>Reviews</h4>
@@ -46,16 +67,6 @@
             </div>
             <button class="btn waves-effect waves-light addReview" type="submit">Add a review</button>
         </div>
-    </div>
-    <div class = "row">
-        <div class="col l3 center-align">
-        </div>
-        <div class="col l6">
-            <h6>Book Owner: @{{uploader}}<br>Current Location: {{location}} </h6>
-        </div>
-        <div class = "col3">
-        <h6> </h6>
-    </div>
     </div>
     
     <div class="row">

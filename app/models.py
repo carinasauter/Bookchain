@@ -280,24 +280,6 @@ def getBookDetails(book_id):
 		return title, author, thumbnail, short_description, isbn, uploader, location
 
 
-
-# goodreadsAPIKey = 'FqRCxxgm6LDcmKP3d4MCQ'
-
-
-
-# def getGoodReadsReviews(isbn):
-# 	baseURL = 'https://www.goodreads.com/book/review_counts.json?isbns='
-# 	query = baseURL + str(isbn) + "&key=" + goodreadsAPIKey
-# 	result = requests.get(query)
-# 	if result.text != 'No books match those ISBNs.':
-# 		result = json.loads(result.text)
-# 		average_rating = result['books'][0]['average_rating']
-# 		print("The average rating is:" + str(average_rating))
-# 		return average_rating
-# 	print("No average rating has been found")
-# 	return "na"
-
-
 NYTAPIKey = '3070504f115249fc8eedadaa0089f3c6'
 
 def nyt_reviews(isbn):
@@ -335,6 +317,37 @@ def getBookComments(book_id):
 		lst = []
 		for entry in result:
 			lst.append([entry[0], getUserByID(entry[1]).username])
-		print(lst)
 		return lst
 
+
+def getBookRating(book_id, user_id):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT rating FROM ratings where book_id = ? AND user_id = ?", (book_id, user_id)).fetchall()
+		print(result)
+		if result == []:
+			return 0
+		return result[0][0]
+
+def getAverageRating(book_id):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		ratings = cursor.execute("SELECT rating FROM ratings where book_id = ?", (book_id,)).fetchall()
+		if ratings == []:
+			return 0
+		sum_ratings = 0
+		count_ratings = 0
+		for rating in ratings:
+			count_ratings += 1
+			sum_ratings += rating[0]
+		return sum_ratings / count_ratings
+
+
+def getBooksUploadedByUser(user_id):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (user_id, "uploader")).fetchall()
+		lst = []
+		for entry in result:
+			lst.append(entry[0])
+		return lst
