@@ -9,7 +9,7 @@ $(document).ready(
     	$("#header").remove();
     	var user_input = $('#search_query').val();
     	$('#search_query').val("");
-    	var query = parseInput(user_input)
+    	var query = "?q=" + parseInput(user_input)
     	callAPI(query, parseQuery);
     })
 )
@@ -29,18 +29,21 @@ $(document).on('click', '.requestBook', function() {
 
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	callAPI(bookID, sendToBackend);
+	console.log(bookID);
+	callAPI("/" + bookID, sendToBackend);
 })
 
 function sendToBackend(data) {
-	data = data['items'][0];
 	console.log(data);
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
 	var author = bookInfo['authors'];
 	var thumbnail = bookInfo['imageLinks'];
 	if (typeof thumbnail != 'undefined') {
-		thumbnail = thumbnail['thumbnail'];
+		thumbnail = thumbnail['large'];
+		if (typeof thumbnail == 'undefined') {
+			thumbnail = bookInfo['imageLinks']['thumbnail'];
+		}
 	} else {
 		thumbnail = "static/img/noImgFound.jpg";
 	}
@@ -56,10 +59,21 @@ function sendToBackend(data) {
 	}
 	var isbn = bookInfo['industryIdentifiers'];
 	if (typeof isbn != 'undefined') {
-		isbn = isbn[0]['identifier']
+		isbn1 = isbn[0]['type'];
+		if (isbn1 == 'ISBN_10') {
+			isbn2 = isbn[1];
+			if (typeof isbn2 !='undefined') {
+				isbn = isbn[1]['identifier'];
+			} else {
+				isbn = isbn[0]['identifier'];
+			}
+		} else {
+			isbn = isbn[0]['identifier'];
+		}
 	} else {
 		isbn = "";
 	}
+	console.log(title, author, thumbnail, short_description, isbn);
 	$.ajax({
 		type: "POST",
 		url: "/registerBook",
@@ -74,7 +88,7 @@ function sendToBackend(data) {
 
 // Event hander for calling the Google Books API using the user's search query to aid registering a book
 function callAPI(query, whatToDo) {
-	$.get("https://www.googleapis.com/books/v1/volumes?q=" + query,
+	$.get("https://www.googleapis.com/books/v1/volumes" + query,
 		function(data) {
 			whatToDo(data);
 		},'json'

@@ -8,3 +8,4 @@ flask_wtf
 flask-material
 requests
 easypost
+markup

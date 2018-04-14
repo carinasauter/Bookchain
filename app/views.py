@@ -7,7 +7,7 @@ from app.models import User
 from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
-
+from markupsafe import Markup
 
 
 
@@ -92,6 +92,7 @@ def registerbook():
     isbn = request.form['isbn']
     registeredBy = current_user.username
     status = 'available'
+    print(title, author, thumbnail, short_description, isbn, registeredBy, status)
     bookID = registerBookInDatabase(title, author, thumbnail, short_description, isbn, \
         registeredBy, status)
     addBookToUser(current_user.username, bookID, 'uploader')
@@ -162,7 +163,7 @@ def book(book_id):
     if form.validate_on_submit():
         comment = form.comment.data
     return render_template('book.html', book_id = book_id, title = title, author = author, \
-        thumbnail = thumbnail, short_description = short_description, uploader = uploader, \
+        thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
         location = location, average_rating= average_rating, stops=stops, review = review, form=form)
 
 
