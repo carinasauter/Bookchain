@@ -24,18 +24,20 @@
         </div>
         <div class="col l3 left-align">
             <h4>Reviews</h4>
-            <i class="material-icons amber-text" id="1">star</i>
-            <i class="material-icons amber-text" id="2">star</i>
-            <i class="material-icons amber-text" id="3">star</i>
-            <i class="material-icons amber-text" id="4">star</i>
-            <i class="material-icons amber-text" id="5">star</i>
+            <i class="material-icons small star grey-text lighten-1" id="1">star</i>
+            <i class="material-icons small star grey-text lighten-1" id="2">star</i>
+            <i class="material-icons small star grey-text lighten-1" id="3">star</i>
+            <i class="material-icons small star grey-text lighten-1" id="4">star</i>
+            <i class="material-icons small star grey-text lighten-1" id="5">star</i>
             <br>
             {% if average_rating != "na" %}
             <h6> Average Rating: {{average_rating}}</h6>
             {% endif %}
             {% if review != "" %}
             <p><i>"{{review}}" </i><br>- New York Times</p>
-            {% endif %}    
+            {% endif %}
+            <div class = "memberComments">    
+            </div>
             <div class="input-field">
                 <textarea id="comment" placeholder = "Share your thoughts!" class = "materialize-textarea " data-length="150"></textarea>
             </div>
@@ -52,8 +54,6 @@
         <h6> </h6>
     </div>
     </div>
-
-
     
     <div class="row">
         <div class="col l12">
@@ -74,5 +74,5 @@
 {% endblock %}
 
 {% block additionallibraries %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bookpage.js') }}"></script>
 {% endblock %}

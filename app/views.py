@@ -92,7 +92,7 @@ def registerbook():
     isbn = request.form['isbn']
     registeredBy = current_user.username
     status = 'available'
-    print(title, author, thumbnail, short_description, isbn, registeredBy, status)
+    # print(title, author, thumbnail, short_description, isbn, registeredBy, status)
     bookID = registerBookInDatabase(title, author, thumbnail, short_description, isbn, \
         registeredBy, status)
     addBookToUser(current_user.username, bookID, 'uploader')
@@ -137,18 +137,31 @@ def dashboard():
 @login_required
 def creatingMap():
     book_id = request.args['book_id']
-    print("This is the book ID that's being passed: ")
-    print(book_id)
+    # print("This is the book ID that's being passed: ")
+    # print(book_id)
     users = getBookHistory(book_id)
     data = []
     for user in users:
         user_info = getUserByID(user)
-        print("this is the user whose info is used for the map")
-        print(user_info.username)
+        # print("this is the user whose info is used for the map")
+        # print(user_info.username)
         lat, lon = getGeocodedAddressFromUser(user_info)
         data.append([lon, lat])
     json_data = json.dumps(data)
     return json_data
+
+
+@app.route('/getUser', methods=['GET'])
+@login_required
+def getUser():
+    userID = current_user.id
+    user = getUserByID(userID)
+    username = user.username
+    data = []
+    data.append(username,)
+    json_data = json.dumps(data)
+    return json_data
+
 
 
 @app.route('/book/<book_id>', methods=['GET','POST'])
@@ -156,7 +169,7 @@ def creatingMap():
 def book(book_id):
     form = CommentForm()
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
-    average_rating = getGoodReadsReviews(isbn)
+    # average_rating = getGoodReadsReviews(isbn)
     review = nyt_reviews(isbn)
     stops = len(getBookHistory(book_id))
     currentUser = current_user.id
@@ -164,20 +177,10 @@ def book(book_id):
     blockRequest = 0
     if int(currentUser) == int(haver):
         blockRequest = 1
-    print(blockRequest)
-    # if form.validate_on_submit():
-    #     comment = form.comment.data
-    #     addReviewToDB(book_id, currentUser, comment)
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
-        location = location, average_rating= average_rating, stops=stops, review = review, form=form, blockRequest = blockRequest)
+        location = location, average_rating= 2.34, stops=stops, review = review, form=form, blockRequest = blockRequest)
 
-@app.route
-
-
-# @app.route('/book')
-# def book():
-#     return render_template('book.html')
 
 @app.route('/acknowledgeReceipt', methods=['POST'])
 @login_required
@@ -206,5 +209,14 @@ def addingReview():
     addReviewToDB(book_id, user_id, comment)
     return 'added review'
 
+@app.route('/addRating', methods=['POST'])
+@login_required
+def addingRating():
+    print("received rating registration request")
+    rating = request.form['rating']
+    book_id = request.form['book_id']
+    user_id = current_user.id
+    addRatingToDB(book_id, user_id, rating)
+    return 'added rating'
 
 

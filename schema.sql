@@ -44,3 +44,13 @@ CREATE TABLE books_users (
     FOREIGN KEY(book_id) REFERENCES books (book_id) ON DELETE CASCADE
     FOREIGN KEY(user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
+
+drop table if exists ratings;
+CREATE TABLE ratings (
+    rating_id integer PRIMARY KEY,
+    book_id integer not null, 
+    user_id integer not null, 
+    rating integer not null,
+    FOREIGN KEY(book_id) REFERENCES books (book_id) ON DELETE CASCADE
+    FOREIGN KEY(user_id) REFERENCES users (user_id) ON DELETE CASCADE
+);

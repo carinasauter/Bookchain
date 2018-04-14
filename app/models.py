@@ -281,21 +281,21 @@ def getBookDetails(book_id):
 
 
 
-goodreadsAPIKey = 'FqRCxxgm6LDcmKP3d4MCQ'
+# goodreadsAPIKey = 'FqRCxxgm6LDcmKP3d4MCQ'
 
 
 
-def getGoodReadsReviews(isbn):
-	baseURL = 'https://www.goodreads.com/book/review_counts.json?isbns='
-	query = baseURL + str(isbn) + "&key=" + goodreadsAPIKey
-	result = requests.get(query)
-	if result.text != 'No books match those ISBNs.':
-		result = json.loads(result.text)
-		average_rating = result['books'][0]['average_rating']
-		print("The average rating is:" + str(average_rating))
-		return average_rating
-	print("No average rating has been found")
-	return "na"
+# def getGoodReadsReviews(isbn):
+# 	baseURL = 'https://www.goodreads.com/book/review_counts.json?isbns='
+# 	query = baseURL + str(isbn) + "&key=" + goodreadsAPIKey
+# 	result = requests.get(query)
+# 	if result.text != 'No books match those ISBNs.':
+# 		result = json.loads(result.text)
+# 		average_rating = result['books'][0]['average_rating']
+# 		print("The average rating is:" + str(average_rating))
+# 		return average_rating
+# 	print("No average rating has been found")
+# 	return "na"
 
 
 NYTAPIKey = '3070504f115249fc8eedadaa0089f3c6'
@@ -313,6 +313,14 @@ def nyt_reviews(isbn):
 			result = result[0]['summary']
 			return result
 	return ""
+
+def addRatingToDB(book_id, user_id, rating):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		cursor.execute("INSERT INTO ratings (book_id, user_id, rating) VALUES (?,?,?)",(book_id, user_id, rating))
+		connection.commit()
+
 
 
 def addReviewToDB(book_id, user_id, comment):

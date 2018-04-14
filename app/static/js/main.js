@@ -185,25 +185,9 @@ function openInNewTab(url) {
 }
 
 
-$(document).on('click', '.addReview', function() {
-	var current_page = window.location.href;
-	var lst = current_page.split('/');
-	var len_lst = lst.length;
-	var book_id = lst[len_lst-1];
-	var comment = $("#comment")[0];
-	var content = comment['value'];
-	$.ajax({
-		type: "POST",
-		url: "/addReview",
-		data: {comment: content, book_id: book_id},
-		dataType: "json"
-	});
-	// $("#comment")[0]['value'].text("");
-})
 
-$(document).ready(function() {
-	$('textarea').characterCounter();
+$("#search_query").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#registerBook").click();
+    }
 });
-
-
-
