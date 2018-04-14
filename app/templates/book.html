@@ -37,6 +37,9 @@
             <p><i>"{{review}}" </i><br>- New York Times</p>
             {% endif %}
             <div class = "memberComments">    
+                {% for comment in comments %}
+                    <p><i>"{{comment[0]}}"</i><br>- {{comment[1]}}</p>
+                {% endfor %}
             </div>
             <div class="input-field">
                 <textarea id="comment" placeholder = "Share your thoughts!" class = "materialize-textarea " data-length="150"></textarea>

@@ -239,7 +239,7 @@ def getGeocodedAddressFromUser(user):
 	result = requests.get(query)
 	result = json.loads(result.text)
 	result_parsed = result['results'][0]['geometry']['location']
-	print(result_parsed)
+	# print(result_parsed)
 	user_lat = result_parsed['lat']
 	user_lon = result_parsed['lng']
 	return user_lat, user_lon
@@ -304,10 +304,8 @@ def nyt_reviews(isbn):
 	nYTimesBaseURI = 'http://api.nytimes.com/svc/books/v3/reviews.json?isbn='
 	query = nYTimesBaseURI + str(isbn) + '&api-key=' + NYTAPIKey
 	result = requests.get(query)
-	print(result)
 	if result.status_code == 200:
 		result = json.loads(result.text)
-		print(result)
 		result = result['results']
 		if result != []:
 			result = result[0]['summary']
@@ -321,11 +319,22 @@ def addRatingToDB(book_id, user_id, rating):
 		cursor.execute("INSERT INTO ratings (book_id, user_id, rating) VALUES (?,?,?)",(book_id, user_id, rating))
 		connection.commit()
 
-
-
 def addReviewToDB(book_id, user_id, comment):
 	with sql.connect('database.db') as connection:
 		connection.row_factory = sql.Row
 		cursor = connection.cursor()
 		cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(book_id, user_id, comment))
 		connection.commit()
+
+
+def getBookComments(book_id):
+	with sql.connect('database.db') as connection:
+		connection.row_factory = sql.Row
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT comment, user_id FROM comments where book_id = ? ORDER BY comment_id DESC LIMIT ?", (book_id, 5)).fetchall()
+		lst = []
+		for entry in result:
+			lst.append([entry[0], getUserByID(entry[1]).username])
+		print(lst)
+		return lst
+

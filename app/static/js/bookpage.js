@@ -29,8 +29,9 @@ $(document).on('click', '.addReview', function() {
     data: {comment: content, book_id: book_id},
     dataType: "json"
   });
-  $(".memberComments").append("<p><i>" + content + "</i><br>-" + currentuser + "</p>");
-  // $("#comment").val('');
+  $(".memberComments")
+  .prepend('<p>"<i>' + content + '</i>"<br>- ' + currentuser + "</p>")
+  .done($("#comment").val(''));
 })
 
 

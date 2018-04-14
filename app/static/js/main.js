@@ -138,7 +138,7 @@ function parseQuery(data) {
 		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l1'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
 		</div><div class='col card-content s4 m4 l9 left-align'><p><b>" + title + "</b></p><p>\
 		" + author + "</p><p class = 'line-clamp hide-on-small-only'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
-		class='btn registerThis' type='text'>Register</button></div></div></div>"
+		class='btn waves-effect waves-light registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
 		var texts = document.getElementsByClassName('line-clamp');
 		// console.log(texts);

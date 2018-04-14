@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from app import app, models, db, login_manager
-from .forms import LoginForm, SignUpForm, CommentForm
+from .forms import LoginForm, SignUpForm
 from .models import *
 from flask_login import current_user, login_user, logout_user
 from app.models import User
@@ -167,10 +167,10 @@ def getUser():
 @app.route('/book/<book_id>', methods=['GET','POST'])
 @login_required
 def book(book_id):
-    form = CommentForm()
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
     # average_rating = getGoodReadsReviews(isbn)
     review = nyt_reviews(isbn)
+    comments = getBookComments(book_id)
     stops = len(getBookHistory(book_id))
     currentUser = current_user.id
     haver = hasBook(book_id)
@@ -179,7 +179,8 @@ def book(book_id):
         blockRequest = 1
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
-        location = location, average_rating= 2.34, stops=stops, review = review, form=form, blockRequest = blockRequest)
+        location = location, average_rating= 2.34, stops=stops, review = review, blockRequest = blockRequest, \
+        comments = comments)
 
 
 @app.route('/acknowledgeReceipt', methods=['POST'])
