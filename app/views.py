@@ -150,6 +150,19 @@ def creatingMap():
     json_data = json.dumps(data)
     return json_data
 
+@app.route('/getMapForUser', methods=['GET'])
+@login_required
+def creatingMapForUser():
+    books = getBooksUploadedByUser(current_user.id)
+    for book in books:
+        user_info = get
+        # print("this is the user whose info is used for the map")
+        # print(user_info.username)
+        lat, lon = getGeocodedAddressFromUser(user_info)
+        data.append([lon, lat])
+    json_data = json.dumps(data)
+    return json_data
+
 
 @app.route('/getUser', methods=['GET'])
 @login_required
@@ -175,10 +188,8 @@ def book(book_id):
     currentUser = current_user.id
     haver = hasBook(book_id)
     userRating = getBookRating(book_id, currentUser)
-    print("userRating:")
-    print(userRating)
     blockRequest = 0
-    if int(currentUser) == int(haver):
+    if int(currentUser) == int(haver) or hasRequested(currentUser, book_id):
         blockRequest = 1
     return render_template('book.html', book_id = book_id, title = title, author = author, \
         thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
@@ -191,12 +202,17 @@ def book(book_id):
 @login_required
 def profile(user_id):
     profileUser = getUserByID(user_id)
+    profileUserName = profileUser.username
     # comments = getBookComments(book_id)
     currentUser_id = current_user.id
     currentUser = getUserByID(currentUser_id)
     uploadedBooks = getBooksUploadedByUser(user_id)
+    lstUploadedBooks = []
+    for book in uploadedBooks:
+        title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book)
+        lstUploadedBooks.append([title, author, thumbnail])
     # haver = hasBook(book_id)
-    return render_template('profile.html')
+    return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
 
 
 
@@ -215,7 +231,7 @@ def toRequestBook():
     requester = current_user.id
     book_id = request.form['book_id']
     book_haver = hasBook(book_id)
-    if book_haver != requester:
+    if book_haver != requester and not hasRequested(requester, book_id):
         requestBook(requester, book_id)
     return "requested"
 

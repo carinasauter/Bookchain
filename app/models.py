@@ -205,7 +205,7 @@ def requestBook(user_id, bookID):
 
 
 """
-checks who currently has the book The person who has the book is defined as the 
+checks who currently has the book. The person who has the book is defined as the 
 last person be associated with the book in a relationship that is not 'requester. 
 Takes book_id and returns user_id
 """
@@ -261,7 +261,6 @@ def acknowledgeReceipt(book_id):
 """
 takes a bookID and returns all details about the book
 """
-# title, author, short_description = getBookDetails(book_id)
 
 def getBookDetails(book_id):
 	with sql.connect('database.db') as connection:
@@ -351,3 +350,16 @@ def getBooksUploadedByUser(user_id):
 		for entry in result:
 			lst.append(entry[0])
 		return lst
+
+
+def hasRequested(user_id, book_id):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT relationship FROM books_users WHERE user_id = ? AND book_id = ? ORDER BY user_book_id DESC LIMIT 1", (user_id, book_id )).fetchall()
+		print("this is the has requested result")
+		print(result)
+		if result == [] or result[0][0] != 'requester':
+			print("false")
+			return False
+		print("true")
+		return True

@@ -87,6 +87,7 @@ $( "#4" ).hover(
   }
 );
 
+
 $( "#5" ).hover(
   function() {
     $( this ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
@@ -187,6 +188,18 @@ function deactivateHover() {
 }
 
 
+$(document).on('click', '.requestBook', function() {
+  $.ajax({
+    type: "POST",
+    url: "/requestBook",
+    data: {book_id: book_id},
+    dataType: "json"
+  })
+  $( this ).addClass(" disabled ").text("Requested");
+})
+
+
+  
 $( document ).ready(function() {
 	$.ajax({
   		url: "/getMap",
