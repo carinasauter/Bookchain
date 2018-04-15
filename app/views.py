@@ -197,19 +197,17 @@ def book(book_id):
 
 
 
-# @app.route('/user/<user_id>', methods=['GET','POST'])
-# @login_required
-# def profile(user_id):
-#     profileUser = getUserByID(user_id)
-#     profileUserName = profileUser.username
-#     # comments = getBookComments(book_id)
-#     uploadedBooks = user.uploadedBooks
-#     lstUploadedBooks = []
-#     for book in uploadedBooks:
-#         title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book)
-#         lstUploadedBooks.append([title, author, thumbnail])
-#     # haver = hasBook(book_id)
-#     return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
+@app.route('/user/<user_id>', methods=['GET','POST'])
+@login_required
+def profile(user_id):
+    profileUser = getUserByID(user_id)
+    profileUserName = profileUser.username
+    # comments = 
+    uploadedBooks = user.uploadedBooks()
+    lstUploadedBooks = []
+    for book in uploadedBooks:
+        lstUploadedBooks.append([book.title, book.author, book.thumbnail])
+    return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
 
 
 

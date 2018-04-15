@@ -27,6 +27,11 @@ class User(UserMixin):
 		self.country = country
 		self.zipcode = zipcode
 
+	def __eq__(self, other):
+    	if isinstance(self, other.__class__):
+        	return self.id == other.getId()
+    	return False
+
 
 	def addToDatabase(self):
 		with sql.connect('database.db') as connection:
@@ -76,13 +81,13 @@ class User(UserMixin):
 	"""
 	acknowledges receipt of a book.
 	"""
-	def acknowledgeReceipt(self, book_id):
+	def acknowledgeReceipt(self, book):
 		relationship = 'reading'
 		user_id = current_user.id
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book_id, relationship))
+			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book.getId(), relationship))
 			connection.commit()
 
 
@@ -110,6 +115,15 @@ class User(UserMixin):
 			for entry in result:
 				lst.append(entry[0])
 			return lst
+
+
+	def hasRequested(self, book):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT relationship FROM books_users WHERE user_id = ? AND book_id = ? ORDER BY user_book_id DESC LIMIT 1", (self.id, book.getId() )).fetchall()
+			if result == [] or result[0][0] != 'requester':
+				return False
+			return True
 
 
 """ Takes a username as parameter and checks in the database. If the user exists, 
@@ -205,8 +219,6 @@ class Book():
 			connection.commit()
 
 
-
-
 	"""
 	checks who currently has the book. The person who has the book is defined as the 
 	last person be associated with the book in a relationship that is not 'requester. 
@@ -245,6 +257,39 @@ class Book():
 				users.append(entry[0])	
 			return users
 
+
+	def getComments(self):
+		with sql.connect('database.db') as connection:
+			connection.row_factory = sql.Row
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT comment, user_id FROM comments where book_id = ? ORDER BY comment_id DESC LIMIT ?", (self.id, 5)).fetchall()
+			lst = []
+			for entry in result:
+				lst.append([entry[0], getUserByID(entry[1]).username])
+			return lst
+
+
+	def getRating(self, user):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT rating FROM ratings where book_id = ? AND user_id = ?", (self.id, user.getId())).fetchall()
+			if result == []:
+				return 0
+			return result[0][0]
+
+
+	def getAverageRating(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			ratings = cursor.execute("SELECT rating FROM ratings where book_id = ?", (self.id,)).fetchall()
+			if ratings == []:
+				return 0
+			sum_ratings = 0
+			count_ratings = 0
+			for rating in ratings:
+				count_ratings += 1
+				sum_ratings += rating[0]
+			return sum_ratings / count_ratings
 
 
 
@@ -348,54 +393,3 @@ def nyt_reviews(isbn):
 ###
 
 
-
-
-
-def getBookComments(book_id):
-	with sql.connect('database.db') as connection:
-		connection.row_factory = sql.Row
-		cursor = connection.cursor()
-		result = cursor.execute("SELECT comment, user_id FROM comments where book_id = ? ORDER BY comment_id DESC LIMIT ?", (book_id, 5)).fetchall()
-		lst = []
-		for entry in result:
-			lst.append([entry[0], getUserByID(entry[1]).username])
-		return lst
-
-
-def getBookRating(book_id, user_id):
-	with sql.connect('database.db') as connection:
-		cursor = connection.cursor()
-		result = cursor.execute("SELECT rating FROM ratings where book_id = ? AND user_id = ?", (book_id, user_id)).fetchall()
-		print(result)
-		if result == []:
-			return 0
-		return result[0][0]
-
-def getAverageRating(book_id):
-	with sql.connect('database.db') as connection:
-		cursor = connection.cursor()
-		ratings = cursor.execute("SELECT rating FROM ratings where book_id = ?", (book_id,)).fetchall()
-		if ratings == []:
-			return 0
-		sum_ratings = 0
-		count_ratings = 0
-		for rating in ratings:
-			count_ratings += 1
-			sum_ratings += rating[0]
-		return sum_ratings / count_ratings
-
-
-
-
-
-def hasRequested(user_id, book_id):
-	with sql.connect('database.db') as connection:
-		cursor = connection.cursor()
-		result = cursor.execute("SELECT relationship FROM books_users WHERE user_id = ? AND book_id = ? ORDER BY user_book_id DESC LIMIT 1", (user_id, book_id )).fetchall()
-		print("this is the has requested result")
-		print(result)
-		if result == [] or result[0][0] != 'requester':
-			print("false")
-			return False
-		print("true")
-		return True
