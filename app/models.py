@@ -93,14 +93,14 @@ class User(UserMixin):
 	"""
 	registers a user_id book_id pair in the database. Relationship status is set to 'requested'
 	"""
-	def requestBook(self, bookID):
+	def requestBook(self, book):
 		relationship = 'requested'
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor1 = connection.cursor()
 			cursor2 = connection.cursor()
-			cursor1.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, bookID, relationship))
-			cursor2.execute("UPDATE books SET status = ? WHERE book_id = ?", ('requested' ,bookID))
+			cursor1.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book.getId(), relationship))
+			cursor2.execute("UPDATE books SET status = ? WHERE book_id = ?", ('requested' ,book.getId()))
 			connection.commit()
 
 
@@ -317,6 +317,11 @@ class Book():
 			return result[0][0]
 
 
+	def markAsRequested(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			cursor.execute("UPDATE books SET status = ? WHERE book_id = ? AND status = ?;",("requested", self.id, "available"))
+			connection.commit()
 
 
 def getBookById(book_id):

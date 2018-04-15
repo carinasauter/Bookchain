@@ -92,10 +92,8 @@ def registerbook():
     registeredBy = current_user.username
     newBook = Book(title, author, thumbnail, short_description, isbn, \
         registeredBy)
-    print("do I get here?")
     newBook.addToDatabase()
     current_user.addBook(newBook)
-    Print("tried to do second thing")
     return 'Received!'
 
 
@@ -181,7 +179,6 @@ def getUser():
 def book(book_id):
     book = getBookById(book_id)
     possessor = book.getPossessor()
-    print(possessor.id)
     location = book.getLocationString()
     average_rating = book.getAverageRating()
     average_rating = format(average_rating, '.1f')
@@ -191,10 +188,7 @@ def book(book_id):
     currentUser = current_user
     userRating = book.getRating(currentUser)
     blockRequest = 0
-    print(currentUser.id)
-    print(possessor == currentUser)
     if possessor == currentUser or currentUser.hasRequested(book):
-        print("block request 1")
         blockRequest = 1
     return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
         thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
@@ -235,8 +229,9 @@ def toRequestBook():
     book_id = request.form['book_id']
     book = getBookById(book_id)
     possessor = book.getPossessor()
-    if possessor.getId() != requester.getBookById() and not requester.hasRequested(book):
+    if possessor != requester and not requester.hasRequested(book):
         requester.requestBook(book)
+        book.markAsRequested()
     return "requested"
 
 
