@@ -113,7 +113,7 @@ def printLabel():
     customsForm = createCustomsForm()
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
     print(shipment.postage_label.label_url)
-    json_data = json.dumps(shiptment.postage_label.label_url)
+    json_data = json.dumps(shipment.postage_label.label_url)
     return json_data
 
 
@@ -164,9 +164,7 @@ def creatingMapForUser():
 @app.route('/getUser', methods=['GET'])
 @login_required
 def getUser():
-    userID = current_user.id
-    user = getUserByID(userID)
-    username = user.username
+    username = current_user.username
     data = []
     data.append(username,)
     json_data = json.dumps(data)
@@ -178,20 +176,20 @@ def getUser():
 @login_required
 def book(book_id):
     book = getBookById(book_id)
-    location = book.getLocationGeocode()
-    average_rating = getAverageRating(book_id)
+    possessor = book.getPossessor()
+    location = book.getLocationString()
+    average_rating = book.getAverageRating()
     average_rating = format(average_rating, '.1f')
-    review = nyt_reviews(isbn)
-    comments = getBookComments(book_id)
-    stops = len(getBookHistory(book_id))
-    currentUser = current_user.id
-    haver = hasBook(book_id)
-    userRating = getBookRating(book_id, currentUser)
+    review = book.nytReview()
+    comments = book.getComments()
+    stops = len(book.getHistory())
+    currentUser = current_user
+    userRating = book.getRating(currentUser)
     blockRequest = 0
-    if int(currentUser) == int(haver) or hasRequested(currentUser, book_id):
+    if possessor == currentUser or currentUser.hasRequested(book):
         blockRequest = 1
     return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
-        thumbnail = boook.thumbnail, short_description = Markup(book.short_description), uploader = book.uploader, \
+        thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
         location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \
         comments = comments, userRating = userRating)
 
@@ -203,12 +201,12 @@ def profile(user_id):
     profileUser = getUserByID(user_id)
     profileUserName = profileUser.username
     # comments = 
-    uploadedBooks = user.uploadedBooks()
+    uploadedBooks = profileUser.uploadedBooks()
     lstUploadedBooks = []
-    for book in uploadedBooks:
+    for bookId in uploadedBooks:
+        book = getBookById(bookId)
         lstUploadedBooks.append([book.title, book.author, book.thumbnail])
     return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
-
 
 
 
@@ -219,6 +217,7 @@ def acknowledgingReceipt():
     book_id = request.form['book_id']
     book = getBookById(book_id)
     current_user.acknowledgeReceipt(book)
+    return 'acknowledged'
 
 
 @app.route('/requestBook', methods=['POST'])

@@ -28,9 +28,9 @@ class User(UserMixin):
 		self.zipcode = zipcode
 
 	def __eq__(self, other):
-    	if isinstance(self, other.__class__):
-        	return self.id == other.getId()
-    	return False
+		if isinstance(self, other.__class__):
+			return self.id == other.getId()
+		return False
 
 
 	def addToDatabase(self):
@@ -61,15 +61,15 @@ class User(UserMixin):
 	Further accuracy not provided due to privacy considerations.
 	"""
 	def getLocationGeocode(self):
-		city = user.city
-		city = city.replace(" ", "+")
-		state = user.state
-		state = state.replace(" ", "+")
-		country = user.country
-		country = country.replace(" ", "+")
+		cityString = self.city
+		cityString = cityString.replace(" ", "+")
+		stateString = self.state
+		stateString = stateString.replace(" ", "+")
+		countryString = self.country
+		countryString = countryString.replace(" ", "+")
 		googleBaseURL = 'https://maps.googleapis.com/maps/api/geocode/json?address='
 		apiKey = "&key=" + googleGeocodingAPIKey
-		query = googleBaseURL + city + ",+" + state + ",+" + country + apiKey
+		query = googleBaseURL + cityString + ",+" + stateString + ",+" + countryString + apiKey
 		result = requests.get(query)
 		result = json.loads(result.text)
 		result_parsed = result['results'][0]['geometry']['location']
@@ -139,7 +139,8 @@ def getUserByUsername(query):
 			return None
 		else:
 			row = result[0]
-			user = User(row[0], query, row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+			user = User(query, row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+			user.id = row[0]
 			return user
 
 
@@ -156,7 +157,8 @@ def getUserByID(query):
 			return None
 		else:
 			row = result[0]
-			user = User(query, row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+			user = User(row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+			user.id = query
 			return user
 
 
@@ -217,7 +219,6 @@ class Book():
 			cursor = connection.cursor()
 			cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(self.id, user.getID(), comment))
 			connection.commit()
-
 
 	"""
 	checks who currently has the book. The person who has the book is defined as the 
@@ -293,6 +294,23 @@ class Book():
 
 
 
+	"""
+	gets the NYT review for a book if available. Returns a string
+	"""
+	def nytReview(self):
+		nYTimesBaseURI = 'http://api.nytimes.com/svc/books/v3/reviews.json?isbn='
+		query = nYTimesBaseURI + str(self.isbn) + '&api-key=' + NYTAPIKey
+		result = requests.get(query)
+		if result.status_code == 200:
+			result = json.loads(result.text)
+			result = result['results']
+			if result != []:
+				result = result[0]['summary']
+				return result
+		return ""
+
+
+
 def getBookById(book_id):
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
@@ -306,6 +324,7 @@ def getBookById(book_id):
 		newBook = Book(title, author, thumbnail, short_description, isbn, uploader)
 		newBook.setId(book_id)
 		return newBook
+
 
 
 
@@ -372,24 +391,5 @@ def createAndBuyShipment(to_address, from_address, parcel, customs_info):
 	shipment.buy(rate = shipment.lowest_rate())
 	return shipment
 
-
-
-
-"""
-gets the NYT review for a book if available. Returns a string
-"""
-def nyt_reviews(isbn):
-	nYTimesBaseURI = 'http://api.nytimes.com/svc/books/v3/reviews.json?isbn='
-	query = nYTimesBaseURI + str(isbn) + '&api-key=' + NYTAPIKey
-	result = requests.get(query)
-	if result.status_code == 200:
-		result = json.loads(result.text)
-		result = result['results']
-		if result != []:
-			result = result[0]['summary']
-			return result
-	return ""
-
-###
 
 
