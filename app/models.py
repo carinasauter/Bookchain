@@ -87,16 +87,16 @@ class User(UserMixin):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book.getId(), relationship))
+			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? AND user_id = ? And relationship = ?;",("reading", book.getId(), self.id, "requested"))
 			connection.commit()
 
 
 
 	"""
-	registers a user_id book_id pair in the database. Relationship status is set to 'requester'
+	registers a user_id book_id pair in the database. Relationship status is set to 'requested'
 	"""
 	def requestBook(self, bookID):
-		relationship = 'requester'
+		relationship = 'requested'
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor1 = connection.cursor()
@@ -121,7 +121,7 @@ class User(UserMixin):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			result = cursor.execute("SELECT relationship FROM books_users WHERE user_id = ? AND book_id = ? ORDER BY user_book_id DESC LIMIT 1", (self.id, book.getId() )).fetchall()
-			if result == [] or result[0][0] != 'requester':
+			if result == [] or result[0][0] != 'requested':
 				return False
 			return True
 
@@ -190,10 +190,11 @@ class Book():
 			uploader, status) VALUES (?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
 			self.short_description, self.isbn, self.registeredBy, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
-			bookID = cursor2.fetchall()
-			bookID = bookID[0][0]
-			connection.commit()
-			self.id = bookID
+			connection.commit()			
+			print(result)
+			result = result[0][0]
+			print(result)
+			self.id = result
 
 	def addRating(self, user, rating):
 		with sql.connect('database.db') as connection:
@@ -293,7 +294,6 @@ class Book():
 			return sum_ratings / count_ratings
 
 
-
 	"""
 	gets the NYT review for a book if available. Returns a string
 	"""
@@ -308,6 +308,16 @@ class Book():
 				result = result[0]['summary']
 				return result
 		return ""
+
+
+	def getNextRequester(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ?", (self.id, "requester")).fetchall()
+			if result == []:
+				return 0
+			return result[0][0]
+
 
 
 

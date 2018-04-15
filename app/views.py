@@ -92,6 +92,7 @@ def registerbook():
     registeredBy = current_user.username
     newBook = Book(title, author, thumbnail, short_description, isbn, \
         registeredBy)
+    print("do I get here?")
     newBook.addToDatabase()
     current_user.addBook(newBook)
     return 'Received!'
@@ -102,7 +103,7 @@ def registerbook():
 @login_required
 def printLabel():
     userID = current_user.id
-    requester = request.form['requester']
+    requester = request.args['requester']
     requester = getUserByUsername(requester)
     shipper = getUserByID(userID)
     from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
@@ -114,6 +115,7 @@ def printLabel():
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
     print(shipment.postage_label.label_url)
     json_data = json.dumps(shipment.postage_label.label_url)
+    print(json_data)
     return json_data
 
 
@@ -128,6 +130,7 @@ def unauthorized_handler():
     return redirect(url_for('login'))
 
 @app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 

@@ -155,15 +155,14 @@ function imgError(image) {
 
 
 $(document).on('click', '.labelprint', function() {
-	var requester = "Amy";
 	$.ajax({
 		url: "/printLabel",
-		data: {requester: requester, },
+		data: {requester: "Amy", },
 		dataType: "json"
 	})
 	.done(function(data) {
     	console.log(data);
-    	// openInNewTab(data)
+    	openInNewTab(data);
     });
 })
 
