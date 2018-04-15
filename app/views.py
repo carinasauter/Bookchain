@@ -182,6 +182,7 @@ def getUser():
 def book(book_id):
     title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
     average_rating = getAverageRating(book_id)
+    average_rating = format(average_rating, '.1f')
     review = nyt_reviews(isbn)
     comments = getBookComments(book_id)
     stops = len(getBookHistory(book_id))
