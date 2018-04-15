@@ -39,10 +39,9 @@ def signup():
             return render_template('signup.html', title = "Sign Up", form = form)
         # in case it does not exist
         password_hash = generate_password_hash(password)
-        create_user(username, email, password_hash, full_name, street, city, state, country, zipcode) # creates user in database
-        userID = getUserID(username)
-        user = User(userID, username, email, password_hash, full_name, street, city, state, country, zipcode)
-        login_user(user)
+        newUser = User(username, email, password_hash, full_name, street, city, state, country, zipcode)
+        newUser.addToDatabase()
+        login_user(newUser)
         return redirect(url_for('index'))
     return render_template('signup.html', title = "Sign Up", form = form)
 
@@ -91,24 +90,21 @@ def registerbook():
     short_description = request.form['short_description']
     isbn = request.form['isbn']
     registeredBy = current_user.username
-    status = 'available'
-    # print(title, author, thumbnail, short_description, isbn, registeredBy, status)
-    bookID = registerBookInDatabase(title, author, thumbnail, short_description, isbn, \
-        registeredBy, status)
-    addBookToUser(current_user.username, bookID, 'uploader')
+    newBook = Book(title, author, thumbnail, short_description, isbn, \
+        registeredBy)
+    newBook.addToDatabase()
+    current_user.addBook(newBook)
     return 'Received!'
 
 
 
-@app.route('/printLabel', methods=['POST'])
+@app.route('/printLabel', methods=['GET'])
 @login_required
 def printLabel():
     userID = current_user.id
     requester = request.form['requester']
     requester = getUserByUsername(requester)
     shipper = getUserByID(userID)
-    print(shipper.username + " wants to ship a book!")
-    print(requester.username + " wants to receive a book!")
     from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
         shipper.state, shipper.zipcode, shipper.country)
     to_address = createAddress(requester.full_name, requester.street, requester.city, \
@@ -117,7 +113,9 @@ def printLabel():
     customsForm = createCustomsForm()
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
     print(shipment.postage_label.label_url)
-    return redirect(shipment.postage_label.label_url)
+    json_data = json.dumps(shiptment.postage_label.label_url)
+    return json_data
+
 
 @app.route('/logout')
 @login_required
@@ -137,15 +135,12 @@ def dashboard():
 @login_required
 def creatingMap():
     book_id = request.args['book_id']
-    # print("This is the book ID that's being passed: ")
-    # print(book_id)
-    users = getBookHistory(book_id)
+    book = getBookById(book_id)
+    users = book.getHistory()
     data = []
-    for user in users:
-        user_info = getUserByID(user)
-        # print("this is the user whose info is used for the map")
-        # print(user_info.username)
-        lat, lon = getGeocodedAddressFromUser(user_info)
+    for userId in users:
+        user = getUserByID(userId)
+        lat, lon = user.getLocationGeocode()
         data.append([lon, lat])
     json_data = json.dumps(data)
     return json_data
@@ -153,12 +148,14 @@ def creatingMap():
 @app.route('/getMapForUser', methods=['GET'])
 @login_required
 def creatingMapForUser():
-    books = getBooksUploadedByUser(current_user.id)
-    for book in books:
-        user_info = get
-        # print("this is the user whose info is used for the map")
-        # print(user_info.username)
-        lat, lon = getGeocodedAddressFromUser(user_info)
+    user_id = request.args['user']
+    user = getUserByID(user_id)
+    books = user.uploadedBooks()
+    data = []
+    for bookId in books:
+        book = getBookById(bookId)
+        currentPossessor = book.getPossessor()
+        lat, lon = currentPossessor.getLocationGeocode()
         data.append([lon, lat])
     json_data = json.dumps(data)
     return json_data
@@ -180,7 +177,8 @@ def getUser():
 @app.route('/book/<book_id>', methods=['GET','POST'])
 @login_required
 def book(book_id):
-    title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book_id)
+    book = getBookById(book_id)
+    location = book.getLocationGeocode()
     average_rating = getAverageRating(book_id)
     average_rating = format(average_rating, '.1f')
     review = nyt_reviews(isbn)
@@ -192,28 +190,26 @@ def book(book_id):
     blockRequest = 0
     if int(currentUser) == int(haver) or hasRequested(currentUser, book_id):
         blockRequest = 1
-    return render_template('book.html', book_id = book_id, title = title, author = author, \
-        thumbnail = thumbnail, short_description = Markup(short_description), uploader = uploader, \
+    return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
+        thumbnail = boook.thumbnail, short_description = Markup(book.short_description), uploader = book.uploader, \
         location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \
         comments = comments, userRating = userRating)
 
 
 
-@app.route('/user/<user_id>', methods=['GET','POST'])
-@login_required
-def profile(user_id):
-    profileUser = getUserByID(user_id)
-    profileUserName = profileUser.username
-    # comments = getBookComments(book_id)
-    currentUser_id = current_user.id
-    currentUser = getUserByID(currentUser_id)
-    uploadedBooks = getBooksUploadedByUser(user_id)
-    lstUploadedBooks = []
-    for book in uploadedBooks:
-        title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book)
-        lstUploadedBooks.append([title, author, thumbnail])
-    # haver = hasBook(book_id)
-    return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
+# @app.route('/user/<user_id>', methods=['GET','POST'])
+# @login_required
+# def profile(user_id):
+#     profileUser = getUserByID(user_id)
+#     profileUserName = profileUser.username
+#     # comments = getBookComments(book_id)
+#     uploadedBooks = user.uploadedBooks
+#     lstUploadedBooks = []
+#     for book in uploadedBooks:
+#         title, author, thumbnail, short_description, isbn, uploader, location = getBookDetails(book)
+#         lstUploadedBooks.append([title, author, thumbnail])
+#     # haver = hasBook(book_id)
+#     return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
 
 
 
@@ -223,17 +219,19 @@ def profile(user_id):
 @login_required
 def acknowledgingReceipt():
     book_id = request.form['book_id']
-    acknowledgeReceipt(book_id)
+    book = getBookById(book_id)
+    current_user.acknowledgeReceipt(book)
 
 
 @app.route('/requestBook', methods=['POST'])
 @login_required
 def toRequestBook():
-    requester = current_user.id
+    requester = current_user
     book_id = request.form['book_id']
-    book_haver = hasBook(book_id)
-    if book_haver != requester and not hasRequested(requester, book_id):
-        requestBook(requester, book_id)
+    book = getBookById(book_id)
+    possessor = book.getPossessor()
+    if possessor.getId() != requester.getBookById() and not requester.hasRequested(book):
+        requester.requestBook(book)
     return "requested"
 
 
@@ -242,8 +240,8 @@ def toRequestBook():
 def addingReview():
     comment = request.form['comment']
     book_id = request.form['book_id']
-    user_id = current_user.id
-    addReviewToDB(book_id, user_id, comment)
+    user = current_user
+    book.addReview(user, comment)
     return 'added review'
 
 @app.route('/addRating', methods=['POST'])
@@ -251,8 +249,9 @@ def addingReview():
 def addingRating():
     rating = request.form['rating']
     book_id = request.form['book_id']
-    user_id = current_user.id
-    addRatingToDB(book_id, user_id, rating)
+    user = current_user
+    book = getBookById(book_id)
+    book.addRating(user, rating)
     return 'added rating'
 
 

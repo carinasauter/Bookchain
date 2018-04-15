@@ -20,13 +20,15 @@
     	<img id='uploaded' src="{{book[2]}}">
     	{% endfor %}
     </div>
-    <div class="col l6 m6 s12 left-align">
-    	This is where the books I currently have go. And we just keep writing to get a better sense for how long this space really is. 
+    <div class="col l6 m6 s12 left-align offset-l1">
+    	<h4>{{username}}'s books in the world</h4>
+		<div id="map" style='width: 500px; height: 300px;'>
+		</div>
     </div>
-
 
 
 {% endblock %}
 
 {% block additionallibraries %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/profilepage.js') }}"></script>
 {% endblock %}

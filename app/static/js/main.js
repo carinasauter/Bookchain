@@ -128,10 +128,8 @@ function parseQuery(data) {
 		class='btn waves-effect waves-light registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
 		var texts = document.getElementsByClassName('line-clamp');
-		// console.log(texts);
 		var len_texts = texts.length;
 		var module = texts[len_texts-1];
-		// console.log(texts[9])
 		$clamp(module, {clamp: 3});
 	}
 }
@@ -159,11 +157,14 @@ function imgError(image) {
 $(document).on('click', '.labelprint', function() {
 	var requester = "Amy";
 	$.ajax({
-		type: "POST",
 		url: "/printLabel",
 		data: {requester: requester, },
 		dataType: "json"
 	})
+	.done(function(data) {
+    	console.log(data);
+    	// openInNewTab(data)
+    });
 })
 
 function openInNewTab(url) {

@@ -213,9 +213,6 @@ $( document ).ready(function() {
 });
 
 
-
-
-
 function createMap(data) {
   mapboxgl.accessToken = 'pk.eyJ1IjoiYW15eWh1YW5nIiwiYSI6ImNqZngwd2UxczN4N3gyd21kOWJoNzJyMGoifQ.TasyG6w1wCe8uSLibB4AWw';
   var map = new mapboxgl.Map({
