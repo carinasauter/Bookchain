@@ -101,10 +101,12 @@ def registerbook():
 @app.route('/printLabel', methods=['GET'])
 @login_required
 def printLabel():
-    userID = current_user.id
-    requester = request.args['requester']
-    requester = getUserByUsername(requester)
-    shipper = getUserByID(userID)
+    shipper = current_user
+    print(shipper)
+    book_id = request.args['book']
+    book = getBookById(book_id)
+    requester = book.getRequester()
+    requester = getUserByID(requester)
     from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
         shipper.state, shipper.zipcode, shipper.country)
     to_address = createAddress(requester.full_name, requester.street, requester.city, \

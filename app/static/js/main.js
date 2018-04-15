@@ -16,12 +16,10 @@ $(document).ready(
 
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	console.log(bookID);
 	callAPI("/" + bookID, sendToBackend);
 })
 
 function sendToBackend(data) {
-	console.log(data);
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
 	var author = bookInfo['authors'];
@@ -60,14 +58,12 @@ function sendToBackend(data) {
 	} else {
 		isbn = "";
 	}
-	console.log(title, author, thumbnail, short_description, isbn);
 	$.ajax({
 		type: "POST",
 		url: "/registerBook",
 		data: { title: title, author: author, thumbnail: thumbnail, short_description: short_description, isbn: isbn},
 		dataType: "json",
 	}).done(function( o ) {
-		console.log('done!')
 	});
 }
 
@@ -95,7 +91,6 @@ function parseQuery(data) {
 	data = data['items'];
 	var num_books = data.length;
 	var firstBook = data[0];
-	// console.log(firstBook);
 	var bookInfo = firstBook['volumeInfo'];
 
 	for (i = 0; i < 10; i++) {
@@ -157,18 +152,16 @@ function imgError(image) {
 $(document).on('click', '.labelprint', function() {
 	$.ajax({
 		url: "/printLabel",
-		data: {requester: "Amy", },
+		data: {book: 5},
 		dataType: "json"
 	})
 	.done(function(data) {
-    	console.log(data);
     	openInNewTab(data);
     });
 })
 
 function openInNewTab(url) {
   var win = window.open(url, '_blank');
-  win.focus();
 }
 
 

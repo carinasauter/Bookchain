@@ -308,10 +308,10 @@ class Book():
 		return ""
 
 
-	def getNextRequester(self):
+	def getRequester(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ?", (self.id, "requested")).fetchall()
+			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ? ORDER BY user_book_id ASC LIMIT 1", (self.id, "requested")).fetchall()
 			if result == []:
 				return 0
 			return result[0][0]
