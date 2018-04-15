@@ -28,9 +28,7 @@ class User(UserMixin):
 		self.zipcode = zipcode
 
 	def __eq__(self, other):
-		if isinstance(self, other.__class__):
-			return self.id == other.getId()
-		return False
+		return int(self.id) == int(other.id)
 
 
 	def addToDatabase(self):
@@ -50,11 +48,11 @@ class User(UserMixin):
 
 
 	def addBook(self, book):
-		book_id = book.getID()
+		book_id = book.getId()
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book_id, relationship))
-
+			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book_id, "uploader"))
+			connection.commit()
 
 	"""
 	returns the lon and lat for the user's city, state and country.
@@ -200,7 +198,7 @@ class Book():
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("INSERT INTO ratings (book_id, user_id, rating) VALUES (?,?,?)",(self.id, user.getID(), rating))
+			cursor.execute("INSERT INTO ratings (book_id, user_id, rating) VALUES (?,?,?)",(self.id, user.getId(), rating))
 			connection.commit()
 
 
@@ -218,19 +216,19 @@ class Book():
 	def addReview(self, user, comment):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(self.id, user.getID(), comment))
+			cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(self.id, user.getId(), comment))
 			connection.commit()
 
 	"""
 	checks who currently has the book. The person who has the book is defined as the 
-	last person be associated with the book in a relationship that is not 'requester. 
+	last person be associated with the book in a relationship that is not 'requested'. 
 	Returns user_id
 	"""
 	def getPossessor(self):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship !=?", (self.id, 'requester')).fetchall()
+			result = cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship !=?", (self.id, 'requested')).fetchall()
 			possessorID = result[-1][0]
 			return getUserByID(possessorID)
 
@@ -246,13 +244,13 @@ class Book():
 
 	"""
 	takes a book and returns a list of the users in the history of the book.
-	Ignores those users that just have relationship 'requester'
+	Ignores those users that just have relationship 'requested'
 	"""
 	def getHistory(self):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requester'))
+			cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requested'))
 			result = cursor.fetchall()
 			users = []
 			for entry in result:
@@ -313,7 +311,7 @@ class Book():
 	def getNextRequester(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ?", (self.id, "requester")).fetchall()
+			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ?", (self.id, "requested")).fetchall()
 			if result == []:
 				return 0
 			return result[0][0]
