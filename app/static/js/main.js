@@ -16,7 +16,18 @@ $(document).ready(
 
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	$(this).addClass("disabled");
+	$(this).html("Registered");
 	callAPI("/" + bookID, sendToBackend);
+})
+
+
+$(document).on('click', '.details', function() {
+	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	console.log(bookID);
+	var url = "/book/" + bookID;
+	console.log(url);
+	window.open(url,"_self");
 })
 
 function sendToBackend(data) {
