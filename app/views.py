@@ -136,8 +136,9 @@ def dashboard():
     lst = bookUploadsForDashboard()
     borrowed = user.readingBooks()
     requested = user.requestedBooks()
-    print(requested)
-    return render_template('dashboard.html', uploads = lst, borrowed = borrowed, requested = requested)
+    available = user.availableBooksDashboard()
+    return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
+        requested = requested, available = available)
 
 @app.route('/getMap', methods=['GET'])
 @login_required

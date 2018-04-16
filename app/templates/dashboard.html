@@ -94,6 +94,13 @@
             </table>
        </section>
     </div> 
-       </div>    
-
+    <div class="col l3 left-align">
+      <section class='books-available'>
+        <h5>Available</h5>
+        {% for book in available %}
+        <p class = "hidden">{{book[0]}}</p>
+        <img class = "available" src="{{book[3]}}">
+        {% endfor %}
+      </section>
+    </div>    
     {% endblock %}

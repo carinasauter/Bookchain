@@ -21,12 +21,17 @@ $(document).on('click', '.registerThis', function() {
 	callAPI("/" + bookID, sendToBackend);
 })
 
+$(document).on('click', '.available', function() {
+	var bookID = $(this).prev()[0].innerHTML;
+	var url = "/book/" + bookID;
+	window.open(url,"_self");
+})
+
+
 
 $(document).on('click', '.details', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	console.log(bookID);
 	var url = "/book/" + bookID;
-	console.log(url);
 	window.open(url,"_self");
 })
 

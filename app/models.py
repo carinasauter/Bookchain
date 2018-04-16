@@ -177,6 +177,31 @@ class User(UserMixin):
 			return True
 
 
+	"""
+	returns the bookIDs of the books that are immediately available for the user. Does not include books user has uploaded.
+	"""
+	def availableBooks(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT book_id FROM books WHERE uploader != ? AND status = ?", (self.username, "available")).fetchall()
+		lst = []
+		for entry in result:
+			lst.append(entry[0])
+		return lst
+
+	"""
+	returns the bookIDs of the books that are immediately available for the user. Does not include books user has uploaded.
+	"""
+	def availableBooksDashboard(self):
+		lstAvailableBooks = self.availableBooks()
+		lst = []
+		for entry in lstAvailableBooks:
+			book = getBookById(entry)
+			lst.append([book.id, book.title, book.author, book.thumbnail])
+		return lst
+
+
+
 """ Takes a username as parameter and checks in the database. If the user exists, 
 returns user object. If not, returns None.
 """
@@ -211,6 +236,8 @@ def getUserByID(query):
 			user = User(row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 			user.id = query
 			return user
+
+
 
 
 @login_manager.user_loader
