@@ -203,23 +203,6 @@ def book(book_id):
         comments = comments, userRating = userRating)
 
 
-
-@app.route('/user/<user_id>', methods=['GET','POST'])
-@login_required
-def profile(user_id):
-    profileUser = getUserByID(user_id)
-    profileUserName = profileUser.username
-    # comments = 
-    uploadedBooks = profileUser.uploadedBooks()
-    lstUploadedBooks = []
-    for bookId in uploadedBooks:
-        book = getBookById(bookId)
-        lstUploadedBooks.append([book.title, book.author, book.thumbnail])
-    return render_template('profile.html', uploaded_books = lstUploadedBooks, username = profileUserName)
-
-
-
-
 @app.route('/acknowledgeReceipt', methods=['POST'])
 @login_required
 def acknowledgingReceipt():
