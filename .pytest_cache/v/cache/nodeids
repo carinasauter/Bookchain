@@ -1,5 +1,1 @@
-[
-  "test/test_first.py::test_pytest",
-  "test/test_first.py::test_getUserbyID",
-  "test/test_first.py::test_getHaver"
-]
+[]

@@ -9,3 +9,12 @@ def test_pytest():
 def test_getUserbyID():
 	user = getUserByID(1)
 	assert "carina" == user.username
+
+
+def test_readingBooks():
+	user = getUserByID(1)
+	assert [] == user.readingBooks()
+
+def test_readingBooks():
+	user = getUserByID(1)
+	assert

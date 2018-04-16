@@ -1,50 +1,63 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-    <div class="col l12 left-align">
+    <div class="col l9 left-align">
        <section class='books-requests '>
           <h5>Requests</h5>
           <table>
+            <col width="10%">
+            <col width="20%">
             <col width="25%">
             <col width="25%">
-            <col width="25%">
-            <col width="25%">
+            <col width="20%">
             <tr>
               <th>Title</th>
+              <th></th>
               <th>Requested By</th>
               <th>Ship By</th>
               <th>Action</th>
             </tr>
+            {% for item in requested %}
             <tr>
-              <td><a href="">HTML5 and CSS3 For Dummies</a></td>
-              <td>Amy</td>
+              <td><img src="{{item[2]}}"></td>
+               <td>{{item[0]}}<p>{{item[1]}}</p></td>
+               <td>have to edit requester</td>
               <td>12/12/18</td>
               <td><button class="btn labelprint">Print Shipping Label</button></td>
             </tr>
+            {% endfor %}
            </table>
        </section>
        <section class="books-borrowed">
             <h5>Books I Borrowed</h5>
             <table>
+                <col width="10%">
                 <col width="20%">
-                <col width="20%">
-                <col width="20%">
-                <col width="20%">
+                <col width="25%">
+                <col width="25%">
                 <col width="20%">
                 <tr>
                     <th>Title</th>
+                    <th></th>
+                    <th>no idea</th>
                     <th>Status</th>
-                    <th>Current Location</th>
-                    <th>Available</th>
-                    <th>Details</th>
+                    <th>Action</th>
                 </tr>
+                {% for book in borrowed %}
                 <tr>
-                    <td>Harry Potter2</td>
-                    <td>Reading</td>
-                    <td>Berkeley, CA</td>
-                    <td>Yes</td>
-                    <td>See Details</td>
+                  <td class = "hidden">{{book[4]}}</td>
+                  <td>
+                    <img src="{{book[2]}}">
+                  </td>
+                  <td>{{book[0]}}<p>{{book[1]}}</p></td>
+                  <td>not sure what to put here yet.</td>
+                  <td>{% for num in book[3] %}
+                    <i class="material-icons tiny star amber-text lighten-1">star</i>
+                    {% endfor %}
+                  </td>
+                  <td><button class = "btn details">See Details</button></td>
                 </tr>
+                {% endfor %}
             </table>
        </section>
        <section class="books-mybooks">
@@ -71,19 +84,13 @@
                   <td>{{entry[0]}}<p>{{entry[1]}}</p></td>
                    <td>{{entry[3]}}</td>
                   <td>{% for num in entry[4] %}
-                    <i class="material-icons small star amber-text lighten-1">star</i>
+                    <i class="material-icons tiny star amber-text lighten-1">star</i>
                     {% endfor %}
                   </td>
                  
                   <td><button class = "btn details">See Details</button></td>
                 </tr>
                 {% endfor %}
-
-<!--                     <td>Harry Potter3</td>
-                    <td>On a Journey</td>
-                    <td>Los Angeles, CA</td>
-                    <td>View Journey</td> -->
-                
             </table>
        </section>
     </div> 

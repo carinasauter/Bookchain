@@ -133,32 +133,11 @@ def unauthorized_handler():
 @login_required
 def dashboard():
     user = current_user
-    books = user.uploadedBooks()
-    lst = []
-    for book in books:
-        entry = []
-        book = getBookById(book)
-        location = book.getLocationString()
-        average_rating = book.getAverageRating()
-        avg_rating = []
-        if average_rating > 0:
-            avg_rating.append(1)
-        if average_rating > 1.5:
-            avg_rating.append(1)
-        if average_rating > 2.5:
-            avg_rating.append(1)
-        if average_rating > 3.5:
-            avg_rating.append(1)
-        if average_rating > 4.5:
-            avg_rating.append(1)
-        entry.append(book.title)
-        entry.append(book.author)
-        entry.append(book.thumbnail)
-        entry.append(location)
-        entry.append(avg_rating)
-        entry.append(book.id)
-        lst.append(entry)
-    return render_template('dashboard.html', uploads = lst)
+    lst = bookUploadsForDashboard()
+    borrowed = user.readingBooks()
+    requested = user.requestedBooks()
+    print(requested)
+    return render_template('dashboard.html', uploads = lst, borrowed = borrowed, requested = requested)
 
 @app.route('/getMap', methods=['GET'])
 @login_required

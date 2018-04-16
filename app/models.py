@@ -104,17 +104,70 @@ class User(UserMixin):
 			connection.commit()
 
 
+	"""
+	returns a list of book ids the user is currently reading that he did not upload
+	"""
+	def readingBooks(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'reading')).fetchall()
+		if result == []:
+			return result
+		lst = []
+		for entry in result:
+			book = getBookById(entry[0])
+			uploader = book.getUploader()
+			if uploader != self:
+				lst.append(entry[0])
+		info = []
+		for entry in lst:
+			book = getBookById(entry)
+			avg_rating = book.getAverageRating()
+			starRating = getStarRating(avg_rating)
+			info.append([book.title, book.author, book.thumbnail, starRating, book.id])
+		return info
 
+
+	def requestedBooks(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requested')).fetchall()
+		if result == []:
+			return result
+		lst = []
+		for entry in result:
+			book = getBookById(entry[0])
+			uploader = book.getUploader()
+			uploader = getUserByUsername(uploader)
+			if uploader != self:
+				lst.append(entry[0])
+			info = []
+			for entry in lst:
+				book = getBookById(entry)
+				avg_rating = book.getAverageRating()
+				starRating = getStarRating(avg_rating)
+				info.append([book.title, book.author, book.thumbnail, starRating, book.id])
+		return info
+
+
+		
+
+
+	"""
+	returns a list of book ids referencing books the user has uploaded to the platform
+	"""
 	def uploadedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, "uploader")).fetchall()
-			lst = []
-			for entry in result:
-				lst.append(entry[0])
-			return lst
+		lst = []
+		for entry in result:
+			lst.append(entry[0])
+		return lst
 
-
+	"""
+	registers a user_id book_id pair in the database. Relationship status is set to 'requested'
+	"""
 	def hasRequested(self, book):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
@@ -404,5 +457,37 @@ def createAndBuyShipment(to_address, from_address, parcel, customs_info):
 	shipment.buy(rate = shipment.lowest_rate())
 	return shipment
 
+def getStarRating(average_rating):
+	avg_rating = []
+	if average_rating > 0:
+		avg_rating.append(1)
+	if average_rating > 1.5:
+		avg_rating.append(1)
+	if average_rating > 2.5:
+		avg_rating.append(1)
+	if average_rating > 3.5:
+		avg_rating.append(1)
+	if average_rating > 4.5:
+		avg_rating.append(1)
+	return avg_rating
 
+
+def bookUploadsForDashboard():
+	user = current_user
+	books = user.uploadedBooks()
+	lst = []
+	for book in books:
+		entry = []
+		book = getBookById(book)
+		location = book.getLocationString()
+		average_rating = book.getAverageRating()
+		avg_rating = getStarRating(average_rating)
+		entry.append(book.title)
+		entry.append(book.author)
+		entry.append(book.thumbnail)
+		entry.append(location)
+		entry.append(avg_rating)
+		entry.append(book.id)
+		lst.append(entry)
+	return lst
 
