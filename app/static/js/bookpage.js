@@ -45,6 +45,7 @@ $(document).ready(function() {
 $( "#1" ).hover(
   function() {
     $( this ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
+    $( this ).css( 'cursor', 'pointer' );
 
   }, function() {
     $( this ).removeClass( "amber-text").addClass("grey-text lighten-1");
@@ -55,6 +56,7 @@ $( "#2" ).hover(
   function() {
     $( this ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#1" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
+    $( this ).css( 'cursor', 'pointer' );
   }, function() {
     $( this ).removeClass( "amber-text").addClass("grey-text lighten-1");
     $("#1" ).removeClass( "amber-text" ).addClass("grey-text lighten-1");
@@ -66,6 +68,7 @@ $( "#3" ).hover(
     $( this ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#2" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#1" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
+    $( this ).css( 'cursor', 'pointer' );
   }, function() {
     $( this ).removeClass( "amber-text").addClass("grey-text lighten-1");
     $("#2" ).removeClass( "amber-text" ).addClass("grey-text lighten-1");
@@ -79,6 +82,7 @@ $( "#4" ).hover(
     $("#3" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#2" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#1" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
+    $( this ).css( 'cursor', 'pointer' );
   }, function() {
     $( this ).removeClass( "amber-text").addClass("grey-text lighten-1");
     $("#3" ).removeClass( "amber-text" ).addClass("grey-text lighten-1");
@@ -95,6 +99,7 @@ $( "#5" ).hover(
     $("#3" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#2" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
     $("#1" ).addClass( "amber-text" ).removeClass("grey-text lighten-1");
+    $( this ).css( 'cursor', 'pointer' );
   }, function() {
     $( this ).removeClass( "amber-text").addClass("grey-text lighten-1");
     $("#4" ).removeClass( "amber-text" ).addClass("grey-text lighten-1");

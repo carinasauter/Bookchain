@@ -27,6 +27,11 @@ $(document).on('click', '.available', function() {
 	window.open(url,"_self");
 })
 
+$(document).on('mouseover', '.available', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+
+
 
 
 $(document).on('click', '.details', function() {
