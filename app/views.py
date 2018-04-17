@@ -14,7 +14,7 @@ from markupsafe import Markup
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for('main'))
+        return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('login'))
 
@@ -68,13 +68,6 @@ def login():
 @login_required
 def protected():
     return 'Logged in as: ' + current_user.username
-
-
-@app.route('/main', methods=['GET'])
-@login_required
-def main():
-    return render_template('dashboard.html')
-
 
 @app.route('/register', methods=['GET'])
 @login_required
