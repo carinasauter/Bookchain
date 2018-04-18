@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <form method="POST" action="" class='container' id='searchbar'>
+        <div class="row s12 m12 l12 valign-wrapper">
+            <div class="col s10 m10 l10 input-field">
+                <input placeholder="Find a book you would like to read. eg: 'The Odyssey'" name="search_query" type="text" class="validate">
+            </div>
+            <div class = 'col s2 m2 l2'>
+                <button class="btn waves-effect waves-light" type="submit"><i class="large material-icons">search</i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="col s12 m7">
+        <h4 class="header">Books in Circulation</h4>
+        {% for book in allBooks %}
+        <div class="card horizontal">
+            <div class="card-image">
+                <img src="{{ book[3] }}">
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h6>Book title here</h6>
+                    <p>I am a very simple card. I am good at containing small bits of information.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
