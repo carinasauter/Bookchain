@@ -420,10 +420,6 @@ def getBookById(book_id):
 
 
 
-
-
-
-
 # Print shipping label
 
 def createAddress(full_name, street, city, state, zipcode, country):
