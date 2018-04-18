@@ -25,7 +25,9 @@
               <!-- <p>decentralized book exchanges</p> -->
                   <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
                   <li><a href="{{ url_for('register')}}">Add books</a></li>
+                  {% block loginLink %}
                   <li><a href="{{ url_for('logout')}}">Logout</a></li>
+                  {% endblock %}
                 </ul>
               </div>
           </nav>

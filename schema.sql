@@ -54,3 +54,13 @@ CREATE TABLE ratings (
     FOREIGN KEY(book_id) REFERENCES books (book_id) ON DELETE CASCADE
     FOREIGN KEY(user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
+
+drop table if exists history;
+CREATE TABLE history (
+    history_id integer PRIMARY KEY,
+    book_id integer not null, 
+    user_id integer not null, 
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP not null,
+    FOREIGN KEY(book_id) REFERENCES books (book_id) ON DELETE CASCADE
+    FOREIGN KEY(user_id) REFERENCES users (user_id) ON DELETE CASCADE
+);
