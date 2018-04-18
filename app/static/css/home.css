@@ -136,3 +136,17 @@ td img {
 .shipping_information_form .row  {
 	margin-left: 25px;
 }
+
+.books_in_circ {
+	display: flex;
+	margin: 5px;
+	flex-direction: column;
+
+}
+
+.books_in_circ .card-horizontal {
+	display: flex;
+	margin: 5px;
+	height: auto;	
+
+}
