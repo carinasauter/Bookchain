@@ -24,31 +24,35 @@
                 </div>
             </div>
             <br>
-            <p>Shipping Information</p>
-			<div class="row">
-                <div class="input-field col s11">
-                    {{ form.full_name(placeholder = "Full Name", class ="materialize-textarea") }}
+            
+            
+            <div class="shipping_information_form">
+            <h6>Shipping Information</h6>
+                <div class="row" >
+                    <div class="input-field col s11">
+                        {{ form.full_name(placeholder = "Full Name", class ="materialize-textarea") }}
+                    </div>
                 </div>
-            </div>
-        	<div class="row">
-                <div class="input-field col s11">
-                    {{ form.street(placeholder = "Street address", class ="materialize-textarea") }}
+                <div class="row">
+                    <div class="input-field col s11">
+                        {{ form.street(placeholder = "Street address", class ="materialize-textarea") }}
+                    </div>
                 </div>
-            </div>
-        	<div class="row">
-                <div class="input-field col s6">
-                    {{ form.city(placeholder = "City", class ="materialize-textarea") }}
+                <div class="row">
+                    <div class="input-field col s5">
+                        {{ form.city(placeholder = "City", class ="materialize-textarea") }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form.state(placeholder = "State", class ="materialize-textarea") }}
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form.zipcode(placeholder = "Zipcode", class ="materialize-textarea") }}
+                    </div>
                 </div>
-                 <div class="input-field col s2">
-                    {{ form.state(placeholder = "State", class ="materialize-textarea") }}
-                </div>
-                <div class="input-field col s4">
-                    {{ form.zipcode(placeholder = "Zipcode", class ="materialize-textarea") }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s11">
-                    {{ form.country(placeholder = "Country", class ="materialize-textarea") }}
+                <div class="row">
+                    <div class="input-field col s11">
+                        {{ form.country(placeholder = "Country", class ="materialize-textarea") }}
+                    </div>
                 </div>
             </div>
         </div>

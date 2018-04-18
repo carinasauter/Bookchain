@@ -137,6 +137,12 @@ def dashboard():
     return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
         my_requests = my_requests, requests_from_others = requests_from_others)
 
+@app.route('/booksincirc')
+@login_required
+def booksincirc():
+    allBooks = getBooksInCirc()
+    return render_template('booksincirc.html', allBooks = allBooks)
+
 @app.route('/getMap', methods=['GET'])
 @login_required
 def creatingMap():
