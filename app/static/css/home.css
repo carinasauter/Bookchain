@@ -30,6 +30,7 @@ body {
 	border-radius: 10px;
 }
 
+
 p {
 	font-size: 12;
 }
@@ -132,3 +133,6 @@ td img {
 	height:70px;
 }
 
+.shipping_information_form .row  {
+	margin-left: 25px;
+}

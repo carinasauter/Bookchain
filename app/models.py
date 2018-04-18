@@ -237,12 +237,23 @@ def getUserByID(query):
 			user.id = query
 			return user
 
-
+"""
+Returns a list of all books that are in the system
+"""
+def getBooksInCirc():
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT * FROM books").fetchall()
+		lst = []
+		for entry in result:
+			lst.append(entry[0])
+		return lst
+		
 
 
 @login_manager.user_loader
 def load_user(id):
-     return getUserByID(id)
+	return getUserByID(id)
 
 
 	
