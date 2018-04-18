@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <form method="POST" action="" class='container' id='searchbar'>
+    <!-- <form method="POST" action="" class='container' id='searchbar'>
         <div class="row s12 m12 l12 valign-wrapper">
             <div class="col s10 m10 l10 input-field">
                 <input placeholder="Find a book you would like to read. eg: 'The Odyssey'" name="search_query" type="text" class="validate">
@@ -11,7 +11,7 @@
                 </button>
             </div>
         </div>
-    </form>
+    </form> -->
 
 
     <div class="books_in_circ">
@@ -23,15 +23,15 @@
             </div>
             <div class="card-stacked">
                 <div class="card-content">
-                    <h6>{{book[1]}}</h6>
-                    <p>{{book[2]}}</p>
+                    <h6><b>{{book[1]}}</b></h6>
+                    <p><i>{{book[2]}}</i></p>
                     <div class="card-description">
                         <p>{{book[4]}}</p>
                     </div>
                 </div>
-                <div class="card-action">
-                    <a href="#">Details</a>
-                </div>
+            </div>
+            <div class="card-action">
+                <button class = "btn bookdetails">Details</button>
             </div>
         </div>
         {% endfor %}
