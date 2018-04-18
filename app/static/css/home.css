@@ -110,7 +110,7 @@ td, th {
 
 img {
 	width: 180px;
-	margin-top: 1.52rem;
+	
 }
 
 .requestBook {
@@ -135,4 +135,50 @@ td img {
 
 .shipping_information_form .row  {
 	margin-left: 25px;
+}
+
+.books_in_circ {
+	display: flex;
+	margin: 5px;
+	flex-direction: column;
+
+}
+
+.books_in_circ .card-horizontal {
+	display: flex;
+	margin: 5px;
+	height: auto;	
+
+}
+
+.book_cover_thumbnail {
+	max-height: inherit;
+	width: auto;
+}
+
+.card-description {
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;  
+	max-width: 780px;
+}
+
+.books_in_circ .card {
+	height: 176px;
+}
+
+.card .card-image {
+	padding-left: 24px;
+
+}
+
+.card.horizontal {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.card .card-action {
+	border: none;
 }

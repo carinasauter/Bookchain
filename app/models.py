@@ -226,7 +226,7 @@ def getUserByID(query):
 	with sql.connect('database.db') as connection:
 		connection.row_factory = sql.Row
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM users WHERE user_id=?", (query,))
+		cursor.execute("SELECT * FROM users WHERE user_id = (?)", (query,))
 		result = cursor.fetchall()
 		if len(result) == 0:
 			return None
@@ -248,8 +248,6 @@ def getBooksInCirc():
 			lst.append(entry)
 		return lst
 		
-
-
 @login_manager.user_loader
 def load_user(id):
 	return getUserByID(id)
@@ -411,6 +409,16 @@ class Book():
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			cursor.execute("UPDATE books SET status = ? WHERE book_id = ? AND status = ?;",("requested", self.id, "available"))
+			connection.commit()
+
+	"""
+	Removes a book from the database
+	"""
+	def removeBook(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			cursor.execute("DELETE FROM books WHERE book_id = (?)", (self.id))
+			cursor.execute("DELETE FROM books_users WHERE book_id = (?)", (self.id))
 			connection.commit()
 
 

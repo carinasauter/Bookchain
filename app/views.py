@@ -259,4 +259,16 @@ def receiveBook():
     #print(bookID)
     # current_user.acknowledgeReceipt(book)
     #print('RECEIVED!', file=sys.stderr)
-    return redirect('/')
+    return 'received'
+
+@app.route('/removeBook', methods=['POST'])
+@login_required
+def removeBook():
+    bookID = request.form['book_id']
+    # print(bookID)
+    # removeBook(bookID)
+    
+    bookToRemove = getBookById(bookID)
+    bookToRemove.removeBook()
+    return redirect('/dashboard')
+
