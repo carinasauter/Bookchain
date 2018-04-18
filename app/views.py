@@ -259,4 +259,4 @@ def receiveBook():
     #print(bookID)
     # current_user.acknowledgeReceipt(book)
     #print('RECEIVED!', file=sys.stderr)
-    return redirect('/')
+    return 'received'
