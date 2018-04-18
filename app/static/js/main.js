@@ -52,6 +52,12 @@ $(document).on('click', '.details', function() {
 	window.open(url,"_self");
 })
 
+$(document).on('click', '.bookdetails', function() {
+	var bookID = $(this).attr("data-bookid");
+	var url = "/book/" + bookID;
+	window.open(url,"_self");
+})
+
 function sendToBackend(data) {
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
