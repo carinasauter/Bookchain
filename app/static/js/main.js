@@ -52,10 +52,24 @@ $(document).on('click', '.details', function() {
 	window.open(url,"_self");
 })
 
+// when "details" button is clicked in the booksincirc page, generates the book page
 $(document).on('click', '.bookdetails', function() {
 	var bookID = $(this).attr("data-bookid");
 	var url = "/book/" + bookID;
 	window.open(url,"_self");
+})
+
+// when "remove" button is clicked in the dashboard, removes the book from the database
+$(document).on('click', '.removebook', function() {
+	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	// console.log(bookID);
+	$.ajax({
+		url: "/removeBook",
+		data: {book_id: bookID},
+		type: "POST",
+		dataType: "json",
+	})
+	// insert pop up message to confirm removal
 })
 
 function sendToBackend(data) {
