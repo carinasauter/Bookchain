@@ -31,7 +31,19 @@ $(document).on('mouseover', '.available', function() {
 	$( this ).css( 'cursor', 'pointer' );
 })
 
-
+//Function when user clicks "Received Book"
+$(document).on('click', '#receive-book', function() {
+	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	//console.log(bookID);
+		 $.ajax({
+		 	url: "/receiveBook",
+		 	data: {book: bookID}
+		// 	dataType: "json"
+		 })
+		// .done(function(data) {
+		// 	openInNewTab(data);
+		// });
+});
 
 
 $(document).on('click', '.details', function() {

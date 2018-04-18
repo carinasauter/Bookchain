@@ -89,7 +89,6 @@ class User(UserMixin):
 			connection.commit()
 
 
-
 	"""
 	registers a user_id book_id pair in the database. Relationship status is set to 'requested'
 	"""
@@ -525,3 +524,14 @@ def bookUploadsForDashboard():
 		lst.append(entry)
 	return lst
 
+
+	"""
+	Receive Book
+	"""
+	def receiveBook(self, book):
+		user_id = current_user.id
+		with sql.connect('database.db') as connection:
+			connection.row_factory = sql.Row
+			cursor = connection.cursor()
+			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", book.getId()))
+			connection.commit()
