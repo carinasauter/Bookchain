@@ -150,3 +150,24 @@ td img {
 	height: auto;	
 
 }
+
+.book_cover_thumbnail {
+	max-height: inherit;
+	width: auto;
+}
+
+.card-description {
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
+
+.books_in_circ .card {
+	height: 208px;
+}
+
+.card .card-image {
+	padding-left: 24px;
+	padding-top: 8px;
+}

@@ -19,13 +19,15 @@
         {% for book in allBooks %}
         <div class="card horizontal">
             <div class="card-image">
-                <img src="{{book[3]}}">
+                <img class="book_cover_thumbnail" src="{{book[3]}}">
             </div>
             <div class="card-stacked">
                 <div class="card-content">
                     <h6>{{book[1]}}</h6>
                     <p>{{book[2]}}</p>
-                    <p>Book rating?</p>
+                    <div class="card-description">
+                        <p>{{book[4]}}</p>
+                    </div>
                 </div>
                 <div class="card-action">
                     <a href="#">Details</a>
