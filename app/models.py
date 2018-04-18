@@ -245,7 +245,7 @@ def getBooksInCirc():
 		result = cursor.execute("SELECT * FROM books").fetchall()
 		lst = []
 		for entry in result:
-			lst.append(entry[0])
+			lst.append(entry)
 		return lst
 		
 

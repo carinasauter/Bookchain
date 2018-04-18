@@ -141,6 +141,7 @@ def dashboard():
 @login_required
 def booksincirc():
     allBooks = getBooksInCirc()
+    print(allBooks)
     return render_template('booksincirc.html', allBooks = allBooks)
 
 @app.route('/getMap', methods=['GET'])
