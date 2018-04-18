@@ -8,6 +8,7 @@ from flask_login import login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from markupsafe import Markup
+import sys
 
 
 
@@ -248,4 +249,14 @@ def addingRating():
     book.addRating(user, rating)
     return 'added rating'
 
-
+@app.route('/receiveBook', methods=['GET', 'POST'])
+@login_required
+def receiveBook():
+    book_id = request.form['book_id']
+    book = getBookById(book_id)
+    print(book, file=sys.stderr)
+    receiveBook(user, book)
+    #print(bookID)
+    # current_user.acknowledgeReceipt(book)
+    #print('RECEIVED!', file=sys.stderr)
+    return redirect('/')

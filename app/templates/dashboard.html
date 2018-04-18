@@ -19,11 +19,12 @@
             </tr>
             {% for book in my_requests %}
             <tr>
+              <td class = "hidden">{{book[4]}}</td>
               <td><img src="{{book[2]}}"></td>
               <td>{{book[0]}}<p>{{book[1]}}</p></td>
-              <td>12/12/18</td>
+              <td>12/14/18</td>
               <td>Requested</td>
-              <td><button class="btn">Received Book</button></td>
+              <td><button class="btn" id="receive-book">Received Book</button></td>
             </tr>
             {% endfor %}
            </table>
@@ -62,7 +63,7 @@
 <div class="divider"></div>
 <div class="col l12 left-align">
     <section class="books-borrowed">
-        <h5>Books I Borrowed & Books I can Mail</h5>
+        <h5>Books I Borrowed &#38; Books I can Mail</h5>
         <table>
             <col width="10%">
             <col width="20%">
