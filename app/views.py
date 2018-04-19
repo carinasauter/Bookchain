@@ -249,13 +249,13 @@ def addingRating():
     book.addRating(user, rating)
     return 'added rating'
 
-@app.route('/receiveBook', methods=['GET', 'POST'])
+@app.route('/receiveBook', methods=['GET'])
 @login_required
 def receiveBook():
-    book_id = request.form['book_id']
+    book_id = request.args['bookID']
+    # print(book_id, file=sys.stderr)
     book = getBookById(book_id)
-    print(book, file=sys.stderr)
-    receiveBook(user, book)
+    book.receiveBook()
     #print(bookID)
     # current_user.acknowledgeReceipt(book)
     #print('RECEIVED!', file=sys.stderr)

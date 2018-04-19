@@ -201,6 +201,7 @@ class User(UserMixin):
 
 
 
+
 """ Takes a username as parameter and checks in the database. If the user exists, 
 returns user object. If not, returns None.
 """
@@ -305,6 +306,16 @@ class Book():
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			cursor.execute("INSERT INTO comments (book_id, user_id, comment) VALUES (?,?,?)",(self.id, user.getId(), comment))
+			connection.commit()
+
+	"""
+	Receive Book
+	"""
+	def receiveBook(self):
+		with sql.connect('database.db') as connection:
+			connection.row_factory = sql.Row
+			cursor = connection.cursor()
+			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", self.id))
 			connection.commit()
 
 	"""
@@ -533,13 +544,3 @@ def bookUploadsForDashboard():
 	return lst
 
 
-	"""
-	Receive Book
-	"""
-	def receiveBook(self, book):
-		user_id = current_user.id
-		with sql.connect('database.db') as connection:
-			connection.row_factory = sql.Row
-			cursor = connection.cursor()
-			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", book.getId()))
-			connection.commit()

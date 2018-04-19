@@ -37,8 +37,8 @@ $(document).on('click', '#receive-book', function() {
 	console.log(bookID);
 		 $.ajax({
 		 	url: "/receiveBook",
-		 	data: {book: bookID}
-		// 	dataType: "json"
+		 	data: {bookID: bookID},
+		 	dataType: "json"
 		 })
 		// .done(function(data) {
 		// 	openInNewTab(data);
