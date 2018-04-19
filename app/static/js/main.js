@@ -34,7 +34,7 @@ $(document).on('mouseover', '.available', function() {
 //Function when user clicks "Received Book"
 $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	//console.log(bookID);
+	console.log(bookID);
 		 $.ajax({
 		 	url: "/receiveBook",
 		 	data: {book: bookID}
