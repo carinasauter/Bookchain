@@ -109,13 +109,14 @@ class User(UserMixin):
 	def readingBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'reading')).fetchall()
+			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'borrower')).fetchall()
 		if result == []:
 			return result
 		lst = []
 		for entry in result:
 			book = getBookById(entry[0])
 			uploader = book.getUploader()
+			uploader = getUserByUsername(uploader)
 			if uploader != self:
 				lst.append(entry[0])
 		info = []
@@ -130,7 +131,7 @@ class User(UserMixin):
 	def requestedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requested')).fetchall()
+			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
 		if result == []:
 			return result
 		lst = []
@@ -311,11 +312,12 @@ class Book():
 	"""
 	Receive Book
 	"""
-	def receiveBook(self):
+	def receiveBook(self, user):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
 			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", self.id))
+			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
 			connection.commit()
 
 	"""
