@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+
+
 {% block content %}
 <div class="row">
     <div class="col l6 left-align">
@@ -88,21 +90,23 @@
                 <td>{{book[6]}}</td>
                 <!-- <td>{% for num in book[3] %}
                 <i class="material-icons tiny star amber-text lighten-1">star</i> -->
-                {% endfor %}
+                <!-- {% endfor %} -->
                 </td>
                 <td>here should be available check box</td>
             </tr>
             {% endfor %}
         </table>
     </section>
+    <div class="col l12 left-align">
     <section class="books-mybooks">
-        <h5>My Books (Or, Books I care to view journey)</h5>
+        <h5>My Books</h5>
         <table>
             <col width="10%">
-            <col width="20%">
+            <col width="10%">
             <col width="25%">
             <col width="25%">
-            <col width="20%">
+            <col width="15%">
+            <col width="15%">
             <tr>
                 <th>Title</th>
                 <th></th>
@@ -123,7 +127,6 @@
                 <i class="material-icons tiny star amber-text lighten-1">star</i>
                 {% endfor %}
                 </td>
-                
                 <td><button class = "btn details">See Details</button></td>
                 <td><button class = "btn removebook">Remove</button></td>
             </tr>
@@ -131,5 +134,17 @@
         </table>
     </section>
 </div>
+</div>
 </div>  
+<!-- <script>
+        // var elem = document.querySelector('.sidenav');
+        //   var instance = new M.Sidenav(elem);
+  
+          // with jquery
+          console.log("hey");
+          $(document).ready(function(){
+            console.log("hey");
+          $('.sidenav').sidenav();
+          });
+    </script>   -->
 {% endblock %}

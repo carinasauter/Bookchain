@@ -134,7 +134,7 @@ function callAPI(query, whatToDo) {
 
 // helper function to add the table header once.
 function addTableHeader() {
-	$("#results").append('<div class="row"><div id="tableHeader" class="col s12 m12 l12">Search Results\
+	$("#results").append('<div class="row"><div id="tableHeader" class="col s12 m12 l12">SEARCH RESULTS\
     </div></div><div id="searchResults"></div>');
 }
 
@@ -170,9 +170,9 @@ function parseQuery(data) {
 			thumbnail = "static/img/noImgFound.jpg"; 
 		}
 		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
-		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m3 l1'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
-		</div><div class='col card-content s4 m4 l9 left-align'><p><b>" + title + "</b></p><p>\
-		" + author + "</p><p class = 'line-clamp hide-on-small-only'>" + short_description + "</p></div><div class='col s4 m4 l2'><button \
+		<p class= 'hidden'>" + bookID + "</p><div class='col s2 m2 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
+		</div><div class='col card-content s6 m7 l8 left-align'><p><b>" + title + "</b></p><p>\
+		" + author + "</p><p class = 'line-clamp hide-on-small-only'>" + short_description + "</p></div><div class='col s4 m3 l2'><button \
 		class='btn waves-effect waves-light registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
 		var texts = document.getElementsByClassName('line-clamp');
@@ -224,3 +224,4 @@ $("#search_query").keyup(function(event) {
         $("#registerBook").click();
     }
 });
+

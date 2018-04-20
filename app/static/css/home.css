@@ -1,9 +1,9 @@
 #header {
-    background: url("../img/header.svg") no-repeat center center;
+    /* background: url("../img/header.svg") no-repeat center center;
 	height: 50%;
-	width: 100%;
-	margin: auto;
-
+	width: 50%;
+	/* margin: auto; */
+	/* height: 60%; */
 }
 
 body {
@@ -32,7 +32,7 @@ body {
 
 
 p {
-	font-size: 12;
+	font-size: 16px;
 }
 
 /* below style is not effective */
@@ -73,16 +73,23 @@ textarea.materialize-textarea.valid:focus {
 }
 
 #nav-img {
-	width: 15vw;
-	margin-left: 40px;
-	margin-top: 15px;
+	/* width: 15vw; */
+	width: auto;
+	height: 40px;
+	margin-left: 35px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	float: left;
 }
 
 .banner-img {
-    display: block;
+	display: block;
+	width: 65%;
+	height: auto;
     margin-left: auto;
 	margin-right: auto;
-	margin-top: 10px;
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 section {
@@ -108,10 +115,10 @@ td, th {
 	display: none;
 }
 
-img {
+/* img {
 	width: 180px;
 	
-}
+} */
 
 .requestBook {
 	margin-top: 15px;
@@ -169,7 +176,7 @@ td img {
 }
 
 .card .card-image {
-	padding-left: 24px;
+	padding-left: 2px;
 
 }
 
@@ -181,4 +188,48 @@ td img {
 
 .card .card-action {
 	border: none;
+}
+
+.material-icons {
+	float: right;
+}
+
+.nav-wrapper {
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+#searchResults {
+	color: grey;
+}
+
+.row .col {
+	padding: 10px 25px;
+}
+
+/* .row .col.l8 {
+	margin-top: 15px;
+	margin-bottom: 15px;
+} */
+
+
+.card {
+	height: 150px;
+}
+
+
+.row #tableHeader {
+	color: white;
+}
+
+#tagline {
+	float: left;
+	margin-left: 10px;
+	margin-top: 4px;
+	font-size: 15px;
+	font-style: italic;
+}
+
+nav .brand-logo {
+	position: relative;
 }
