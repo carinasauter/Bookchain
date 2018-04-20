@@ -3,14 +3,14 @@
 
 {% block content %}
 <div class="row">
-    <div class="col l6 left-align">
-       <section class='books-requests '>
+    <div class="col s12 m12 l6 left-align">
+       <!-- <section class='books-requests '> -->
           <h5>My Requests</h5>
           <table>
             <col width="10%">
+            <col width="25%">
+            <col width="25%">
             <col width="20%">
-            <col width="25%">
-            <col width="25%">
             <col width="20%">
             <tr>
               <th>Title</th>
@@ -30,17 +30,17 @@
             </tr>
             {% endfor %}
            </table>
-       </section>
+       <!-- </section> -->
     </div>
-    <div class="col l6 left-align">
-        <section class='request-from-others'>
+    <div class="col s12 m12 l6">
+        <!-- <section class='request-from-others'> -->
             <h5>Requests From Others</h5>
             <table>
                 <col width="10%">
+                <col width="40%">
                 <col width="20%">
-                <col width="25%">
-                <col width="25%">
-                <col width="20%">
+                <col width="15%">
+                <col width="15%">
                 <tr>
                     <th>Title</th>
                     <th></th>
@@ -54,17 +54,18 @@
                     <td>{{book[1]}}<p>{{book[2]}}</p></td>
                     <td>username</td>
                     <td>2018/7/19</td>
-                    <td><button class="btn labelprint">Print Shipping Label</button></td>
+                    <td id="printIcon"><a href="#"><i class="material-icons labelprint">print</i></a></td>
+                    <!-- <td class = "bigButton"><button class="btn labelprint">Print Shipping Label</button></td> -->
                 </tr>
                 {% endfor %}
             </table>
-        </section>
+        <!-- </section> -->
     </div> 
 </div>
 <div class="row">
 <div class="divider"></div>
 <div class="col l12 left-align">
-    <section class="books-borrowed">
+    <!-- <section class="books-borrowed"> -->
         <h5>Books I Borrowed & Books I can Mail</h5>
         <table>
             <col width="10%">
@@ -96,9 +97,8 @@
             </tr>
             {% endfor %}
         </table>
-    </section>
-    <div class="col l12 left-align">
-    <section class="books-mybooks">
+    <!-- </section> -->
+    <!-- <section class="books-mybooks"> -->
         <h5>My Books</h5>
         <table>
             <col width="10%">
@@ -132,8 +132,7 @@
             </tr>
             {% endfor %}
         </table>
-    </section>
-</div>
+    <!-- </section> -->
 </div>
 </div>  
 <!-- <script>
