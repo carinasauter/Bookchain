@@ -197,7 +197,7 @@ td img {
 }
 
 .material-icons {
-	float: right;
+	float: left;
 }
 
 .nav-wrapper {
@@ -268,3 +268,7 @@ nav .brand-logo {
 	height: 300px;
 	width: auto;
 }
+/* 
+.bookDesc {
+	padding-left: 20px;
+} */
