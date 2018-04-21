@@ -123,9 +123,12 @@ td, th {
 	
 } */
 
-/* .requestBook {
+.btn.disabled {
+	padding-top:12px;
 	margin-top: 15px;
-} */
+	vertical-align: middle;
+	text-align: center;
+}
 
 #uploaded {
 	width: 30%;
@@ -258,4 +261,10 @@ nav .brand-logo {
 
 .btn .bookdetails {
 	padding-right: 20px;
+}
+
+.bookCover {
+	margin-top: 30px;
+	height: 300px;
+	width: auto;
 }
