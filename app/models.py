@@ -202,7 +202,31 @@ class User(UserMixin):
 			lst.append([book.id, book.title, book.author, book.thumbnail])
 		return lst
 
+	"""
+	returns the bookIDs of the books that are requested by others. 
+	"""
+	def requestedBooksOthers(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT book_id FROM books WHERE uploader = ? AND status = ?", (self.username, "requested")).fetchall()
+		if result == []:
+			return result
+		# lst = []
+		info = []
+		for entry in result:
+			book = getBookById(entry[0])
+			requester = getRequesterUsername(entry[0])
+			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
+		# print(info)
+		return info
 
+""" Get book requester"""
+def getRequesterUsername(bookid):
+	with sql.connect('database.db') as connection:
+		cursor = connection.cursor()
+		result = cursor.execute("SELECT user_id FROM books_users WHERE book_id = ? AND relationship = ?", (bookid, "requester")).fetchall()
+		username = cursor.execute("SELECT username FROM users WHERE user_id = ?", (result[0])).fetchone()
+		return username
 
 
 """ Takes a username as parameter and checks in the database. If the user exists, 
@@ -414,7 +438,7 @@ class Book():
 	def getRequester(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ? ORDER BY user_book_id ASC LIMIT 1", (self.id, "requested")).fetchall()
+			result = cursor.execute("SELECT user_id FROM books_users where book_id = ? AND relationship = ? ORDER BY user_book_id ASC LIMIT 1", (self.id, "requester")).fetchall()
 			if result == []:
 				return 0
 			return result[0][0]

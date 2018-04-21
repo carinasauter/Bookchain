@@ -34,6 +34,9 @@ $(document).on('mouseover', '.available', function() {
 //Function when user clicks "Received Book"
 $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
+	
+	$(this).closest('tr').remove();
+
 	console.log(bookID);
 		 $.ajax({
 		 	url: "/receiveBook",
@@ -43,6 +46,7 @@ $(document).on('click', '#receive-book', function() {
 		// .done(function(data) {
 		// 	openInNewTab(data);
 		// });
+	
 });
 
 
@@ -203,9 +207,12 @@ function imgError(image) {
 
 
 $(document).on('click', '.labelprint', function() {
+	console.log("clicked print label");
+	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
+	console.log(bookID);
 	$.ajax({
 		url: "/printLabel",
-		data: {book: 5},
+		data: {book: bookID},
 		dataType: "json"
 	})
 	.done(function(data) {

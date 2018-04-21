@@ -18,11 +18,11 @@
         <h4 class="header">Books in Circulation</h4>
         {% for book in allBooks %}
         <div class="card horizontal">
-            <div class="card-image">
+            <div class="card-image col s2 m2 l2">
                 <img class="book_cover_thumbnail" src="{{book[3]}}">
             </div>
             <div class="card-stacked">
-                <div class="card-content">
+                <div class="card-content s6 m7 l7 left-align">
                     <h6><b>{{book[1]}}</b></h6>
                     <p><i>{{book[2]}}</i></p>
                     <div class="card-description">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-action">
+            <div class="card-action col s4 m3 l3">
                 <button class = "btn bookdetails" data-bookid="{{book[0]}}">Details</button>
             </div>
         </div>

@@ -111,6 +111,7 @@ td, th {
 	padding: 10px;
 	font-size: 14px;
 	font-weight: bold;
+	/* height: 10px; */
 }
 
 .hidden {
@@ -122,9 +123,9 @@ td, th {
 	
 } */
 
-.requestBook {
+/* .requestBook {
 	margin-top: 15px;
-}
+} */
 
 #uploaded {
 	width: 30%;
@@ -178,7 +179,7 @@ td img {
 }
 
 .card .card-image {
-	padding-left: 2px;
+	padding-left: 20px;
 
 }
 
@@ -246,9 +247,15 @@ nav .brand-logo {
 }
 
 .btn {
-	line-height: 20px;
+	line-height: 15px;
+    font-size: 13px;
 }
 
 #printIcon .material-icons{
 	float: left;
+	margin-left: 15px;
+}
+
+.btn .bookdetails {
+	padding-right: 20px;
 }

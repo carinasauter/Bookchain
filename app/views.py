@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from markupsafe import Markup
 import sys
+import webbrowser
 
 
 
@@ -107,10 +108,10 @@ def printLabel():
     parcel = createParcel()
     customsForm = createCustomsForm()
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
-    print(shipment.postage_label.label_url)
+    shipment_url=shipment.postage_label.label_url
     json_data = json.dumps(shipment.postage_label.label_url)
     print(json_data)
-    return json_data
+    return webbrowser.open_new_tab(shipment_url)
 
 
 @app.route('/logout')
@@ -131,7 +132,8 @@ def dashboard():
     borrowed = user.readingBooks()
     my_requests = user.requestedBooks()
     # my_request = uesr.requestFromOther()
-    requests_from_others = user.availableBooksDashboard()
+    # requests_from_others = user.availableBooksDashboard()
+    requests_from_others = user.requestedBooksOthers()
     # available = user.availableBooksDashboard()
 
     return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
@@ -257,10 +259,11 @@ def receiveBook():
     book = getBookById(book_id)
     user = current_user
     book.receiveBook(user)
+    borrowed = user.readingBooks()
     #print(bookID)
     # current_user.acknowledgeReceipt(book)
     #print('RECEIVED!', file=sys.stderr)
-    return redirect(url_for('dashboard'))
+    return render_template('dashboard.html', borrowed = borrowed)
     # return redirect('/dashboard')
 
 @app.route('/removeBook', methods=['POST'])
