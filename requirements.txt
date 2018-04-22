@@ -9,3 +9,4 @@ flask-material
 requests
 easypost
 markup
+flask-testing

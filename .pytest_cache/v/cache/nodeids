@@ -1,7 +1,10 @@
 [
-  "test/test_first.py::test_createUser",
-  "test/test_first.py::test_addToDatabase",
-  "test/test_first.py::test_getLocationGeocode",
-  "test/test_first.py::test_getUserByUsername",
-  "test/test_first.py::test_cleanup"
+  "test/test_acceptance.py::test_login",
+  "test/test_unit.py::test_createUser",
+  "test/test_unit.py::test_addToDatabase",
+  "test/test_unit.py::test_getLocationGeocode",
+  "test/test_unit.py::test_getUserByUsername",
+  "test/test_unit.py::test_createBook",
+  "test/test_unit.py::test_getStarRating",
+  "test/test_unit.py::test_cleanup"
 ]

@@ -12,20 +12,20 @@
             <div class="row">
                 <div class="input-field col s11">
                     <i class="material-icons prefix">account_circle</i>
-                    {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
+                    {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2", id = "username") }}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s11">
                     <i class="material-icons prefix">lock</i>
-                    {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+                    {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2", id = "password") }}
                 </div>
             </div>
         </div>
-        <button class="btn waves-effect waves-light" type="submit">LOG IN
+        <button class="btn waves-effect waves-light" type="submit" id = "loginButton">LOG IN
             <i class="material-icons right">send</i>
         </button>
     </form>
-     <p>No account? <a href="{{ url_for('signup') }}" title="">Sign up</a>  instead. </p>
+     <p>No account? <a href="{{ url_for('signup') }}">Sign up</a>  instead. </p>
 </div>
 {% endblock %}

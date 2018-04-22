@@ -12,6 +12,14 @@ country = 'USA'
 zipcode = "94705"
 testUser = User(username, email, password_hash, full_name, street, city, state, country, zipcode)
 
+title = "Harry Potter and the Chamber of Secrets"
+author = "Joanne K Rowling"
+thumbnail = "image link"
+short_description = "great story about a young wizard and his friends"
+isbn = "123456789"
+registeredBy = "testuser"
+book = Book(title, author, thumbnail, short_description, isbn, registeredBy)
+
 def test_createUser():
 	assert username == testUser.username and email == testUser.email and \
 	password_hash == testUser.password_hash and full_name == testUser.full_name and \
@@ -34,6 +42,22 @@ def test_getLocationGeocode():
 def test_getUserByUsername():
 	user = getUserByUsername(username)
 	assert user == testUser
+
+# def test_getUserByID():
+# 	user = getUserByID(5)
+# 	assert user == testUser
+
+
+def test_createBook():
+	assert title == book.title and author == book.author and thumbnail == book.thumbnail \
+	and short_description == book.short_description and isbn == book.isbn and \
+	registeredBy == book.registeredBy
+
+
+def test_getStarRating():
+	starRating = getStarRating(3.85)
+	assert len(starRating) == 4
+
 
 def test_cleanup():
 	with sql.connect('database.db') as connection:

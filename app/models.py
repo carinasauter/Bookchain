@@ -304,9 +304,7 @@ class Book():
 			self.short_description, self.isbn, self.registeredBy, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
 			connection.commit()			
-			print(result)
 			result = result[0][0]
-			print(result)
 			self.id = result
 
 	def addRating(self, user, rating):
