@@ -21,6 +21,7 @@ CREATE TABLE books (
     thumbnail text,
     short_description text,
     isbn integer,
+    uploader text not null,
     holder text not null,
     status text not null
 );
