@@ -39,3 +39,4 @@ Thumbs.db
 # Other #
 #########
 *__pycache*
+*.pytest_cache
