@@ -223,6 +223,8 @@ function createMap(data) {
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/basic-v9',
+    center: [-74.50, 40],
+    zoom: 1.5
   });
   map.addControl(new mapboxgl.NavigationControl());
 
@@ -230,10 +232,16 @@ function createMap(data) {
     var marker = new mapboxgl.Marker()
     .setLngLat(data[entry])
     .addTo(map);
+    // console.log(data[entry])
   }
 
-  if (data.length > 1) {
+  latlngs = []
+  for (entry in data) {
+    latlngs.push(data[entry])
+  }
+  console.log(latlngs)
 
+  if (data.length > 1) {
     map.on('load', function (data) {
     map.addLayer({
       "id": "route",
@@ -245,7 +253,7 @@ function createMap(data) {
           "properties": {},
           "geometry": {
             "type": "LineString",
-            "coordinates": [[30.5, 50.5],[5.5, 50.5]]
+             "coordinates": latlngs
           }
         }
       },
@@ -259,7 +267,7 @@ function createMap(data) {
       }
     });
   });
-    
+
   } else {
     console.log("not longer than 1");
   }
