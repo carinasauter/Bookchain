@@ -4,13 +4,12 @@ install:
   - pip install -r requirements.txt
 script: 
   - pytest
+sudo: required
 addons:
   chrome: beta
-before_script:
-  - wget http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip -d 
-  /home/travis/virtualenv/python3.6/bin/
-  - export CHROME_BIN=chromium-browser
+before_install:
+  - "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &"
+
 # before_install:
 #   - "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &"
 #   ⋮
