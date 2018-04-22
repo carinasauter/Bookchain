@@ -11,3 +11,4 @@ easypost
 markup
 flask-testing
 selenium
+chromedriver
