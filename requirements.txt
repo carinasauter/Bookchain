@@ -10,3 +10,4 @@ requests
 easypost
 markup
 flask-testing
+selenium
