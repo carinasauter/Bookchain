@@ -128,7 +128,7 @@ class User(UserMixin):
 			info.append([book.title, book.author, book.thumbnail, starRating, book.id, book.status, uploader])
 		return info
 
-
+# CY: where to use this function?
 	def requestedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
@@ -207,12 +207,13 @@ class User(UserMixin):
 	def requestedBooksOthers(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books WHERE uploader = ? AND status = ?", (self.username, "requested")).fetchall()
+			result = cursor.execute("SELECT book_id FROM books WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
 		if result == []:
 			return result
 		# lst = []
 		info = []
 		for entry in result:
+			print(entry[0])
 			book = getBookById(entry[0])
 			requester = getRequesterUsername(entry[0])
 			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
@@ -284,7 +285,7 @@ def load_user(id):
 
 class Book():
 
-	def __init__(self, title, author, thumbnail, short_description, isbn, registeredBy):
+	def __init__(self, title, author, thumbnail, short_description, isbn, registeredBy, holder):
 		self.id = 0
 		self.title = title
 		self.author = author
@@ -292,6 +293,7 @@ class Book():
 		self.short_description = short_description
 		self.isbn = isbn
 		self.registeredBy = registeredBy
+		self.holder = holder
 		self.status = "available"
 
 
@@ -300,8 +302,8 @@ class Book():
 			cursor1 = connection.cursor()
 			cursor2 = connection.cursor()
 			cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description, isbn,\
-			uploader, status) VALUES (?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
-			self.short_description, self.isbn, self.registeredBy, self.status))
+			uploader, holder, status) VALUES (?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
+			self.short_description, self.isbn, self.registeredBy, self.holder, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
 			connection.commit()			
 			result = result[0][0]
@@ -325,6 +327,8 @@ class Book():
 	def getUploader(self):
 		return self.registeredBy
 
+	def getHolder(self):
+		return self.holder
 
 	def addReview(self, user, comment):
 		with sql.connect('database.db') as connection:
@@ -468,7 +472,8 @@ def getBookById(book_id):
 		short_description = result[0][4]
 		isbn = result[0][5]
 		uploader = result[0][6]
-		newBook = Book(title, author, thumbnail, short_description, isbn, uploader)
+		holder = result[0][7]
+		newBook = Book(title, author, thumbnail, short_description, isbn, uploader, holder)
 		newBook.setId(book_id)
 		return newBook
 

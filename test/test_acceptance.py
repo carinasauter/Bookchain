@@ -8,7 +8,6 @@ from selenium.webdriver.firefox.options import Options
 # options.add_argument('-headless')
 # # firefox = Firefox(firefox_options=options)
 
-
 def test_login():
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
@@ -20,6 +19,7 @@ def test_login():
 	passwordfield.send_keys("abc")
 	elem = driver.find_element_by_id("loginButton").click()
 	assert "Dashboard" in driver.page_source
+	driver.close()
 
 # def test_signup():
 #     options = webdriver.ChromeOptions()

@@ -18,7 +18,8 @@ thumbnail = "image link"
 short_description = "great story about a young wizard and his friends"
 isbn = "123456789"
 registeredBy = "testuser"
-book = Book(title, author, thumbnail, short_description, isbn, registeredBy)
+holder = "testuser"
+book = Book(title, author, thumbnail, short_description, isbn, registeredBy, holder)
 
 def test_createUser():
 	assert username == testUser.username and email == testUser.email and \
