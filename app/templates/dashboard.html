@@ -97,6 +97,19 @@
                 <td>here should be available check box</td>
             </tr>
             {% endfor %}
+            {% for entry in uploads %}
+            <tr>
+                    <td class = "hidden">{{entry[5]}}</td>
+                    <td>
+                    <img src="{{entry[2]}}">
+                    </td>
+                    <td>{{entry[0]}}<p>{{entry[1]}}</p></td>
+                    <td>{{entry[6]}}</td>
+                    <td>Me</td>
+                    </td>
+                    <td>here should be available check box</td>
+                </tr>
+            {% endfor %}
         </table>
     <!-- </section> -->
     <!-- <section class="books-mybooks"> -->

@@ -565,6 +565,7 @@ def bookUploadsForDashboard():
 		entry.append(location)
 		entry.append(avg_rating)
 		entry.append(book.id)
+		entry.append(book.status)
 		lst.append(entry)
 	return lst
 
