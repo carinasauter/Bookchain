@@ -11,7 +11,6 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
 <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   </head>
   	
 	<body>
@@ -22,22 +21,22 @@
                   <a href="{{ url_for('dashboard')}}"><img src="../static/img/bookchain logo long.png" class="brand-logo left" id = "nav-img" align="left"></a>
                   <!-- <ul id="nav-mobile" class="right hide-on-med-and-down"> -->
                 <!-- <p>decentralized book exchanges</p> -->
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
                 <!-- {% block loginLink %} -->
+                <!-- <a href="#" data-activates="mobile-menu" class="button-collapse" ><i class="material-icons">menu</i></a> -->
+                <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
                     <li><a href="{{ url_for('register')}}">Add Books</a></li>
                     <li><a href="{{ url_for('booksincirc')}}">Borrow Books</a></li>
                     <li><a href="{{ url_for('logout')}}">Logout</a></li>
-                  </ul>
+                </ul>
+                <!-- <ul class="side-nav" id="mobile-menu">
+                    <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
+                    <li><a href="{{ url_for('register')}}">Add Books</a></li>
+                    <li><a href="{{ url_for('booksincirc')}}">Borrow Books</a></li>
+                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
+                </ul> -->
               </div>
           </nav>
-          <ul class="sidenav" id="mobile-demo">
-              <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
-              <li><a href="{{ url_for('register')}}">Add Books</a></li>
-              <li><a href="{{ url_for('booksincirc')}}">Borrow Books</a></li>
-              <li><a href="{{ url_for('logout')}}">Logout</a></li>
-          </ul>
           <!-- {% endblock %} -->
       </div>
     </header>
@@ -48,17 +47,17 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.js') }}"></script>
-  <!-- <script>
+  <script>
       // var elem = document.querySelector('.sidenav');
       //   var instance = new M.Sidenav(elem);
 
         // with jquery
-
-        $(document).ready(function(){
-          cosole.log("hey");
-        $('.sidenav').sidenav();
-        });
-  </script>   -->
+        // $(document).ready(function(){
+        //   console.log("hey");
+        //   $(".button-collapse").sideNav();
+        //   console.log("hi");
+        // });
+  </script>
 </body>
   
   {% block additionallibraries %} {% endblock %}
