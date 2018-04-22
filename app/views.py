@@ -131,8 +131,6 @@ def dashboard():
     lst = bookUploadsForDashboard()
     borrowed = user.readingBooks()
     my_requests = user.requestedBooks()
-    # my_request = uesr.requestFromOther()
-    # requests_from_others = user.availableBooksDashboard()
     requests_from_others = user.requestedBooksOthers()
     # available = user.availableBooksDashboard()
 
