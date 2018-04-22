@@ -27,6 +27,10 @@ def test_addToDatabase():
 	assert check[0][0] == username
 
 
+def test_getLocationGeocode():
+	lat, lon = testUser.getLocationGeocode()
+	assert type(3.34) == type(lat) and type(3.34) == type(lon)
+
 def test_cleanup():
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
