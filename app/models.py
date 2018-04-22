@@ -125,7 +125,6 @@ class User(UserMixin):
 			avg_rating = book.getAverageRating()
 			starRating = getStarRating(avg_rating)
 			uploader = book.getUploader()
-			# uploader = getUserByUsername(uploader)
 			info.append([book.title, book.author, book.thumbnail, starRating, book.id, book.status, uploader])
 		return info
 
