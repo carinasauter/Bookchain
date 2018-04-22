@@ -8,18 +8,18 @@ from selenium.webdriver.firefox.options import Options
 # options.add_argument('-headless')
 # # firefox = Firefox(firefox_options=options)
 
-def test_login():
-	options = webdriver.ChromeOptions()
-	options.add_argument('headless')
-	driver = webdriver.Chrome(chrome_options=options)
-	driver.get('http://localhost:8081/login')
-	userfield = driver.find_element_by_id("username")
-	userfield.send_keys("carina")
-	passwordfield = driver.find_element_by_id("password")
-	passwordfield.send_keys("abc")
-	elem = driver.find_element_by_id("loginButton").click()
-	assert "Dashboard" in driver.page_source
-	driver.close()
+# def test_login():
+# 	options = webdriver.ChromeOptions()
+# 	options.add_argument('headless')
+# 	driver = webdriver.Chrome(chrome_options=options)
+# 	driver.get('http://localhost:8081/login')
+# 	userfield = driver.find_element_by_id("username")
+# 	userfield.send_keys("carina")
+# 	passwordfield = driver.find_element_by_id("password")
+# 	passwordfield.send_keys("abc")
+# 	elem = driver.find_element_by_id("loginButton").click()
+# 	assert "Dashboard" in driver.page_source
+# 	driver.close()
 
 # def test_signup():
 #     options = webdriver.ChromeOptions()
