@@ -6,6 +6,6 @@ script:
   - pytest
 addons:
   chrome: beta
-before_install:
-  - "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &"
-  ⋮
+# before_install:
+#   - "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &"
+#   ⋮
