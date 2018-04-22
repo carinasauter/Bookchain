@@ -189,7 +189,7 @@ def getUser():
 @login_required
 def book(book_id):
     book = getBookById(book_id)
-    possessor = book.getPossessor()
+    holder = book.getHolder()
     location = book.getLocationString()
     average_rating = book.getAverageRating()
     average_rating = format(average_rating, '.1f')
@@ -199,8 +199,9 @@ def book(book_id):
     currentUser = current_user
     userRating = book.getRating(currentUser)
     blockRequest = 0
-    if possessor == currentUser or currentUser.hasRequested(book):
+    if holder == currentUser.username or currentUser.hasRequested(book):
         blockRequest = 1
+    print("here")
     return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
         thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
         location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \
@@ -222,8 +223,8 @@ def toRequestBook():
     requester = current_user
     book_id = request.form['book_id']
     book = getBookById(book_id)
-    possessor = book.getPossessor()
-    if possessor != requester and not requester.hasRequested(book):
+    holder = getUserByUsername(book.getHolder())
+    if holder != requester and not requester.hasRequested(book):
         requester.requestBook(book)
         book.markAsRequested()
     return "requested"

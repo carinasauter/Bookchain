@@ -213,7 +213,6 @@ class User(UserMixin):
 		# lst = []
 		info = []
 		for entry in result:
-			print(entry[0])
 			book = getBookById(entry[0])
 			requester = getRequesterUsername(entry[0])
 			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
@@ -364,7 +363,7 @@ class Book():
 	checks where the book currently is. Returns the location as a composite string
 	"""
 	def getLocationString(self):
-		currentPossessor = self.getPossessor()
+		currentPossessor = getUserByUsername(self.getHolder())
 		location = currentPossessor.city + ", " + currentPossessor.state + ", " + currentPossessor.country
 		return location
 
