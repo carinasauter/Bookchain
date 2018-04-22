@@ -1,10 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from flask_testing import LiveServerTestCase
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
 
-test_admin_username = "admin"
-test_admin_email = "admin@email.com"
-test_admin_password = "admin2016"
+options = Options()
+options.add_argument('-headless')
+firefox = Firefox(firefox_options=options)
 
 
 def test_login():
