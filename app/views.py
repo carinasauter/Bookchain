@@ -288,3 +288,13 @@ def removeBook():
     bookToRemove.removeBook()
     return ""
 
+
+@app.route('/cancelRequest', methods=['GET', 'POST'])
+@login_required
+def cancelRequest():
+    bookID = request.args['book_id']
+    user = current_user
+    # print(user)
+    bookToCancel = getBookById(bookID)
+    bookToCancel.cancelRequest(user)
+    return ""

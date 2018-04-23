@@ -203,7 +203,16 @@ $(document).on('click', '.requestBook', function() {
   $( this ).addClass(" disabled ").text("Requested");
 })
 
-
+$(document).on('click', '#cancelRequest', function() {
+  // console.log("cancel request clicked")
+  $.ajax({
+    // type: "POST",
+    url: "/cancelRequest",
+    data: {book_id: book_id},
+    dataType: "json"
+  })
+  $( this ).addClass(" disabled ").text("Request Cancelled");
+})
   
 $( document ).ready(function() {
 	$.ajax({

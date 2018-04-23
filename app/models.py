@@ -365,7 +365,18 @@ class Book():
 			if prev_userId != None:
 				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId))
 			connection.commit()
-			
+
+	"""
+	Ｃancels a user_id book_id pair in the database.
+	"""
+
+	def cancelRequest(self, user):
+		relationship = 'requester'
+		with sql.connect('database.db') as connection:
+			connection.row_factory = sql.Row
+			cursor = connection.cursor()
+			cursor.execute("DELETE FROM books_users WHERE book_id = (?) and user_id = (?) and relationship = (?)", (self.id, user.getId(), relationship))
+			connection.commit()	
 
 	"""
 	Ship Book

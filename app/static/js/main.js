@@ -36,23 +36,6 @@ $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).closest('tr').remove();
 	console.log(bookID);
-<<<<<<< HEAD
-	$.ajax({
-		url: "/receiveBook",
-		data: {bookID: bookID},
-		dataType: "json"
-	 }).done(function(data) {
-	 	console.log("data received");
-	 	console.log(data[0]);
-		var string = "<tr><td class = 'hidden'>" + bookID + "</td><td>\
-			<img src='" + data[0] + "'></td><td>" + data[1] + "<p>" + data[2] + "</p></td>\
-			<td>" + data[3] + "</td><td>" + data[4] + "</td></td><td>here should be \
-			available check box</td></tr>";
-		console.log(string);
-		$("#borrowedAndContributed").append(string);
-		console.log("tried to append.")
-	})
-=======
 		 $.ajax({
 		 	url: "/receiveBook",
 		 	data: {bookID: bookID},
@@ -64,7 +47,6 @@ $(document).on('click', '#receive-book', function() {
 		// 	openInNewTab(data);
 		// });
 	
->>>>>>> 13d90d2fedefea8d185ee9a2773038d3e3820e1b
 });
 
 
