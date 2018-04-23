@@ -265,7 +265,6 @@ def receiveBook():
     book = getBookById(book_id)
     user = current_user
     book.receiveBook(user)
-<<<<<<< HEAD
     data = []
     data.append(book.thumbnail)
     data.append(book.title)
@@ -275,10 +274,6 @@ def receiveBook():
     json_data = json.dumps(data)
     return json_data
 
-
-=======
-    return "success"
->>>>>>> 13d90d2fedefea8d185ee9a2773038d3e3820e1b
 
 @app.route('/removeBook', methods=['POST'])
 @login_required
