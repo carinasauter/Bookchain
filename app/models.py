@@ -1,4 +1,5 @@
 import sqlite3 as sql
+from datetime import datetime, date
 from app import login_manager, db
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -131,7 +132,7 @@ class User(UserMixin):
 	def requestedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
+			result = cursor.execute("SELECT book_id, timestamp FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
 		if result == []:
 			return result
 		# CY: if we disable request buttom of a book for the book uploader, we don't need to examine this logic again here
@@ -150,10 +151,11 @@ class User(UserMixin):
 		# 		info.append([book.title, book.author, book.thumbnail, starRating, book.id])
 		info = []
 		for entry in result:
+			requested_date = datetime.strptime(entry[1], "%Y-%m-%d %H:%M:%S").strftime("%m/%d/%Y")
 			book = getBookById(entry[0])
 			avg_rating = book.getAverageRating()
 			starRating = getStarRating(avg_rating)
-			info.append([book.title, book.author, book.thumbnail, starRating, book.id])
+			info.append([book.title, book.author, book.thumbnail, starRating, book.id, requested_date, book.status])
 		return info
 
 
@@ -290,7 +292,7 @@ def load_user(id):
 
 class Book():
 
-	def __init__(self, title, author, thumbnail, short_description, isbn, registeredBy, holder):
+	def __init__(self, title, author, thumbnail, short_description, isbn, registeredBy, holder, status):
 		self.id = 0
 		self.title = title
 		self.author = author
@@ -299,7 +301,7 @@ class Book():
 		self.isbn = isbn
 		self.registeredBy = registeredBy
 		self.holder = holder
-		self.status = "available"
+		self.status = status
 
 
 	def addToDatabase(self):
@@ -478,7 +480,8 @@ def getBookById(book_id):
 		isbn = result[0][5]
 		uploader = result[0][6]
 		holder = result[0][7]
-		newBook = Book(title, author, thumbnail, short_description, isbn, uploader, holder)
+		status = result[0][8]
+		newBook = Book(title, author, thumbnail, short_description, isbn, uploader, holder, status)
 		newBook.setId(book_id)
 		return newBook
 

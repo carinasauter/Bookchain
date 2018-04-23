@@ -85,8 +85,9 @@ def registerbook():
     short_description = request.form['short_description']
     isbn = request.form['isbn']
     registeredBy = current_user.username
+    status = "available"
     newBook = Book(title, author, thumbnail, short_description, isbn, \
-        registeredBy, registeredBy)
+        registeredBy, registeredBy, status)
     newBook.addToDatabase()
     current_user.addBook(newBook)
     return 'Received!'
