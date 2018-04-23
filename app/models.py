@@ -90,10 +90,10 @@ class User(UserMixin):
 
 
 	"""
-	registers a user_id book_id pair in the database. Relationship status is set to 'requested'
+	registers a user_id book_id pair in the database. Relationship status is set to 'requester'
 	"""
 	def requestBook(self, book):
-		relationship = 'requested'
+		relationship = 'requester'
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor1 = connection.cursor()
@@ -128,26 +128,32 @@ class User(UserMixin):
 			info.append([book.title, book.author, book.thumbnail, starRating, book.id, book.status, uploader])
 		return info
 
-# CY: where to use this function?
 	def requestedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
 		if result == []:
 			return result
-		lst = []
+		# CY: if we disable request buttom of a book for the book uploader, we don't need to examine this logic again here
+		# lst = []
+		# for entry in result:
+		# 	book = getBookById(entry[0])
+		# 	uploader = book.getUploader()
+		# 	uploader = getUserByUsername(uploader)
+		# 	if uploader != self:
+		# 		lst.append(entry[0])
+		# 	info = []
+		# 	for entry in lst:
+		# 		book = getBookById(entry)
+		# 		avg_rating = book.getAverageRating()
+		# 		starRating = getStarRating(avg_rating)
+		# 		info.append([book.title, book.author, book.thumbnail, starRating, book.id])
+		info = []
 		for entry in result:
 			book = getBookById(entry[0])
-			uploader = book.getUploader()
-			uploader = getUserByUsername(uploader)
-			if uploader != self:
-				lst.append(entry[0])
-			info = []
-			for entry in lst:
-				book = getBookById(entry)
-				avg_rating = book.getAverageRating()
-				starRating = getStarRating(avg_rating)
-				info.append([book.title, book.author, book.thumbnail, starRating, book.id])
+			avg_rating = book.getAverageRating()
+			starRating = getStarRating(avg_rating)
+			info.append([book.title, book.author, book.thumbnail, starRating, book.id])
 		return info
 
 
