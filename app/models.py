@@ -182,7 +182,7 @@ class User(UserMixin):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			result = cursor.execute("SELECT relationship FROM books_users WHERE user_id = ? AND book_id = ? ORDER BY user_book_id DESC LIMIT 1", (self.id, book.getId() )).fetchall()
-			if result == [] or result[0][0] != 'requested':
+			if result == [] or result[0][0] != 'requester':
 				return False
 			return True
 
