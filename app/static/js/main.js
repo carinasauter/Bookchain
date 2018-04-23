@@ -210,14 +210,23 @@ $(document).on('click', '.labelprint', function() {
 	console.log("clicked print label");
 	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
 	console.log(bookID);
+	// change book status from requested to in-transit in books table
 	$.ajax({
-		url: "/printLabel",
-		data: {book: bookID},
+		type: "POST",
+		contentType: "application/json",
+		url: "/shipBook",
+		data: JSON.stringify({book: bookID}),
 		dataType: "json"
-	})
-	.done(function(data) {
-    	openInNewTab(data);
-    });
+	});
+	// print shipping label
+	// $.ajax({
+	// 	url: "/printLabel",
+	// 	data: {book: bookID},
+	// 	dataType: "json"
+	// })
+	// .done(function(data) {
+	// 	openInNewTab(data);
+	// });
 })
 
 function openInNewTab(url) {

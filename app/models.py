@@ -218,13 +218,11 @@ class User(UserMixin):
 			result = cursor.execute("SELECT book_id FROM books WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
 		if result == []:
 			return result
-		# lst = []
 		info = []
 		for entry in result:
 			book = getBookById(entry[0])
 			requester = getRequesterUsername(entry[0])
 			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
-		# print(info)
 		return info
 
 """ Get book requester"""
@@ -352,6 +350,16 @@ class Book():
 			cursor = connection.cursor()
 			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", self.id))
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
+			connection.commit()
+
+	"""
+	Ship Book
+	"""
+	def setBookStatusToInTransit(self):
+		with sql.connect('database.db') as connection:
+			connection.row_factory = sql.Row
+			cursor = connection.cursor()
+			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("in-transit", self.id))
 			connection.commit()
 
 	"""

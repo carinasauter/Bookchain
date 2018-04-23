@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, json
 from app import app, models, db, login_manager
 from .forms import LoginForm, SignUpForm
 from .models import *
@@ -92,7 +92,15 @@ def registerbook():
     current_user.addBook(newBook)
     return 'Received!'
 
-
+@app.route('/shipBook', methods=['POST'])
+@login_required
+def shipBook():
+    content = request.get_json()
+    book_id = content['book']
+    book = getBookById(book_id)
+    book.setBookStatusToInTransit()
+    print(book.status)
+    return "book status change to in-transit"
 
 @app.route('/printLabel', methods=['GET'])
 @login_required
