@@ -219,14 +219,14 @@ $(document).on('click', '.labelprint', function() {
 		dataType: "json"
 	});
 	// print shipping label
-	// $.ajax({
-	// 	url: "/printLabel",
-	// 	data: {book: bookID},
-	// 	dataType: "json"
-	// })
-	// .done(function(data) {
-	// 	openInNewTab(data);
-	// });
+	$.ajax({
+		url: "/printLabel",
+		data: {book: bookID},
+		dataType: "json"
+	})
+	.done(function(data) {
+		openInNewTab(data);
+	});
 })
 
 function openInNewTab(url) {
