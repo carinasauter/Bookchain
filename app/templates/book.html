@@ -6,7 +6,15 @@
     var blockRequest = {{ blockRequest }};
     if (blockRequest == 1) {
         $( ".requestBook").addClass( "disabled" );
-    }
+    } 
+    else if (blockRequest == 2) {
+         console.log("already requested");
+         $( ".requestBook").remove();
+         var button = document.createElement("button");
+         button.innerHTML = "Cancel Request";
+         button.className = "btn waves-effect waves-light";
+         document.getElementById("bookImgButton").appendChild(button);
+     } 
     var userRating = {{ userRating }};
     console.log(userRating);
     if (userRating != 0) {
@@ -33,7 +41,7 @@
 {% block content %}
 <!-- add valign-wrapper to below row div? -->
     <div class="row"> 
-        <div class="col s12 m6 l3 center-align">
+        <div class="col s12 m6 l3 center-align" id ="bookImgButton">
             <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this) class="bookCover">
             <br>
             <a class="btn requestBook valign-wrapper">Request</a>

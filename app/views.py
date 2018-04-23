@@ -207,8 +207,10 @@ def book(book_id):
     currentUser = current_user
     userRating = book.getRating(currentUser)
     blockRequest = 0
-    if holder == currentUser.username or currentUser.hasRequested(book):
+    if holder == currentUser.username:
         blockRequest = 1
+    elif currentUser.hasRequested(book):
+        blockRequest = 2
     print("here")
     return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
         thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
