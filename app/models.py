@@ -1,5 +1,5 @@
 import sqlite3 as sql
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from app import login_manager, db
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -215,14 +215,18 @@ class User(UserMixin):
 	def requestedBooksOthers(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
+			result = cursor.execute("SELECT books.book_id, books_users.user_id, books_users.timestamp from books INNER JOIN books_users on books.book_id = books_users.book_id WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
 		if result == []:
 			return result
 		info = []
+		
 		for entry in result:
+			requested_date = datetime.strptime(entry[2], "%Y-%m-%d %H:%M:%S")+ timedelta(days=14)
+			requested_date = requested_date.strftime("%m/%d/%Y")
 			book = getBookById(entry[0])
-			requester = getRequesterUsername(entry[0])
-			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
+			# requester = getRequesterUsername(entry[0])
+			requester = getUserByID(entry[1])
+			info.append([book.title, book.author, book.thumbnail, book.id, requester.username, requested_date])
 		return info
 
 """ Get book requester"""
