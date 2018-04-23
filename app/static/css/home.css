@@ -273,3 +273,8 @@ nav .brand-logo {
 .card.horizontal .card-image img{
 	width: 70px;
 }
+
+
+.tableContentStyle {
+	text-transform: uppercase;
+}
