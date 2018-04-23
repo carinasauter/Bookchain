@@ -263,16 +263,10 @@ def addingRating():
 @login_required
 def receiveBook():
     book_id = request.args['bookID']
-    # print(book_id, file=sys.stderr)
     book = getBookById(book_id)
     user = current_user
     book.receiveBook(user)
-    borrowed = user.readingBooks()
-    #print(bookID)
-    # current_user.acknowledgeReceipt(book)
-    #print('RECEIVED!', file=sys.stderr)
-    return render_template('dashboard.html', borrowed = borrowed)
-    # return redirect('/dashboard')
+    return "success"
 
 @app.route('/removeBook', methods=['POST'])
 @login_required

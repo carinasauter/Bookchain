@@ -352,12 +352,13 @@ class Book():
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			prev_userId = cursor.execute("SELECT user_id FROM books_users WHERE book_id == ? AND relationship = ?", (self.id, "borrower"))
+			prev_userId = cursor.execute("SELECT user_id FROM books_users WHERE book_id == ? AND relationship = ?", (self.id, "borrower")).fetchone()
 			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", user.username, self.id))
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
-			if prev_userId != []:
+			if prev_userId != None:
 				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId))
 			connection.commit()
+			
 
 	"""
 	Ship Book
