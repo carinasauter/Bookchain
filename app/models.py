@@ -1,5 +1,5 @@
 import sqlite3 as sql
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from app import login_manager, db
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,6 +7,7 @@ import sys
 import requests
 import json
 import easypost
+
 
 
 googleGeocodingAPIKey = 'AIzaSyAVu5x4ezPVUSr6BEQ8I41BN65R6w8D5uI'
@@ -17,7 +18,7 @@ easypost.api_key = '3So8pVF6yhYekwW91WrP5g'
 class User(UserMixin):
 
 	def __init__(self, username, email, password_hash, full_name, street, city, state, country, zipcode):
-		self.id = 0;
+		self.id = 0
 		self.username = username
 		self.email = email
 		self.password_hash = password_hash
@@ -215,14 +216,18 @@ class User(UserMixin):
 	def requestedBooksOthers(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
+			result = cursor.execute("SELECT books.book_id, books_users.user_id, books_users.timestamp from books INNER JOIN books_users on books.book_id = books_users.book_id WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
 		if result == []:
 			return result
 		info = []
+		
 		for entry in result:
+			requested_date = datetime.strptime(entry[2], "%Y-%m-%d %H:%M:%S")+ timedelta(days=14)
+			requested_date = requested_date.strftime("%m/%d/%Y")
 			book = getBookById(entry[0])
-			requester = getRequesterUsername(entry[0])
-			info.append([book.title, book.author, book.thumbnail, book.id, requester[0]])
+			# requester = getRequesterUsername(entry[0])
+			requester = getUserByID(entry[1])
+			info.append([book.title, book.author, book.thumbnail, book.id, requester.username, requested_date])
 		return info
 
 """ Get book requester"""
@@ -280,7 +285,14 @@ def getBooksInCirc():
 		for entry in result:
 			lst.append(entry)
 		return lst
-		
+
+
+
+def cleanhtml(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
+
 @login_manager.user_loader
 def load_user(id):
 	return getUserByID(id)
@@ -347,9 +359,13 @@ class Book():
 	def receiveBook(self, user):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", current_user.username, self.id))
-			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? AND user_id =?",("borrower", self.id, user.getId()))
+			prev_userId = cursor.execute("SELECT user_id FROM books_users WHERE book_id == ? AND relationship = ?", (self.id, "borrower")).fetchone()
+			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", user.username, self.id))
+			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
+			if prev_userId != None:
+				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId))
 			connection.commit()
+			
 
 	"""
 	Ship Book

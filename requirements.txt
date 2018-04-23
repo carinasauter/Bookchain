@@ -12,3 +12,4 @@ markup
 flask-testing
 selenium
 chromedriver
+six

@@ -36,6 +36,7 @@ $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).closest('tr').remove();
 	console.log(bookID);
+<<<<<<< HEAD
 	$.ajax({
 		url: "/receiveBook",
 		data: {bookID: bookID},
@@ -51,6 +52,19 @@ $(document).on('click', '#receive-book', function() {
 		$("#borrowedAndContributed").append(string);
 		console.log("tried to append.")
 	})
+=======
+		 $.ajax({
+		 	url: "/receiveBook",
+		 	data: {bookID: bookID},
+		 })
+		 .done(function(){
+			location.reload();
+		 }); 
+		// .done(function(data) {
+		// 	openInNewTab(data);
+		// });
+	
+>>>>>>> 13d90d2fedefea8d185ee9a2773038d3e3820e1b
 });
 
 
