@@ -301,7 +301,7 @@ class Book():
 			cursor1 = connection.cursor()
 			cursor2 = connection.cursor()
 			cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description, isbn,\
-			uploader, holder, status) VALUES (?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
+			uploader, holder, status) VALUES (?,?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
 			self.short_description, self.isbn, self.registeredBy, self.holder, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
 			connection.commit()			
