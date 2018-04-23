@@ -387,13 +387,13 @@ class Book():
 
 	"""
 	takes a book and returns a list of the users in the history of the book.
-	Ignores those users that just have relationship 'requested'
+	Ignores those users that just have relationship 'requester'
 	"""
 	def getHistory(self):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requested'))
+			cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requester'))
 			result = cursor.fetchall()
 			users = []
 			for entry in result:
