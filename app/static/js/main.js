@@ -34,19 +34,23 @@ $(document).on('mouseover', '.available', function() {
 //Function when user clicks "Received Book"
 $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	
 	$(this).closest('tr').remove();
-
 	console.log(bookID);
-		 $.ajax({
-		 	url: "/receiveBook",
-		 	data: {bookID: bookID},
-		 	dataType: "json"
-		 })
-		// .done(function(data) {
-		// 	openInNewTab(data);
-		// });
-	
+	$.ajax({
+		url: "/receiveBook",
+		data: {bookID: bookID},
+		dataType: "json"
+	 }).done(function(data) {
+	 	console.log("data received");
+	 	console.log(data[0]);
+		var string = "<tr><td class = 'hidden'>" + bookID + "</td><td>\
+			<img src='" + data[0] + "'></td><td>" + data[1] + "<p>" + data[2] + "</p></td>\
+			<td>" + data[3] + "</td><td>" + data[4] + "</td></td><td>here should be \
+			available check box</td></tr>";
+		console.log(string);
+		$("#borrowedAndContributed").append(string);
+		console.log("tried to append.")
+	})
 });
 
 

@@ -12,7 +12,6 @@ import sys
 import webbrowser
 
 
-
 @app.route('/')
 def index():
     if current_user.is_authenticated:
@@ -263,16 +262,19 @@ def addingRating():
 @login_required
 def receiveBook():
     book_id = request.args['bookID']
-    # print(book_id, file=sys.stderr)
     book = getBookById(book_id)
     user = current_user
     book.receiveBook(user)
-    borrowed = user.readingBooks()
-    #print(bookID)
-    # current_user.acknowledgeReceipt(book)
-    #print('RECEIVED!', file=sys.stderr)
-    return render_template('dashboard.html', borrowed = borrowed)
-    # return redirect('/dashboard')
+    data = []
+    data.append(book.thumbnail)
+    data.append(book.title)
+    data.append(book.author)
+    data.append("reading")
+    data.append(book.registeredBy)
+    json_data = json.dumps(data)
+    return json_data
+
+
 
 @app.route('/removeBook', methods=['POST'])
 @login_required
@@ -283,5 +285,5 @@ def removeBook():
     
     bookToRemove = getBookById(bookID)
     bookToRemove.removeBook()
-    return redirect('/dashboard')
+    return ""
 
