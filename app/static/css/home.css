@@ -118,14 +118,11 @@ td, th {
 	display: none;
 }
 
-/* img {
-	width: 180px;
-	
-} */
+/*.requestBook {
+	vertical-align: middle;
+}*/
 
 .btn.disabled {
-	padding-top:12px;
-	margin-top: 15px;
 	vertical-align: middle;
 	text-align: center;
 }
@@ -250,7 +247,7 @@ nav .brand-logo {
 }
 
 .btn {
-	line-height: 15px;
+	/*line-height: 15px; if this is active, it breaks the button spacing in book*/
     font-size: 13px;
 }
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block variables %}
-<!-- this script needs to go here because this is a nice way to assess flask variables. -->
+<!-- this script needs to go here because this is a nice way to use flask variables for styling. -->
 <script type="text/javascript">
     var blockRequest = {{ blockRequest }};
     if (blockRequest == 1) {
@@ -36,7 +36,7 @@
         <div class="col s12 m6 l3 center-align">
             <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this) class="bookCover">
             <br>
-            <a class="btn requestBook">Request</a>
+            <a class="btn requestBook valign-wrapper">Request</a>
         </div>
         <div class="col s12 m6 l6 left-align bookDesc">
             <h4>{{ title }}</h4>
