@@ -276,7 +276,7 @@ nav .brand-logo {
 
 
 .tableContentStyle {
-	text-transform: uppercase;
+	text-transform: capitalize;
 }
 
 .nav {

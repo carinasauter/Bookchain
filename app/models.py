@@ -9,6 +9,7 @@ import json
 import easypost
 
 
+
 googleGeocodingAPIKey = 'AIzaSyAVu5x4ezPVUSr6BEQ8I41BN65R6w8D5uI'
 NYTAPIKey = '3070504f115249fc8eedadaa0089f3c6'
 easypost.api_key = '3So8pVF6yhYekwW91WrP5g'
@@ -284,7 +285,14 @@ def getBooksInCirc():
 		for entry in result:
 			lst.append(entry)
 		return lst
-		
+
+
+
+def cleanhtml(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
+
 @login_manager.user_loader
 def load_user(id):
 	return getUserByID(id)
