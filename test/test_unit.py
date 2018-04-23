@@ -19,7 +19,8 @@ short_description = "great story about a young wizard and his friends"
 isbn = "123456789"
 registeredBy = "testuser"
 holder = "testuser"
-book = Book(title, author, thumbnail, short_description, isbn, registeredBy, holder)
+status = "available"
+book = Book(title, author, thumbnail, short_description, isbn, registeredBy, holder, status)
 
 def test_createUser():
 	assert username == testUser.username and email == testUser.email and \
