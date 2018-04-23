@@ -17,7 +17,7 @@ easypost.api_key = '3So8pVF6yhYekwW91WrP5g'
 class User(UserMixin):
 
 	def __init__(self, username, email, password_hash, full_name, street, city, state, country, zipcode):
-		self.id = 0;
+		self.id = 0
 		self.username = username
 		self.email = email
 		self.password_hash = password_hash
@@ -348,7 +348,7 @@ class Book():
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("reading", self.id))
+			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", user.username, self.id))
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
 			connection.commit()
 

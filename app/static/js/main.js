@@ -43,6 +43,9 @@ $(document).on('click', '#receive-book', function() {
 		 	data: {bookID: bookID},
 		 	dataType: "json"
 		 })
+		 .done(function(){
+			console.log("hello")
+		 }); 
 		// .done(function(data) {
 		// 	openInNewTab(data);
 		// });
