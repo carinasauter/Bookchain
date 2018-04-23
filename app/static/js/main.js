@@ -41,10 +41,9 @@ $(document).on('click', '#receive-book', function() {
 		 $.ajax({
 		 	url: "/receiveBook",
 		 	data: {bookID: bookID},
-		 	dataType: "json"
 		 })
 		 .done(function(){
-			console.log("hello")
+			location.reload();
 		 }); 
 		// .done(function(data) {
 		// 	openInNewTab(data);
