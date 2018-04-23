@@ -269,3 +269,7 @@ nav .brand-logo {
 .bookDesc {
 	padding-left: 20px;
 } */
+
+.card.horizontal .card-image img{
+	width: 70px;
+}
