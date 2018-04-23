@@ -16,19 +16,27 @@
 	<body>
     <header>
       <div class="navbar-fixed">
-          <nav>
+          <div class = 'nav'>
               <div class="nav-wrapper">
                   <a href="{{ url_for('dashboard')}}"><img src="../static/img/bookchain logo long.png" class="brand-logo left" id = "nav-img" align="left"></a>
                   <!-- <ul id="nav-mobile" class="right hide-on-med-and-down"> -->
                 <!-- <p>decentralized book exchanges</p> -->
                 <!-- {% block loginLink %} -->
                 <!-- <a href="#" data-activates="mobile-menu" class="button-collapse" ><i class="material-icons">menu</i></a> -->
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
-                    <li><a href="{{ url_for('register')}}">Add Books</a></li>
-                    <li><a href="{{ url_for('booksincirc')}}">Borrow Books</a></li>
-                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
-                </ul>
+                <label for="toggle">&#9776;</label>
+                <input type="checkbox" id="toggle"/>
+                <div class ="menu">
+                    <a href="{{ url_for('dashboard')}}">Dashboard</a>
+                    <a href="{{ url_for('register')}}">Add Books</a>
+                    <a href="{{ url_for('booksincirc')}}">Borrow Books</a>
+                    <a href="{{ url_for('logout')}}">Logout</a>
+                  <!-- <ul class="right hide-on-med-and-down">
+                      <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
+                      <li><a href="{{ url_for('register')}}">Add Books</a></li>
+                      <li><a href="{{ url_for('booksincirc')}}">Borrow Books</a></li>
+                      <li><a href="{{ url_for('logout')}}">Logout</a></li>
+                  </ul> -->
+                </div>
                 <!-- <ul class="side-nav" id="mobile-menu">
                     <li><a href="{{ url_for('dashboard')}}">Dashboard</a></li>
                     <li><a href="{{ url_for('register')}}">Add Books</a></li>
@@ -36,7 +44,7 @@
                     <li><a href="{{ url_for('logout')}}">Logout</a></li>
                 </ul> -->
               </div>
-          </nav>
+            </div>
           <!-- {% endblock %} -->
       </div>
     </header>

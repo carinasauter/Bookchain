@@ -278,3 +278,65 @@ nav .brand-logo {
 .tableContentStyle {
 	text-transform: uppercase;
 }
+
+.nav {
+	text-align: right;
+	height: 70px;
+	line-height: 70px;
+}
+
+.menu {
+	margin: 0 30px 0 0;
+}
+
+.menu a {
+	clear: right;
+	text-decoration: none;
+	color: gray;
+	/* margin: 0 10px; */
+	line-height: 70px;
+	padding: 25px;
+}
+
+label {
+	margin: 0 40px 0 0;
+	font-size: 26px;
+	line-height: 70px;
+	display: none;
+	width: 26px;
+	float: right;
+}
+
+#toggle {
+	display: none;
+}
+
+.menu a:hover {
+	background-color: rgb(224, 224, 224);
+}
+
+@media only screen and (max-width: 850px) {
+	label {
+		display: block;
+		cursor: pointer;
+	}
+	.menu {
+		text-align: center;
+		width: 100%;
+		display: none;
+
+	}
+	.menu a {
+		display: block;
+		border-bottom: 1px solid #EAEAEB;
+		background-color: white;
+		margin: 0;
+	}
+
+	.menu a:hover {
+		background-color: rgb(235, 235, 235);
+	}
+	#toggle:checked + .menu {
+		display: block;
+	}
+}
