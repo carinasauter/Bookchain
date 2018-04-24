@@ -1,5 +1,6 @@
 drop table if exists users;
 
+
 CREATE TABLE users (
     user_id integer PRIMARY KEY,
     username text not null,

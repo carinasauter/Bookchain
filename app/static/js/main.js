@@ -102,15 +102,25 @@ $(document).on('click', '.bookdetails', function() {
 
 // when "remove" button is clicked in the dashboard, removes the book from the database
 $(document).on('click', '.removebook', function() {
-	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	// console.log(bookID);
-	$.ajax({
-		url: "/removeBook",
-		data: {book_id: bookID},
-		type: "POST",
-		dataType: "json",
-	})
-	// insert pop up message to confirm removal
+	var r = confirm("Remove book from circulation?");
+    if (r == true) {
+   
+		var bookID = $(this).parent().parent().children()[0].innerHTML;
+		// console.log(bookID);
+		$.ajax({
+			url: "/removeBook",
+			data: {book_id: bookID},
+			type: "DELETE",
+			dataType: "json",
+		})
+		// remove the book from the html 
+		$(this).closest('tr').remove();
+		// pop up message to confirm removal
+		alert("Successfully removed from circulation.");
+	} else {
+		return;
+	}
+	
 })
 
 function sendToBackend(data) {
@@ -291,6 +301,7 @@ $("#search_query").keyup(function(event) {
     }
 });
 
+// searches the circulation page for matching titles or authors, dynamically filters results
 function searchCirc(event) {
     // Declare variables
 	var input = document.getElementById('circQuery').value.toLowerCase();
@@ -322,4 +333,7 @@ $(document).on('click', '#cancelRequest', function() {
 	  dataType: "json"
 	})
 	$( this ).addClass(" disabled ").text("Cancelled");
+	// $( this ).addClass(" disabled ");
+	// $(this).closest('tr').remove();
+
   })

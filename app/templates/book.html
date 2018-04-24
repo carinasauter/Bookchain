@@ -51,7 +51,7 @@
             <h4>{{ title }}</h4>
             <h6>by {{ author }}</h6>
             <p>{{ short_description }}</p>
-             <h6>Uploader: {{uploader}}<br>Current Location: {{location}} </h6>
+            <h6>Uploader: {{uploader}} </h6>
         </div>
         <div class="col l3 left-align">
             <h4>Reviews</h4>
@@ -86,7 +86,9 @@
             {% else %}
             <h4> I've traveled to {{stops}} locations!</h4>
             {% endif %}
+            <h6>Current Location: {{location}}</h6>
         </div>
+        
     </div>
 
     <div class="row">
