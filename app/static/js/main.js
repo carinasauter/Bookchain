@@ -11,7 +11,33 @@ $(document).ready(
     	$('#search_query').val("");
     	var query = "?q=" + parseInput(user_input)
     	callAPI(query, parseQuery);
-    })
+	}),
+
+	// Register event for available-switch to change book status between 'reading' and 'available'
+	$(".available-checkbox").change(function (event) {
+		bookID = String(this.id).replace("bookID-", "");
+		status_cell = $(event.target.parentNode.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling);
+		if (this.checked) {
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "/setBookAvailability",
+				data: JSON.stringify({book: bookID, status: "available"}),
+				dataType: "json"
+			});
+			status_cell = status_cell.html("available");
+		}
+		else {
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "/setBookAvailability",
+				data: JSON.stringify({book: bookID, status: "reading"}),
+				dataType: "json"
+			});
+			status_cell = status_cell.html("reading");
+		}
+	})
 )
 
 $(document).ready(function(){
@@ -44,7 +70,9 @@ $(document).on('mouseover', '.requestBook', function() {
 })
 
 
-//Function when user clicks "Received Book"
+
+
+// Function when user clicks "Received Book"
 $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).closest('tr').remove();
@@ -55,11 +83,7 @@ $(document).on('click', '#receive-book', function() {
 		 })
 		 .done(function(){
 			location.reload();
-		 }); 
-		// .done(function(data) {
-		// 	openInNewTab(data);
-		// });
-	
+		 }); 	
 });
 
 

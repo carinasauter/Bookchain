@@ -91,22 +91,47 @@
                 <!-- <td>{% for num in book[3] %}
                 <i class="material-icons tiny star amber-text lighten-1">star</i> -->
                 <!-- {% endfor %} -->
+                <!-- </td> -->
+                <td>
+                    <div class="switch">
+                        <label>
+                            Off
+                            {% if book[5] == "available" %}
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[4]}}" checked>
+                            {% else %}
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[4]}}">
+                            {% endif %}
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
                 </td>
-                <td>here should be available check box</td>
             </tr>
             {% endfor %}
             {% for entry in uploads %}
             <tr>
-                    <td class = "hidden">{{entry[5]}}</td>
-                    <td>
+                <td class = "hidden">{{entry[5]}}</td>
+                <td>
                     <img src="{{entry[2]}}">
-                    </td>
-                    <td>{{entry[0]}}<p>{{entry[1]}}</p></td>
-                    <td class="tableContentStyle">{{entry[6]}}</td>
-                    <td>Me</td>
-                    </td>
-                    <td>here should be available check box</td>
-                </tr>
+                </td>
+                <td>{{entry[0]}}<p>{{entry[1]}}</p></td>
+                <td class="tableContentStyle">{{entry[6]}}</td>
+                <td>Me</td>
+                <td>
+                    <div class="switch">
+                        <label>
+                            Off
+                            {% if entry[6] == "available" %}
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{entry[5]}}" checked>
+                            {% else %}
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{entry[5]}}">
+                            {% endif %}
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
+                </td>
+            </tr>
             {% endfor %}
         </table>
     <!-- </section> -->
@@ -147,15 +172,4 @@
     <!-- </section> -->
 </div>
 </div>  
-<!-- <script>
-        // var elem = document.querySelector('.sidenav');
-        //   var instance = new M.Sidenav(elem);
-  
-          // with jquery
-          console.log("hey");
-          $(document).ready(function(){
-            console.log("hey");
-          $('.sidenav').sidenav();
-          });
-    </script>   -->
 {% endblock %}
