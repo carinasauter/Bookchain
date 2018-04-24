@@ -14,6 +14,10 @@ $(document).ready(
     })
 )
 
+$(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).addClass("disabled");
@@ -231,14 +235,6 @@ $(document).on('click', '.labelprint', function() {
 	console.log("clicked print label");
 	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
 	console.log(bookID);
-	// change book status from requested to in-transit in books table
-	$.ajax({
-		type: "POST",
-		contentType: "application/json",
-		url: "/shipBook",
-		data: JSON.stringify({book: bookID}),
-		dataType: "json"
-	});
 	// print shipping label
 	$.ajax({
 		url: "/printLabel",
@@ -248,6 +244,16 @@ $(document).on('click', '.labelprint', function() {
 	.done(function(data) {
 		openInNewTab(data);
 	});
+	// change book status from requested to in-transit in books table
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: "/shipBook",
+		data: JSON.stringify({book: bookID}),
+		dataType: "json"
+	});
+	
+
 })
 
 function openInNewTab(url) {
