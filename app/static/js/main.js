@@ -261,10 +261,28 @@ function openInNewTab(url) {
 }
 
 
-
 $("#search_query").keyup(function(event) {
     if (event.keyCode === 13) {
         $("#registerBook").click();
     }
 });
 
+function searchCirc(event) {
+    // Declare variables
+	var input = document.getElementById('circQuery').value.toLowerCase();
+	var bookList = document.getElementsByClassName('card horizontal')
+	// console.log(input.value)
+	// console.log(bookList)
+
+    // Loop through all books, and hide those who don't match the search query
+    for (i = 0; i < bookList.length; i++) {
+		title = bookList[i].getElementsByTagName("b")[0].innerHTML.toLowerCase();
+		author = bookList[i].getElementsByTagName("i")[0].innerHTML.toLowerCase();
+		// console.log(a)
+        if (title.indexOf(input) > -1 || author.indexOf(input) > -1) {
+            bookList[i].style.display = "";
+        } else {
+            bookList[i].style.display = "none";
+        }
+    }
+}
