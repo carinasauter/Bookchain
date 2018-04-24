@@ -97,7 +97,7 @@ def shipBook():
     content = request.get_json()
     book_id = content['book']
     book = getBookById(book_id)
-    book.setBookStatusToInTransit()
+    book.setBookStatus("in-transit")
     print(book.status)
     return "book status change to in-transit"
 
@@ -305,4 +305,15 @@ def cancelRequest():
     # print(user)
     bookToCancel = getBookById(bookID)
     bookToCancel.cancelRequest(user)
+    return ""
+
+@app.route('/setBookAvailability', methods=['POST'])
+@login_required
+def setBookAvailability():
+    content = request.get_json()
+    book_id = content['book']
+    status = content['status']
+    book = getBookById(book_id)
+    book.setBookStatus(status)
+    print(book.status)
     return ""

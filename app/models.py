@@ -383,11 +383,11 @@ class Book():
 	"""
 	Ship Book
 	"""
-	def setBookStatusToInTransit(self):
+	def setBookStatus(self, status):
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",("in-transit", self.id))
+			cursor.execute("UPDATE books SET status = ? WHERE book_id = ?",(status, self.id))
 			connection.commit()
 
 	"""
