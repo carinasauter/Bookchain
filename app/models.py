@@ -498,11 +498,11 @@ class Book():
 	"""
 	Removes a book from the database
 	"""
-	def removeBook(self):
+	def removeBook(self, user):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			cursor.execute("DELETE FROM books WHERE book_id = (?)", (self.id))
-			cursor.execute("DELETE FROM books_users WHERE book_id = (?)", (self.id))
+			cursor.execute("DELETE FROM books WHERE book_id = (?) AND uploader = (?) AND holder = (?)", (self.id, user.username, user.username))
+			cursor.execute("DELETE FROM books_users WHERE book_id = (?) AND user_id =(?) AND relationship = (?)", (self.id, user.getId(), "uploader"))
 			connection.commit()
 
 
