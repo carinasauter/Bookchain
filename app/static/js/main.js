@@ -31,6 +31,15 @@ $(document).on('mouseover', '.available', function() {
 	$( this ).css( 'cursor', 'pointer' );
 })
 
+$(document).on('mouseover', '.bookdetails', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+
+$(document).on('mouseover', '.requestBook', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+
+
 //Function when user clicks "Received Book"
 $(document).on('click', '#receive-book', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
@@ -204,6 +213,19 @@ function imgError(image) {
     image.src = "/static/img/noImgFound.jpg";
     return true;
 }
+
+$(document).on('click', '.requestBook', function() {
+	console.log("clicked")
+	var bookID = $(this).attr("data-bookid");
+	$.ajax({
+		type: "POST",
+    	url: "/requestBook",
+    	data: {book_id: bookID},
+    	dataType: "json"
+  	})
+  $( this ).addClass(" grey-text ");
+  $(this).unbind('mouseenter mouseleave click');
+})
 
 
 $(document).on('click', '.labelprint', function() {

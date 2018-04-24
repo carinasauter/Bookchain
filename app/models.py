@@ -6,7 +6,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sys
 import requests
 import json
+import re
 import easypost
+from markupsafe import Markup
 
 
 
@@ -282,8 +284,8 @@ def getBooksInCirc():
 		cursor = connection.cursor()
 		result = cursor.execute("SELECT * FROM books").fetchall()
 		lst = []
-		for entry in result:
-			lst.append(entry)
+		for book in result:
+			lst.append(book)
 		return lst
 
 
@@ -320,7 +322,7 @@ class Book():
 			cursor2 = connection.cursor()
 			cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description, isbn,\
 			uploader, holder, status) VALUES (?,?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
-			self.short_description, self.isbn, self.registeredBy, self.holder, self.status))
+			cleanhtml(self.short_description), self.isbn, self.registeredBy, self.holder, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
 			connection.commit()			
 			result = result[0][0]

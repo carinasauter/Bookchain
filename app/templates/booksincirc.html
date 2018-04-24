@@ -25,13 +25,17 @@
                 <div class="card-content s6 m7 l7 left-align">
                     <h6><b>{{book[1]}}</b></h6>
                     <p><i>{{book[2]}}</i></p>
-                    <div class="card-description">
+                    <div class="card-description line-clamp">
                         <p>{{book[4]}}</p>
                     </div>
                 </div>
             </div>
             <div class="card-action col s4 m3 l3">
-                <button class = "btn bookdetails" data-bookid="{{book[0]}}">Details</button>
+<!--                 <div class="tooltip"> -->
+                    <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text bookdetails">search</i>
+<!--                     <span class="tooltiptext">Search</span> -->
+                <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook">book</i>
+                <!-- <button class = "btn bookdetails" data-bookid="{{book[0]}}">Details</button> -->
             </div>
         </div>
         {% endfor %}
