@@ -149,8 +149,13 @@ def dashboard():
 @login_required
 def booksincirc():
     allBooks = getBooksInCirc()
-    print(allBooks)
-    return render_template('booksincirc.html', allBooks = allBooks)
+    # print(allBooks)
+    requests = current_user.requestedBooks()
+    list_ids = []
+    for book in requests:
+        list_ids.append(int(book[4]))
+    print(list_ids)
+    return render_template('booksincirc.html', allBooks = allBooks, requests = list_ids)
 
 @app.route('/getMap', methods=['GET'])
 @login_required
@@ -211,7 +216,6 @@ def book(book_id):
         blockRequest = 1
     elif currentUser.hasRequested(book):
         blockRequest = 2
-    print("here")
     return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
         thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
         location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \

@@ -5,17 +5,6 @@ from wtforms.fields.html5 import EmailField
 from .models import *
 from flask_material import Material 
 
-# class TripForm(Form):
-# 	tripname = StringField('tripname', validators=[DataRequired()])
-# 	destination = StringField('destination', validators=[DataRequired()])
-# 	friend = SelectField('friend', validators=[DataRequired()])
-# 	submit = SubmitField('Create Trip')
-
-# 	def set_choices(self):
-# 		friends = getAvailableFriends()
-# 		self.friend.choices = [(friend[0],friend[0]) for friend in friends]
-
-
 class LoginForm(Form):
 	username = StringField('Username', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])

@@ -223,8 +223,7 @@ $(document).on('click', '.requestBook', function() {
     	data: {book_id: bookID},
     	dataType: "json"
   	})
-  $( this ).addClass(" grey-text ");
-  $(this).unbind('mouseenter mouseleave click');
+  $( this ).addClass(" grey-text ").removeClass(" requestBook ");
 })
 
 

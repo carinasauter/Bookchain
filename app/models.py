@@ -138,7 +138,7 @@ class User(UserMixin):
 			result = cursor.execute("SELECT book_id, timestamp FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
 		if result == []:
 			return result
-		# CY: if we disable request buttom of a book for the book uploader, we don't need to examine this logic again here
+		# CY: if we disable request button of a book for the book uploader, we don't need to examine this logic again here
 		# lst = []
 		# for entry in result:
 		# 	book = getBookById(entry[0])
