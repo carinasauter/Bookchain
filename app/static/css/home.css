@@ -300,7 +300,7 @@ nav .brand-logo {
 	padding: 20px;
 }
 
-label {
+.nav-wrapper label {
 	margin: 0 40px 0 0;
 	font-size: 26px;
 	line-height: 70px;
@@ -309,7 +309,7 @@ label {
 	float: right;
 }
 
-#toggle {
+.nav-wrapper #toggle {
 	display: none;
 }
 
@@ -318,7 +318,7 @@ label {
 }
 
 @media only screen and (max-width: 850px) {
-	label {
+	.nav-wrapper label {
 		display: block;
 		cursor: pointer;
 	}
@@ -338,7 +338,7 @@ label {
 	.menu a:hover {
 		background-color: rgb(235, 235, 235);
 	}
-	#toggle:checked + .menu {
+	.nav-wrapper #toggle:checked + .menu {
 		display: block;
 	}
 }
