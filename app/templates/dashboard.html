@@ -8,13 +8,11 @@
           <h5>My Requests</h5>
           <table>
             <col width="10%">
-            <col width="35%">
             <col width="30%">
             <col width="15%">
             <col width="10%">
             <tr>
-              <th>Title</th>
-              <th></th>
+              <th>Book</th>
               <th>Requested Date</th>
               <th>Status</th>
               <th>Action</th>
@@ -37,13 +35,11 @@
             <h5>Requests From Others</h5>
             <table>
                 <col width="10%">
-                <col width="35%">
                 <col width="20%">
                 <col width="20%">
                 <col width="15%">
                 <tr>
-                    <th>Title</th>
-                    <th></th>
+                    <th>Book</th>
                     <th>Requested By</th>
                     <th>Ship By</th>
                     <th>Action</th>
@@ -52,11 +48,9 @@
                 <tr>
                     <td class = "hidden">{{book[3]}}</td>
                     <td><img src="{{book[2]}}"></td>
-                    <td>{{book[0]}}<p>{{book[1]}}</p></td>
                     <td>{{book[4]}}</td>
                     <td>{{book[5]}}</td>
-                    <td id="printIcon"><a href="#"><i class="material-icons labelprint">print</i></a></td>
-                    <!-- <td class = "bigButton"><button class="btn labelprint">Print Shipping Label</button></td> -->
+                    <td><a href="#"><i class="material-icons ourBlue-text labelprint">print</i></a><a href="#"><i class="material-icons ourBlue-text shipBook">check_box</i></a></td>
                 </tr>
                 {% endfor %}
             </table>
