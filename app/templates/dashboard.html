@@ -22,7 +22,11 @@
               <td><img src="{{book[2]}}"></td>
               <td>{{book[5]}}</td>
               <td class="tableContentStyle">{{book[6]}}</td>
-              <td><button class="btn" id="receive-book">Received Book</button></td>
+              {% if book[6] == "requested" %}
+                <td><button class="btn waves-effect waves-light" id="cancelRequest">Cancel</button></td>            
+              {% else %}
+                <td><button class="btn" id="receive-book">Received Book</button></td>            
+              {% endif %}
             </tr>
             {% endfor %}
            </table>

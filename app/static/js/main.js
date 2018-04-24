@@ -286,3 +286,16 @@ function searchCirc(event) {
         }
     }
 }
+
+$(document).on('click', '#cancelRequest', function() {
+	console.log("cancel request clicked")
+	var book_id = $(this).parent().parent().children()[0].innerHTML;
+	console.log(book_id);
+	$.ajax({
+	  // type: "POST",
+	  url: "/cancelRequest",
+	  data: {book_id: book_id},
+	  dataType: "json"
+	})
+	$( this ).addClass(" disabled ").text("Cancelled");
+  })
