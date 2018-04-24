@@ -140,14 +140,17 @@ def unauthorized_handler():
 @login_required
 def dashboard():
     user = current_user
-    lst = bookUploadsForDashboard()
-    borrowed = user.readingBooks()
+    # lst = bookUploadsForDashboard()
+    # borrowed = user.readingBooks()
+    owned_books = user.ownedBooks()
     my_requests = user.requestedBooks()
     requests_from_others = user.requestedBooksOthers()
     # available = user.availableBooksDashboard()
 
-    return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
+    return render_template('dashboard.html', owned_books = owned_books, \
         my_requests = my_requests, requests_from_others = requests_from_others)
+    # return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
+    #     my_requests = my_requests, requests_from_others = requests_from_others)
 
 @app.route('/booksincirc')
 @login_required

@@ -78,15 +78,15 @@
                 <th>Book Owner</th>
                 <th>Available</th>
             </tr>
-            {% for book in borrowed %}
+            {% for book in owned_books %}
             <tr>
-                <td class = "hidden">{{book[4]}}</td>
+                <td class = "hidden">{{book[0]}}</td>
                 <td>
-                <img src="{{book[2]}}">
+                <img src="{{book[1]}}">
                 </td>
-                <td>{{book[0]}}<p>{{book[1]}}</p></td>
+                <td>{{book[2]}}<p>{{book[3]}}</p></td>
+                <td class="tableContentStyle">{{book[4]}}</td>
                 <td class="tableContentStyle">{{book[5]}}</td>
-                <td class="tableContentStyle">{{book[6]}}</td>
                 <!-- <td>{% for num in book[3] %}
                 <i class="material-icons tiny star amber-text lighten-1">star</i> -->
                 <!-- {% endfor %} -->
@@ -95,10 +95,10 @@
                     <div class="switch">
                         <label>
                             Off
-                            {% if book[5] == "available" %}
-                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[4]}}" checked>
+                            {% if book[4] == "available" %}
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}" checked>
                             {% else %}
-                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[4]}}">
+                            <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}">
                             {% endif %}
                             <span class="lever"></span>
                             On
@@ -107,7 +107,7 @@
                 </td>
             </tr>
             {% endfor %}
-            {% for entry in uploads %}
+            <!-- {% for entry in uploads %}
             <tr>
                 <td class = "hidden">{{entry[5]}}</td>
                 <td>
@@ -131,7 +131,7 @@
                     </div>
                 </td>
             </tr>
-            {% endfor %}
+            {% endfor %} -->
         </table>
     <!-- </section> -->
     <!-- <section class="books-mybooks"> -->
