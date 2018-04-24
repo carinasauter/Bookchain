@@ -102,18 +102,25 @@ $(document).on('click', '.bookdetails', function() {
 
 // when "remove" button is clicked in the dashboard, removes the book from the database
 $(document).on('click', '.removebook', function() {
-	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	// console.log(bookID);
-	$.ajax({
-		url: "/removeBook",
-		data: {book_id: bookID},
-		type: "DELETE",
-		dataType: "json",
-	})
-	// remove the book from the html 
-	$(this).closest('tr').remove();
-	// pop up message to confirm removal
-	alert("Successfully removed from circulation.");
+	var r = confirm("Remove book from circulation?");
+    if (r == true) {
+   
+		var bookID = $(this).parent().parent().children()[0].innerHTML;
+		// console.log(bookID);
+		$.ajax({
+			url: "/removeBook",
+			data: {book_id: bookID},
+			type: "DELETE",
+			dataType: "json",
+		})
+		// remove the book from the html 
+		$(this).closest('tr').remove();
+		// pop up message to confirm removal
+		alert("Successfully removed from circulation.");
+	} else {
+		return;
+	}
+	
 })
 
 function sendToBackend(data) {
