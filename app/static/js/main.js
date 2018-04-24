@@ -40,6 +40,10 @@ $(document).ready(
 	})
 )
 
+$(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).addClass("disabled");
@@ -255,14 +259,6 @@ $(document).on('click', '.labelprint', function() {
 	console.log("clicked print label");
 	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
 	console.log(bookID);
-	// change book status from requested to in-transit in books table
-	$.ajax({
-		type: "POST",
-		contentType: "application/json",
-		url: "/shipBook",
-		data: JSON.stringify({book: bookID}),
-		dataType: "json"
-	});
 	// print shipping label
 	$.ajax({
 		url: "/printLabel",
@@ -272,12 +268,21 @@ $(document).on('click', '.labelprint', function() {
 	.done(function(data) {
 		openInNewTab(data);
 	});
+	// change book status from requested to in-transit in books table
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: "/shipBook",
+		data: JSON.stringify({book: bookID}),
+		dataType: "json"
+	});
+	
+
 })
 
 function openInNewTab(url) {
   var win = window.open(url, '_blank');
 }
-
 
 
 $("#search_query").keyup(function(event) {
@@ -286,3 +291,35 @@ $("#search_query").keyup(function(event) {
     }
 });
 
+function searchCirc(event) {
+    // Declare variables
+	var input = document.getElementById('circQuery').value.toLowerCase();
+	var bookList = document.getElementsByClassName('card horizontal')
+	// console.log(input.value)
+	// console.log(bookList)
+
+    // Loop through all books, and hide those who don't match the search query
+    for (i = 0; i < bookList.length; i++) {
+		title = bookList[i].getElementsByTagName("b")[0].innerHTML.toLowerCase();
+		author = bookList[i].getElementsByTagName("i")[0].innerHTML.toLowerCase();
+		// console.log(a)
+        if (title.indexOf(input) > -1 || author.indexOf(input) > -1) {
+            bookList[i].style.display = "";
+        } else {
+            bookList[i].style.display = "none";
+        }
+    }
+}
+
+$(document).on('click', '#cancelRequest', function() {
+	console.log("cancel request clicked")
+	var book_id = $(this).parent().parent().children()[0].innerHTML;
+	console.log(book_id);
+	$.ajax({
+	  // type: "POST",
+	  url: "/cancelRequest",
+	  data: {book_id: book_id},
+	  dataType: "json"
+	})
+	$( this ).addClass(" disabled ").text("Cancelled");
+  })

@@ -107,8 +107,12 @@ def printLabel():
     shipper = current_user
     book_id = request.args['book']
     book = getBookById(book_id)
+    print("Book id: " + book_id)
     requester = book.getRequester()
+    print(requester)
     requester = getUserByID(requester)
+    print(requester)
+    print(requester.full_name)
     from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
         shipper.state, shipper.zipcode, shipper.country)
     to_address = createAddress(requester.full_name, requester.street, requester.city, \
