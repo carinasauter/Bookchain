@@ -162,8 +162,17 @@ class User(UserMixin):
 		return info
 
 
-		
-
+	"""
+	returns a list of book ids referencing books the user has uploaded to the platform
+	"""
+	def ownedBooks(self):
+		with sql.connect('database.db') as connection:
+			cursor = connection.cursor()
+			result = cursor.execute("SELECT book_id, thumbnail, title, author, status, uploader FROM books WHERE holder = ? ", (self.username,)).fetchall()
+		# lst = []
+		# for entry in result:
+		# 	lst.append(entry)
+		return result
 
 	"""
 	returns a list of book ids referencing books the user has uploaded to the platform
