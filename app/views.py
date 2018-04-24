@@ -289,7 +289,7 @@ def receiveBook():
     return json_data
 
 
-@app.route('/removeBook', methods=['POST'])
+@app.route('/removeBook', methods=['DELETE'])
 @login_required
 def removeBook():
     bookID = request.form['book_id']

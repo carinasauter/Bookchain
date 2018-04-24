@@ -107,10 +107,13 @@ $(document).on('click', '.removebook', function() {
 	$.ajax({
 		url: "/removeBook",
 		data: {book_id: bookID},
-		type: "POST",
+		type: "DELETE",
 		dataType: "json",
 	})
-	// insert pop up message to confirm removal
+	// remove the book from the html 
+	$(this).closest('tr').remove();
+	// pop up message to confirm removal
+	alert("Successfully removed from circulation.");
 })
 
 function sendToBackend(data) {
@@ -291,6 +294,7 @@ $("#search_query").keyup(function(event) {
     }
 });
 
+// searches the circulation page for matching titles or authors, dynamically filters results
 function searchCirc(event) {
     // Declare variables
 	var input = document.getElementById('circQuery').value.toLowerCase();

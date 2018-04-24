@@ -501,8 +501,8 @@ class Book():
 	def removeBook(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			cursor.execute("DELETE FROM books WHERE book_id = (?)", (self.id))
-			cursor.execute("DELETE FROM books_users WHERE book_id = (?)", (self.id))
+			cursor.execute("DELETE FROM books WHERE book_id = (?)", (self.id,))
+			cursor.execute("DELETE FROM books_users WHERE book_id = (?)", (self.id,))
 			connection.commit()
 
 
