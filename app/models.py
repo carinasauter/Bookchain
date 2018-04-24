@@ -378,6 +378,7 @@ class Book():
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
 			cursor.execute("DELETE FROM books_users WHERE book_id = (?) and user_id = (?) and relationship = (?)", (self.id, user.getId(), relationship))
+			cursor.execute("UPDATE books SET status = (?) WHERE book_id = (?)", ("available", self.id))
 			connection.commit()	
 
 	"""

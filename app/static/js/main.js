@@ -298,4 +298,7 @@ $(document).on('click', '#cancelRequest', function() {
 	  dataType: "json"
 	})
 	$( this ).addClass(" disabled ").text("Cancelled");
+	// $( this ).addClass(" disabled ");
+	// $(this).closest('tr').remove();
+
   })
