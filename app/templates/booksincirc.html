@@ -5,10 +5,14 @@
     var bookRequests = {{ requests }};
     var elements = document.getElementsByClassName("requestBook");
     var x = elements.length;
+    console.log("bookRequests:");
+    console.log(bookRequests);
     var i = 0;
     while (i < x - 1) {
         var result = elements[i].getAttribute("data-bookid");
+        console.log(result);
         if (bookRequests.includes(parseInt(result))) {
+            console.log("entering here.");
             elements[i].classList.add("grey-text");
             elements[i].classList.remove("requestBook");
         }

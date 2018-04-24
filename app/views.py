@@ -149,12 +149,16 @@ def dashboard():
 @login_required
 def booksincirc():
     allBooks = getBooksInCirc()
-    # print(allBooks)
     requests = current_user.requestedBooks()
+    lst = bookUploadsForDashboard()
+    currentPossessions = current_user.readingBooks()
     list_ids = []
     for book in requests:
         list_ids.append(int(book[4]))
-    print(list_ids)
+    for book in currentPossessions:
+        list_ids.append(int(book[4]))
+    for book in lst:
+        list_ids.append(int(book[5]))
     return render_template('booksincirc.html', allBooks = allBooks, requests = list_ids)
 
 @app.route('/getMap', methods=['GET'])
