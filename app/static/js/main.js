@@ -126,18 +126,24 @@ $(document).on('click', '.removebook', function() {
 })
 
 function sendToBackend(data) {
+	console.log(data);
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
 	var author = bookInfo['authors'];
+	
 	var thumbnail = bookInfo['imageLinks'];
 	if (typeof thumbnail != 'undefined') {
 		thumbnail = thumbnail['large'];
+		thumbnail_small = bookInfo['imageLinks']['thumbnail'];
 		if (typeof thumbnail == 'undefined') {
 			thumbnail = bookInfo['imageLinks']['thumbnail'];
+			thumbnail_small = bookInfo['imageLinks']['thumbnail'];
 		}
 	} else {
 		thumbnail = "static/img/noImgFound.jpg";
+		thumbnail_small = "static/img/noImgFound.jpg";
 	}
+
 	if (typeof author != 'undefined') {
 		author = author[0];
 	} else {
@@ -167,7 +173,7 @@ function sendToBackend(data) {
 	$.ajax({
 		type: "POST",
 		url: "/registerBook",
-		data: { title: title, author: author, thumbnail: thumbnail, short_description: short_description, isbn: isbn},
+		data: { title: title, author: author, thumbnail: thumbnail, thumbnail_small: thumbnail_small, short_description: short_description, isbn: isbn},
 		dataType: "json",
 	}).done(function( o ) {
 	});
@@ -308,8 +314,6 @@ function searchCirc(event) {
     // Declare variables
 	var input = document.getElementById('circQuery').value.toLowerCase();
 	var bookList = document.getElementsByClassName('card horizontal')
-	// console.log(input.value)
-	// console.log(bookList)
 
     // Loop through all books, and hide those who don't match the search query
     for (i = 0; i < bookList.length; i++) {

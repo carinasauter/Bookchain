@@ -2,21 +2,13 @@
 {% block variables %}
 <!-- this script needs to go here because this is a nice way to use flask variables for styling. -->
 <script type="text/javascript">
-    var bookRequests = {{ requests }};
-    var elements = document.getElementsByClassName("requestBook");
-    var x = elements.length;
-    console.log("bookRequests:");
-    console.log(bookRequests);
-    var i = 0;
-    while (i < x - 1) {
-        var result = elements[i].getAttribute("data-bookid");
-        console.log(result);
-        if (bookRequests.includes(parseInt(result))) {
-            console.log("entering here.");
-            elements[i].classList.add("grey-text");
-            elements[i].classList.remove("requestBook");
+    var alreadyHave = {{ blocked }};
+    var list = document.getElementsByClassName("active");
+    for (var item of list) {
+        if (alreadyHave.includes(parseInt(item.getAttribute("data-bookid")))) {
+            item.classList.add("grey-text");
+            item.classList.remove("requestBook");
         }
-        i ++;
     }
 
 </script>
@@ -41,14 +33,14 @@
         {% for book in allBooks %}
         <div class="card horizontal">
             <div class="card-image col s2 m2 l2">
-                <img class="book_cover_thumbnail" src="{{book[3]}}">
+                <img class="book_cover_thumbnail" src="{{book[4]}}">
             </div>
             <div class="card-stacked">
                 <div class="card-content s6 m7 l7 left-align">
                     <h6><b>{{book[1]}}</b></h6>
                     <p><i>{{book[2]}}</i></p>
                     <div class="card-description line-clamp">
-                        <p>{{book[4]}}</p>
+                        <p>{{book[5]}}</p>
                     </div>
                 </div>
             </div>
@@ -56,7 +48,7 @@
 <!--                 <div class="tooltip"> -->
                     <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text bookdetails">search</i>
 <!--                     <span class="tooltiptext">Search</span> -->
-                <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook">book</i>
+                <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook active">book</i>
                 <!-- <button class = "btn bookdetails" data-bookid="{{book[0]}}">Details</button> -->
             </div>
         </div>

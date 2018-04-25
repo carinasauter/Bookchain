@@ -130,7 +130,7 @@ class User(UserMixin):
 			avg_rating = book.getAverageRating()
 			starRating = getStarRating(avg_rating)
 			uploader = book.getUploader()
-			info.append([book.title, book.author, book.thumbnail, starRating, book.id, book.status, uploader])
+			info.append([book.title, book.author, book.thumbnail_small, starRating, book.id, book.status, uploader])
 		return info
 
 	def requestedBooks(self):
@@ -159,7 +159,7 @@ class User(UserMixin):
 			book = getBookById(entry[0])
 			avg_rating = book.getAverageRating()
 			starRating = getStarRating(avg_rating)
-			info.append([book.title, book.author, book.thumbnail, starRating, book.id, requested_date, book.status])
+			info.append([book.title, book.author, book.thumbnail_small, starRating, book.id, requested_date, book.status])
 		return info
 
 
@@ -219,7 +219,7 @@ class User(UserMixin):
 		lst = []
 		for entry in lstAvailableBooks:
 			book = getBookById(entry)
-			lst.append([book.id, book.title, book.author, book.thumbnail])
+			lst.append([book.id, book.title, book.author, book.thumbnail_small])
 		return lst
 
 	"""
@@ -239,7 +239,7 @@ class User(UserMixin):
 			book = getBookById(entry[0])
 			# requester = getRequesterUsername(entry[0])
 			requester = getUserByID(entry[1])
-			info.append([book.title, book.author, book.thumbnail, book.id, requester.username, requested_date])
+			info.append([book.title, book.author, book.thumbnail_small, book.id, requester.username, requested_date])
 		return info
 
 """ Get book requester"""
@@ -314,11 +314,12 @@ def load_user(id):
 
 class Book():
 
-	def __init__(self, title, author, thumbnail, short_description, isbn, registeredBy, holder, status):
+	def __init__(self, title, author, thumbnail, thumbnail_small, short_description, isbn, registeredBy, holder, status):
 		self.id = 0
 		self.title = title
 		self.author = author
 		self.thumbnail = thumbnail
+		self.thumbnail_small = thumbnail_small
 		self.short_description = short_description
 		self.isbn = isbn
 		self.registeredBy = registeredBy
@@ -330,9 +331,9 @@ class Book():
 		with sql.connect('database.db') as connection:
 			cursor1 = connection.cursor()
 			cursor2 = connection.cursor()
-			cursor1.execute("INSERT INTO books (title, author, thumbnail, short_description, isbn,\
-			uploader, holder, status) VALUES (?,?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
-			cleanhtml(self.short_description), self.isbn, self.registeredBy, self.holder, self.status))
+			cursor1.execute("INSERT INTO books (title, author, thumbnail, thumbnail_small, short_description, isbn,\
+			uploader, holder, status) VALUES (?,?,?,?,?,?,?,?,?)",(self.title, self.author, self.thumbnail, \
+			self.thumbnail_small, cleanhtml(self.short_description), self.isbn, self.registeredBy, self.holder, self.status))
 			result = cursor2.execute("SELECT LAST_INSERT_ROWID()").fetchall()
 			connection.commit()			
 			result = result[0][0]
@@ -524,12 +525,13 @@ def getBookById(book_id):
 		title = result[0][1]
 		author = result[0][2]
 		thumbnail = result[0][3]
-		short_description = result[0][4]
-		isbn = result[0][5]
-		uploader = result[0][6]
-		holder = result[0][7]
-		status = result[0][8]
-		newBook = Book(title, author, thumbnail, short_description, isbn, uploader, holder, status)
+		thumbnail_small = result[0][4]
+		short_description = result[0][5]
+		isbn = result[0][6]
+		uploader = result[0][7]
+		holder = result[0][8]
+		status = result[0][9]
+		newBook = Book(title, author, thumbnail, thumbnail_small, short_description, isbn, uploader, holder, status)
 		newBook.setId(book_id)
 		return newBook
 
@@ -622,7 +624,7 @@ def bookUploadsForDashboard():
 		avg_rating = getStarRating(average_rating)
 		entry.append(book.title)
 		entry.append(book.author)
-		entry.append(book.thumbnail)
+		entry.append(book.thumbnail_small)
 		entry.append(location)
 		entry.append(avg_rating)
 		entry.append(book.id)
