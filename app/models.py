@@ -227,7 +227,7 @@ class User(UserMixin):
 	def requestedBooksOthers(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT books.book_id, books_users.user_id, books_users.timestamp from books INNER JOIN books_users on books.book_id = books_users.book_id WHERE holder = ? AND status = ?", (self.username, "requested")).fetchall()
+			result = cursor.execute("SELECT books.book_id, books_users.user_id, books_users.timestamp from books INNER JOIN books_users on books.book_id = books_users.book_id WHERE holder = ? AND relationship = ?", (self.username, "requester")).fetchall()
 		if result == []:
 			return result
 		info = []
@@ -374,7 +374,7 @@ class Book():
 			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", user.username, self.id))
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
 			if prev_userId != None:
-				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId))
+				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId[0]))
 			connection.commit()
 
 	"""

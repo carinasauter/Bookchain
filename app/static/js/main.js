@@ -16,7 +16,8 @@ $(document).ready(
 	// Register event for available-switch to change book status between 'reading' and 'available'
 	$(".available-checkbox").change(function (event) {
 		bookID = String(this.id).replace("bookID-", "");
-		status_cell = $(event.target.parentNode.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling);
+		status_cell = $(event.target).parent().parent().parent().prev().prev();
+		console.log(status_cell);
 		if (this.checked) {
 			$.ajax({
 				type: "POST",
@@ -36,6 +37,7 @@ $(document).ready(
 				dataType: "json"
 			});
 			status_cell = status_cell.html("reading");
+			console.log("here");
 		}
 	})
 )
