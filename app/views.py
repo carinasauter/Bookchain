@@ -110,12 +110,8 @@ def printLabel():
     shipper = current_user
     book_id = request.args['book']
     book = getBookById(book_id)
-    print("Book id: " + book_id)
     requester = book.getRequester()
-    print(requester)
     requester = getUserByID(requester)
-    print(requester)
-    print(requester.full_name)
     from_address = createAddress(shipper.full_name, shipper.street, shipper.city, \
         shipper.state, shipper.zipcode, shipper.country)
     to_address = createAddress(requester.full_name, requester.street, requester.city, \
@@ -125,8 +121,8 @@ def printLabel():
     shipment = createAndBuyShipment(to_address, from_address, parcel, customsForm)
     shipment_url=shipment.postage_label.label_url
     json_data = json.dumps(shipment.postage_label.label_url)
-    print(json_data)
-    return webbrowser.open_new_tab(shipment_url)
+    return json_data    
+
 
 
 @app.route('/logout')

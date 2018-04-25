@@ -44,10 +44,6 @@ $(document).ready(
 	})
 )
 
-$(document).ready(function(){
-    $('.tooltipped').tooltip();
-  });
-
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).addClass("disabled");
@@ -73,6 +69,13 @@ $(document).on('mouseover', '.requestBook', function() {
 	$( this ).css( 'cursor', 'pointer' );
 })
 
+$(document).on('mouseover', '.labelprint', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+
+$(document).on('mouseover', '.shipBook', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
 
 
 
@@ -266,6 +269,7 @@ function imgError(image) {
 }
 
 $(document).on('click', '.requestBook', function() {
+	console.log("requested book");
 
 	var bookID = $(this).attr("data-bookid");
 	$.ajax({
@@ -279,7 +283,7 @@ $(document).on('click', '.requestBook', function() {
 
 
 $(document).on('click', '.labelprint', function() {
-	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
+	var bookID = $(this).parent().parent().children()[0].innerHTML;
 
 	// print shipping label
 	$.ajax({
