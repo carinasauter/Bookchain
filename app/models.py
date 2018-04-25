@@ -548,7 +548,7 @@ def getBookById(book_id):
 def createAddress(full_name, street, city, state, zipcode, country):
 	return easypost.Address.create(verify=["delivery"],name = full_name,\
 		street1 = street, street2 = "", city = city, state = state, zip = zipcode,\
-		country = country)
+		country = country, phone = "123-456-7890")
 
 
 def createParcel():
@@ -576,13 +576,13 @@ def createCustomsForm():
 	    description = "book from BookChain",
 	    hs_tariff_number = 123456,
 	    origin_country = "US",
-	    quantity = 2,
+	    quantity = 1,
 	    value = 96.27,
 	    weight = 21.1
 	)
 	customs_info = easypost.CustomsInfo.create(
 	    customs_certify = 1,
-	    customs_signer = "Hector Hammerfall",
+	    customs_signer = "IO Lab Team",
 	    contents_type = "gift",
 	    contents_explanation = "",
 	    eel_pfc = "NOEEI 30.37(a)",

@@ -44,10 +44,6 @@ $(document).ready(
 	})
 )
 
-$(document).ready(function(){
-    $('.tooltipped').tooltip();
-  });
-
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).addClass("disabled");
@@ -266,6 +262,7 @@ function imgError(image) {
 }
 
 $(document).on('click', '.requestBook', function() {
+	console.log("requested book");
 
 	var bookID = $(this).attr("data-bookid");
 	$.ajax({
