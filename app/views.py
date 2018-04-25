@@ -73,7 +73,7 @@ def protected():
 @app.route('/register', methods=['GET'])
 @login_required
 def register():
-    return render_template('register.html')
+    return render_template('register.html', username = current_user.username)
 
 @app.route('/registerBook', methods=['POST'])
 @login_required
@@ -148,8 +148,6 @@ def dashboard():
 
     return render_template('dashboard.html', username = current_user.username, uploaded_books = uploaded_books, owned_books = owned_books, \
         my_requests = my_requests, requests_from_others = requests_from_others)
-    # return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
-    #     my_requests = my_requests, requests_from_others = requests_from_others)
 
 @app.route('/booksincirc')
 @login_required
@@ -166,7 +164,7 @@ def booksincirc():
         list_ids.append(int(book[4]))
     for book in lst:
         list_ids.append(int(book[5]))
-    return render_template('booksincirc.html', allBooks = allBooks, blocked = list_ids)
+    return render_template('booksincirc.html', username = current_user.username, allBooks = allBooks, blocked = list_ids)
 
 @app.route('/getMap', methods=['GET'])
 @login_required
@@ -229,7 +227,7 @@ def book(book_id):
         blockRequest = 1
     elif currentUser.hasRequested(book):
         blockRequest = 2
-    return render_template('book.html', book_id = book_id, title = book.title, author = book.author, \
+    return render_template('book.html', username = current_user.username, book_id = book_id, title = book.title, author = book.author, \
         thumbnail = book.thumbnail, short_description = Markup(book.short_description), uploader = book.registeredBy, \
         location = location, average_rating= average_rating, stops=stops, review = review, blockRequest = blockRequest, \
         comments = comments, userRating = userRating)
