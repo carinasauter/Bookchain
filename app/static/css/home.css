@@ -343,3 +343,9 @@ nav .brand-logo {
 .input-field .material-icons {
 	margin-top: 10px;
 }
+
+#mapMain {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

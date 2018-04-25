@@ -411,6 +411,11 @@ class Book():
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
 			result = cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship !=?", (self.id, 'requested')).fetchall()
+			# result = cursor.execute("SELECT user_id FROM history WHERE book_id=?", (self.id,)).fetchall()			
+			# users = []
+			# for entry in result:
+			# 	users.append(entry[0])
+			# return users
 			possessorID = result[-1][0]
 			return getUserByID(possessorID)
 
