@@ -297,12 +297,11 @@ def receiveBook():
     return json_data
 
 
-@app.route('/removeBook', methods=['DELETE'])
+@app.route('/removeBook', methods=['POST'])
 @login_required
 def removeBook():
-    bookID = request.args['book_id']
-    # print(bookID)
-    # removeBook(bookID)
+    print("trying to remove a book")
+    bookID = request.form['book_id']
     user = current_user
     bookToRemove = getBookById(bookID)
     bookToRemove.removeBook(user)

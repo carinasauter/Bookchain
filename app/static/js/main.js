@@ -114,7 +114,7 @@ $(document).on('click', '.removebook', function() {
 		$.ajax({
 			url: "/removeBook",
 			data: {book_id: bookID},
-			type: "DELETE",
+			type: "POST",
 			dataType: "json",
 		})
 		// remove the book from the html 
