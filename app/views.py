@@ -188,15 +188,17 @@ def creatingMap():
 @app.route('/getMapForUser', methods=['GET'])
 @login_required
 def creatingMapForUser():
-    user_id = request.args['user']
-    user = getUserByID(user_id)
+    username = request.args['user']
+    user = getUserByUsername(username)
     books = user.uploadedBooks()
     data = []
     for bookId in books:
         book = getBookById(bookId)
-        currentPossessor = book.getPossessor()
-        lat, lon = currentPossessor.getLocationGeocode()
-        data.append([lon, lat])
+        users = book.getHistory()
+        for userId in users:
+            user = getUserByID(userId)
+            lat, lon = user.getLocationGeocode()
+            data.append([lon, lat])
     json_data = json.dumps(data)
     return json_data
 
