@@ -376,6 +376,7 @@ class Book():
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
 			if prev_userId != None:
 				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId[0]))
+				cursor.execute("DELETE FROM books_users WHERE book_id = (?) and user_id = (?)", (self.id, prev_userId[0]))
 			connection.commit()
 
 	"""
