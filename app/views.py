@@ -158,7 +158,8 @@ def dashboard():
 @app.route('/booksincirc')
 @login_required
 def booksincirc():
-    allBooks = getBooksInCirc()
+    user = current_user
+    allBooks = getBooksInCirc(user.username)
     requests = current_user.requestedBooks()
     lst = bookUploadsForDashboard()
     currentPossessions = current_user.readingBooks()
@@ -226,7 +227,7 @@ def book(book_id):
     comments = book.getComments()
     stops = len(book.getHistory())
     currentUser = current_user
-    userRating = book.getRating(currentUser)
+    userRating = book.getRating(currentUser )
     blockRequest = 0
     if holder == currentUser.username:
         blockRequest = 1
