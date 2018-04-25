@@ -27,6 +27,8 @@
                 <label for="toggle">&#9776;</label>
                 <input type="checkbox" id="toggle"/>
                 <div class ="menu">
+                    <span align="left" id="login-name">Logged in as {{username}}</span>
+                    <a href="#" id="login-name-small">Logged in as {{username}}</a>
                     <a href="{{ url_for('dashboard')}}">Dashboard</a>
                     <a href="{{ url_for('register')}}">Add Books</a>
                     <a href="{{ url_for('booksincirc')}}">Borrow Books</a>

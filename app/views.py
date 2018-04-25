@@ -150,7 +150,7 @@ def dashboard():
     requests_from_others = user.requestedBooksOthers()
     # available = user.availableBooksDashboard()
 
-    return render_template('dashboard.html', uploaded_books = uploaded_books, owned_books = owned_books, \
+    return render_template('dashboard.html', username = current_user.username, uploaded_books = uploaded_books, owned_books = owned_books, \
         my_requests = my_requests, requests_from_others = requests_from_others)
     # return render_template('dashboard.html', uploads = lst, borrowed = borrowed, \
     #     my_requests = my_requests, requests_from_others = requests_from_others)

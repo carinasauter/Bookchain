@@ -313,6 +313,15 @@ nav .brand-logo {
 	background-color: rgb(224, 224, 224);
 }
 
+#login-name {
+	float: left;
+	margin-left: 10px;
+}
+
+#login-name-small {
+	display: none;
+}
+
 @media only screen and (max-width: 850px) {
 	.nav-wrapper label {
 		display: block;
@@ -335,6 +344,14 @@ nav .brand-logo {
 		background-color: rgb(235, 235, 235);
 	}
 	.nav-wrapper #toggle:checked + .menu {
+		display: block;
+	}
+
+	#login-name {
+		display: none;
+		float: none;
+	}
+	#login-name-small {
 		display: block;
 	}
 }
