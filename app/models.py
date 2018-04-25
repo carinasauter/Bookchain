@@ -169,10 +169,7 @@ class User(UserMixin):
 	def ownedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id, thumbnail, title, author, status, uploader FROM books WHERE holder = ? ", (self.username,)).fetchall()
-		# lst = []
-		# for entry in result:
-		# 	lst.append(entry)
+			result = cursor.execute("SELECT book_id, thumbnail_small, title, author, status, uploader FROM books WHERE holder = ? ", (self.username,)).fetchall()
 		return result
 
 	"""
@@ -289,10 +286,10 @@ def getUserByID(query):
 """
 Returns a list of all books that are in the system
 """
-def getBooksInCirc():
+def getBooksInCirc(username):
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
-		result = cursor.execute("SELECT * FROM books").fetchall()
+		result = cursor.execute("SELECT * FROM books WHERE status = ? AND uploader != ?", ("available", username)).fetchall()
 		lst = []
 		for book in result:
 			lst.append(book)

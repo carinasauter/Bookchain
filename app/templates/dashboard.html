@@ -25,7 +25,7 @@
             {% for book in my_requests %}
             <tr>
               <td class = "hidden">{{book[4]}}</td>
-              <td><img src="{{book[2]}}"></td>
+              <td><a href="/book/{{book[4]}}"><img src="{{book[2]}}"></a></td>
               <td>{{book[5]}}</td>
               <td class="tableContentStyle">{{book[6]}}</td>
               {% if book[6] == "requested" %}
@@ -56,7 +56,7 @@
                 {% for book in requests_from_others %}
                 <tr>
                     <td class = "hidden">{{book[3]}}</td>
-                    <td><img src="{{book[2]}}"></td>
+                    <td><a href="/book/{{book[3]}}"><img src="{{book[2]}}"></a></td>
                     <td>{{book[4]}}</td>
                     <td>{{book[5]}}</td>
                     <td><a href="#"><i class="material-icons ourBlue-text labelprint">print</i></a>
@@ -89,7 +89,7 @@
             <tr>
                 <td class = "hidden">{{book[0]}}</td>
                 <td>
-                <img src="{{book[1]}}">
+                    <a href="/book/{{book[0]}}"><img src="{{book[1]}}"></a>
                 </td>
                 <td><h6><b>{{book[2]}}</b></h6><p>{{book[3]}}</p></td>
                 <td class="tableContentStyle">{{book[4]}}</td>
@@ -114,31 +114,6 @@
                 </td>
             </tr>
             {% endfor %}
-            <!-- {% for entry in uploads %}
-            <tr>
-                <td class = "hidden">{{entry[5]}}</td>
-                <td>
-                    <img src="{{entry[2]}}">
-                </td>
-                <td>{{entry[0]}}<p>{{entry[1]}}</p></td>
-                <td class="tableContentStyle">{{entry[6]}}</td>
-                <td>Me</td>
-                <td>
-                    <div class="switch">
-                        <label>
-                            Off
-                            {% if entry[6] == "available" %}
-                            <input class="available-checkbox" type="checkbox" id="bookID-{{entry[5]}}" checked>
-                            {% else %}
-                            <input class="available-checkbox" type="checkbox" id="bookID-{{entry[5]}}">
-                            {% endif %}
-                            <span class="lever"></span>
-                            On
-                        </label>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %} -->
         </table>
     <!-- </section> -->
     <!-- <section class="books-mybooks"> -->
@@ -162,7 +137,7 @@
             <tr>
                 <td class = "hidden">{{entry[5]}}</td>
                 <td>
-                <img src="{{entry[2]}}">
+                    <a href="/book/{{entry[5]}}"><img src="{{entry[2]}}"></a>
                 </td>
                 <td><h6><b>{{entry[0]}}</b></h6><p>{{entry[1]}}</p></td>
                 <td>{{entry[3]}}</td>
