@@ -180,7 +180,7 @@ class User(UserMixin):
 	def uploadedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, "uploader")).fetchall()
+			result = cursor.execute("SELECT book_id FROM books WHERE uploader = ?", (self.username,)).fetchall()
 		lst = []
 		for entry in result:
 			lst.append(entry[0])
