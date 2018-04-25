@@ -81,11 +81,14 @@ def registerbook():
     title = request.form['title']
     author = request.form['author']
     thumbnail = request.form['thumbnail']
+    print(thumbnail)
+    thumbnail_small = request.form['thumbnail_small']
+    print(thumbnail_small)
     short_description = request.form['short_description']
     isbn = request.form['isbn']
     registeredBy = current_user.username
     status = "available"
-    newBook = Book(title, author, thumbnail, short_description, isbn, \
+    newBook = Book(title, author, thumbnail, thumbnail_small, short_description, isbn, \
         registeredBy, registeredBy, status)
     newBook.addToDatabase()
     current_user.addBook(newBook)
@@ -166,7 +169,7 @@ def booksincirc():
         list_ids.append(int(book[4]))
     for book in lst:
         list_ids.append(int(book[5]))
-    return render_template('booksincirc.html', allBooks = allBooks, requests = list_ids)
+    return render_template('booksincirc.html', allBooks = allBooks, blocked = list_ids)
 
 @app.route('/getMap', methods=['GET'])
 @login_required
@@ -294,12 +297,11 @@ def receiveBook():
     return json_data
 
 
-@app.route('/removeBook', methods=['DELETE'])
+@app.route('/removeBook', methods=['POST'])
 @login_required
 def removeBook():
-    bookID = request.args['book_id']
-    # print(bookID)
-    # removeBook(bookID)
+    print("trying to remove a book")
+    bookID = request.form['book_id']
     user = current_user
     bookToRemove = getBookById(bookID)
     bookToRemove.removeBook(user)

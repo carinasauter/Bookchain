@@ -20,6 +20,7 @@ CREATE TABLE books (
     title text not null,
     author text not null,
     thumbnail text,
+    thumbnail_small text,
     short_description text,
     isbn integer,
     uploader text not null,
