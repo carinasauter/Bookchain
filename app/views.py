@@ -300,7 +300,6 @@ def receiveBook():
 @app.route('/removeBook', methods=['POST'])
 @login_required
 def removeBook():
-    print("trying to remove a book")
     bookID = request.form['book_id']
     user = current_user
     bookToRemove = getBookById(bookID)
