@@ -56,6 +56,7 @@ class User(UserMixin):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
 			cursor.execute("INSERT INTO books_users (user_id, book_id, relationship) VALUES (?,?,?)",(self.id, book_id, "uploader"))
+			cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(book_id, self.id))			
 			connection.commit()
 
 	"""
@@ -180,7 +181,7 @@ class User(UserMixin):
 	def uploadedBooks(self):
 		with sql.connect('database.db') as connection:
 			cursor = connection.cursor()
-			result = cursor.execute("SELECT book_id FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, "uploader")).fetchall()
+			result = cursor.execute("SELECT book_id FROM books WHERE uploader = ?", (self.username,)).fetchall()
 		lst = []
 		for entry in result:
 			lst.append(entry[0])
@@ -431,7 +432,8 @@ class Book():
 		with sql.connect('database.db') as connection:
 			connection.row_factory = sql.Row
 			cursor = connection.cursor()
-			cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requester'))
+			# cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requester'))
+			cursor.execute("SELECT user_id FROM history WHERE book_id=?", (self.id,))		
 			result = cursor.fetchall()
 			users = []
 			for entry in result:
