@@ -106,11 +106,9 @@ $(document).on('click', '.bookdetails', function() {
 
 // when "remove" button is clicked in the dashboard, removes the book from the database
 $(document).on('click', '.removebook', function() {
-	var r = confirm("Remove book from circulation?");
+	var r = confirm("Remove book from bookchain?");
     if (r == true) {
-   
 		var bookID = $(this).parent().parent().children()[0].innerHTML;
-		// console.log(bookID);
 		$.ajax({
 			url: "/removeBook",
 			data: {book_id: bookID},
@@ -121,6 +119,12 @@ $(document).on('click', '.removebook', function() {
 		$(this).closest('tr').remove();
 		// pop up message to confirm removal
 		alert("Successfully removed from circulation.");
+		var result = $("#borrowedAndContributed").children().children('tr').children('td.hidden');
+		for (entry of result) {
+			if (entry.innerHTML == bookID) {
+				entry.closest('tr').remove();
+			}
+		}
 	} else {
 		return;
 	}
@@ -128,7 +132,6 @@ $(document).on('click', '.removebook', function() {
 })
 
 function sendToBackend(data) {
-	console.log(data);
 	var bookInfo = data['volumeInfo'];
 	var title = bookInfo['title'];
 	var author = bookInfo['authors'];
@@ -263,7 +266,7 @@ function imgError(image) {
 }
 
 $(document).on('click', '.requestBook', function() {
-	console.log("clicked")
+
 	var bookID = $(this).attr("data-bookid");
 	$.ajax({
 		type: "POST",
@@ -276,9 +279,8 @@ $(document).on('click', '.requestBook', function() {
 
 
 $(document).on('click', '.labelprint', function() {
-	console.log("clicked print label");
 	var bookID = $(this).parent().parent().parent().children()[0].innerHTML;
-	console.log(bookID);
+
 	// print shipping label
 	$.ajax({
 		url: "/printLabel",
@@ -331,9 +333,7 @@ function searchCirc(event) {
 }
 
 $(document).on('click', '#cancelRequest', function() {
-	console.log("cancel request clicked")
 	var book_id = $(this).parent().parent().children()[0].innerHTML;
-	console.log(book_id);
 	$.ajax({
 	  // type: "POST",
 	  url: "/cancelRequest",
