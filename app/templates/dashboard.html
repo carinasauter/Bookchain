@@ -101,6 +101,8 @@
                         <span class = "hide-on-med-and-down">Off</span>
                         {% if book[4] == "available" %}
                         <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}" checked>
+                        {% elif book[4] == "requested" %}
+                        <input disabled type="checkbox" checked>
                         {% else %}
                         <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}">
                         {% endif %}
@@ -146,7 +148,11 @@
                 <!-- <button class = "btn details">Details</button> -->
                 <i data-bookid="{{entry[5]}}" class="material-icons small ourBlue-text bookdetails">search</i>
                 <!-- <button class = "btn removebook">Remove</button> -->
+                {% if entry[6] == "requested" %}
+                <i class="material-icons small grey-text">delete</i>
+                {% else %}
                 <i class="material-icons small ourBlue-text removebook">delete</i>
+                {% endif %}
 
             </td>
         </tr>
