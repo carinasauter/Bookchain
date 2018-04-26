@@ -44,7 +44,7 @@
         <div class="col s12 m6 l3 center-align" id ="bookImgButton">
             <img src= {{ thumbnail }} alt='coverThumbnail' onerror=imgError(this) class="bookCover">
             <br>
-            <button class="btn requestBook valign-wrapper">Request</button>
+            <button class="btn requestBook valign-wrapper" data-bookid={{book_id}}>Request</button>
         </div>
         <div class="col s12 m6 l6 left-align bookDesc">
             <h4>{{ title }}</h4>
