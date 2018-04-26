@@ -257,19 +257,6 @@ function imgError(image) {
     return true;
 }
 
-$(document).on('click', '.requestBook', function() {
-	console.log("requested book");
-
-	var bookID = $(this).attr("data-bookid");
-	$.ajax({
-		type: "POST",
-    	url: "/requestBook",
-    	data: {book_id: bookID},
-    	dataType: "json"
-  	})
-  $( this ).addClass(" grey-text ").removeClass(" requestBook ");
-})
-
 
 $(document).on('click', '.labelprint', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
@@ -283,16 +270,6 @@ $(document).on('click', '.labelprint', function() {
 	.done(function(data) {
 		openInNewTab(data);
 	});
-	// change book status from requested to in-transit in books table
-	// $.ajax({
-	// 	type: "POST",
-	// 	contentType: "application/json",
-	// 	url: "/shipBook",
-	// 	data: JSON.stringify({book: bookID}),
-	// 	dataType: "json"
-	// });
-	
-
 })
 
 function openInNewTab(url) {

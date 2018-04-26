@@ -51,5 +51,7 @@
     </div>
     {% endfor %}
 </div>
-
+{% block additionallibraries %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/booksincirc.js') }}"></script>
+{% endblock %}
 {% endblock %}
