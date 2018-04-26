@@ -215,7 +215,8 @@ $(document).on('click', '#cancelRequest', function() {
 })
   
 $( document ).ready(function() {
-	$.ajax({
+  console.log(book_id);
+  $.ajax({
   		url: "/getMap",
   		data: {book_id: book_id, },
   		dataType: "json"

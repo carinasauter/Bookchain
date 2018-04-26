@@ -372,8 +372,8 @@ class Book():
 			prev_userId = cursor.execute("SELECT user_id FROM books_users WHERE book_id == ? AND relationship = ?", (self.id, "borrower")).fetchone()
 			cursor.execute("UPDATE books SET status = ?, holder = ? WHERE book_id = ?",("reading", user.username, self.id))
 			cursor.execute("UPDATE books_users SET relationship = ? WHERE book_id = ? and user_id =?",("borrower", self.id, user.getId()))
+			cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, current_user.id))
 			if prev_userId != None:
-				cursor.execute("INSERT INTO history (book_id, user_id) VALUES (?,?)",(self.id, prev_userId[0]))
 				cursor.execute("DELETE FROM books_users WHERE book_id = (?) and user_id = (?)", (self.id, prev_userId[0]))
 			connection.commit()
 
@@ -439,6 +439,7 @@ class Book():
 			# cursor.execute("SELECT user_id FROM books_users WHERE book_id=? AND relationship!=?", (self.id, 'requester'))
 			cursor.execute("SELECT user_id FROM history WHERE book_id=?", (self.id,))		
 			result = cursor.fetchall()
+			print(result)
 			users = []
 			for entry in result:
 				users.append(entry[0])	

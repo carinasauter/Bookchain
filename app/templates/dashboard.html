@@ -156,5 +156,8 @@
         </table>
     <!-- </section> -->
 </div>
-</div>  
+</div>
+{% block additionallibraries %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}  
 {% endblock %}
