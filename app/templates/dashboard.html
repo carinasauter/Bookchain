@@ -150,7 +150,11 @@
                 <!-- <button class = "btn details">Details</button> -->
                 <i data-bookid="{{entry[5]}}" class="material-icons small ourBlue-text bookdetails">search</i>
                 <!-- <button class = "btn removebook">Remove</button> -->
+                {% if entry[6] == "requested" %}
+                <i class="material-icons small grey-text">delete</i>
+                {% else %}
                 <i class="material-icons small ourBlue-text removebook">delete</i>
+                {% endif %}
 
             </td>
         </tr>
