@@ -10,10 +10,10 @@
     <div class="col s12 m12 l6 left-align">
           <h5>My Requests</h5>
           <table>
-            <col width="10%">
-            <col width="30%">
-            <col class = "hide-on-small-only" width="40%">
-            <col width="20%">
+            <col width="15%">
+            <col width="40%">
+            <col class = "hide-on-small-only" width="30%">
+            <col width="15%">
             <tr>
               <th>Book</th>
               <th>Requested Date</th>
@@ -28,10 +28,8 @@
               <td class="tableContentStyle hide-on-small-only" >{{book[6]}}</td>
               {% if book[6] == "requested" %}
                 <td>
-                    <!-- <button class="btn waves-effect waves-light" id="cancelRequest">Cancel</button> -->
                     <i id = "cancelRequest" class="material-icons small ourBlue-text">cancel</i>
                 </td>            
-                <!-- <td><a href="#" class = "tooltipped" data-position="bottom" data-tooltip="Cancel Request"><i class="material-icons ourBlue-text" id="cancelRequestIcon">clear</i></a></td> -->
               {% else %}
                 <td><button class="btn" id="receive-book">Received Book</button></td>            
               {% endif %}
