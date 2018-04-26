@@ -45,8 +45,8 @@
             </div>
         </div>
         <div class="col s4 m3 l2 ">
-            <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text bookdetails">search</i>
-            <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook active">book</i>
+            <button class="btn waves-effect waves-light bookdetails" data-bookid="{{book[0]}}">Details</button>
+            <button class="btn waves-effect waves-light requestBook" data-bookid="{{book[0]}}">Request</button>
         </div>
     </div>
     {% endfor %}

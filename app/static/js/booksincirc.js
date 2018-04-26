@@ -10,5 +10,6 @@ $(document).ready(
             dataType: "json"
         })
     $( this ).addClass(" grey-text ").removeClass(" requestBook ");
+    $(this).html('Requested');
     })
 )

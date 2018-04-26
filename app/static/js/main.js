@@ -56,6 +56,11 @@ $(document).ready(
 	})
 )
 
+// initializes the tooltips
+$(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+});
+
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
 	$(this).addClass("disabled");
