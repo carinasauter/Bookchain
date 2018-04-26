@@ -291,9 +291,9 @@ nav .brand-logo {
 	clear: right;
 	text-decoration: none;
 	color: gray;
-	/* margin: 0 10px; */
 	line-height: 70px;
-	padding: 20px;
+	padding-left: 1%;
+	padding-right:1%;
 }
 
 .nav-wrapper label {

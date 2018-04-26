@@ -57,23 +57,7 @@ $(document).on('click', '.available', function() {
 	window.open(url,"_self");
 })
 
-$(document).on('mouseover', '.available', function() {
-	$( this ).css( 'cursor', 'pointer' );
-})
-
-$(document).on('mouseover', '.bookdetails', function() {
-	$( this ).css( 'cursor', 'pointer' );
-})
-
-$(document).on('mouseover', '.requestBook', function() {
-	$( this ).css( 'cursor', 'pointer' );
-})
-
-$(document).on('mouseover', '.labelprint', function() {
-	$( this ).css( 'cursor', 'pointer' );
-})
-
-$(document).on('mouseover', '.shipBook', function() {
+$(document).on('mouseover', '.material-icons', function() {
 	$( this ).css( 'cursor', 'pointer' );
 })
 
@@ -94,11 +78,11 @@ $(document).on('click', '#receive-book', function() {
 });
 
 
-$(document).on('click', '.details', function() {
-	var bookID = $(this).parent().parent().children()[0].innerHTML;
-	var url = "/book/" + bookID;
-	window.open(url,"_self");
-})
+// $(document).on('click', '.details', function() {
+// 	var bookID = $(this).parent().parent().children()[0].innerHTML;
+// 	var url = "/book/" + bookID;
+// 	window.open(url,"_self");
+// })
 
 // when "details" button is clicked in the booksincirc page, generates the book page
 $(document).on('click', '.bookdetails', function() {

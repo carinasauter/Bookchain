@@ -423,7 +423,7 @@ class Book():
 	"""
 	def getLocationString(self):
 		currentPossessor = getUserByUsername(self.getHolder())
-		location = currentPossessor.city + ", " + currentPossessor.state + ", " + currentPossessor.country
+		location = currentPossessor.city + ", " + currentPossessor.state
 		return location
 
 
