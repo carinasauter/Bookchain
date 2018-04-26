@@ -56,10 +56,6 @@ p {
 	height: 110px;
 }
 
-.card {
-	height: 130px;
-	overflow: hidden;
-}
 
 textarea.materialize-textarea.valid:focus {
 	color: #0881A3;
@@ -210,16 +206,6 @@ td img {
 
 .row .col {
 	padding: 10px 25px;
-}
-
-/* .row .col.l8 {
-	margin-top: 15px;
-	margin-bottom: 15px;
-} */
-
-
-.card {
-	height: 150px;
 }
 
 
