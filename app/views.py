@@ -31,7 +31,7 @@ def signup():
         street = form.street.data
         city = form.city.data
         state = form.state.data
-        country = form.country.data
+        country = "USA"
         zipcode = form.zipcode.data
         user = getUserByUsername(username) #checks if user already exists
         if user is not None:

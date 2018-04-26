@@ -1,58 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="form_shape_signup">
+<div class = "col s12 m10 l3" id="form_shape_signup">
     <form action="" method="POST">
         {{ form.hidden_tag() }}
-        <div class="col s12">
-            <div class="row">
+        <div class="row">
+            <div class="input-field col s11">
+                <i class="material-icons prefix">account_circle</i>
+                {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
+            </div>
+        </div>
+        <div class="row">
+        	<div class="input-field col s11">
+    		<i class="material-icons prefix">email</i>
+    		{{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
+		</div>
+		</div>
+        <div class="row">
+            <div class="input-field col s11">
+                <i class="material-icons prefix">lock</i>
+                {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+            </div>
+        </div>
+        <br>
+        
+        
+        <div class="shipping_information_form">
+        <h6>Shipping Information</h6>
+            <div class="row" >
                 <div class="input-field col s11">
-                    <i class="material-icons prefix">account_circle</i>
-                    {{ form.username(placeholder = "Username", class ="materialize-textarea icon_prefix2") }}
+                    {{ form.full_name(placeholder = "Full Name", class ="materialize-textarea") }}
                 </div>
             </div>
             <div class="row">
-            	<div class="input-field col s11">
-        		<i class="material-icons prefix">email</i>
-        		{{ form.email(placeholder = "Email", class ="materialize-textarea icon_prefix2") }}
-    		</div>
-			</div>
-            <div class="row">
                 <div class="input-field col s11">
-                    <i class="material-icons prefix">lock</i>
-                    {{ form.password(placeholder = "Password", class ="materialize-textarea icon_prefix2") }}
+                    {{ form.street(placeholder = "Street address", class ="materialize-textarea") }}
                 </div>
             </div>
-            <br>
-            
-            
-            <div class="shipping_information_form">
-            <h6>Shipping Information</h6>
-                <div class="row" >
-                    <div class="input-field col s11">
-                        {{ form.full_name(placeholder = "Full Name", class ="materialize-textarea") }}
-                    </div>
+            <div class="row">
+                <div class="input-field col s5">
+                    {{ form.city(placeholder = "City", class ="materialize-textarea") }}
                 </div>
-                <div class="row">
-                    <div class="input-field col s11">
-                        {{ form.street(placeholder = "Street address", class ="materialize-textarea") }}
-                    </div>
+                <div class="input-field col s3">
+                    {{ form.state(placeholder = "State", class ="materialize-textarea") }}
                 </div>
-                <div class="row">
-                    <div class="input-field col s5">
-                        {{ form.city(placeholder = "City", class ="materialize-textarea") }}
-                    </div>
-                    <div class="input-field col s3">
-                        {{ form.state(placeholder = "State", class ="materialize-textarea") }}
-                    </div>
-                    <div class="input-field col s3">
-                        {{ form.zipcode(placeholder = "Zipcode", class ="materialize-textarea") }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s11">
-                        {{ form.country(placeholder = "Country", class ="materialize-textarea") }}
-                    </div>
+                <div class="input-field col s3">
+                    {{ form.zipcode(placeholder = "Zipcode", class ="materialize-textarea") }}
                 </div>
             </div>
         </div>
@@ -63,14 +56,7 @@
      <p>Already have an account? <a  id = "login" href="{{ url_for('login') }}" title="">Log in</a>  instead. </p>
 </div>
 
-
-
-
-
-
-
-
-
- 
-
 {% endblock %}
+
+
+
