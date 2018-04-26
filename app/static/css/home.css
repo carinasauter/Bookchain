@@ -238,10 +238,11 @@ td img {
 nav .brand-logo {
 	position: relative;
 }
-/* 
-.btn .labelprint {
+
+/* .btn .labelprint, .btn .confirm-shippment {
 	height: 60px;
-	width: 100px;
+	width: 150px;
+	margin-top: 5px;
 } */
 
 .bigButton .btn {

@@ -15,12 +15,13 @@ testUser = User(username, email, password_hash, full_name, street, city, state, 
 title = "Harry Potter and the Chamber of Secrets"
 author = "Joanne K Rowling"
 thumbnail = "image link"
+thumbnail_small = "small image link"
 short_description = "great story about a young wizard and his friends"
 isbn = "123456789"
 registeredBy = "testuser"
 holder = "testuser"
 status = "available"
-book = Book(title, author, thumbnail, short_description, isbn, registeredBy, holder, status)
+book = Book(title, author, thumbnail, thumbnail_small, short_description, isbn, registeredBy, holder, status)
 
 def test_createUser():
 	assert username == testUser.username and email == testUser.email and \
