@@ -35,10 +35,10 @@
     {% for book in allBooks %}
     <div class = "row card horizontal s12 m12 l10 offset-l1 valign-wrapper">
         <div class="col s3 m2 l2">
-                <img src="{{book[4]}}">
+                <a href="/book/{{book[0]}}"><img src="{{book[4]}}"></a>
         </div>
         <div class="col s5 m7 l8 left-align">
-            <p><b>{{book[1]}}</b></p>
+            <a href="/book/{{book[0]}}"><p><b>{{book[1]}}</b></p></a>
             <p><i>{{book[2]}}</i></p>
             <div class = "hide-on-small-only">
                 <p class="card-description">{{book[5]}}</p>
