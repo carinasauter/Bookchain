@@ -289,7 +289,7 @@ Returns a list of all books that are in the system
 def getBooksInCirc(username):
 	with sql.connect('database.db') as connection:
 		cursor = connection.cursor()
-		result = cursor.execute("SELECT * FROM books WHERE status = ? AND uploader != ?", ("available", username)).fetchall()
+		result = cursor.execute("SELECT * FROM books WHERE status = ? AND holder != ?", ("available", username)).fetchall()
 		lst = []
 		for book in result:
 			lst.append(book)
