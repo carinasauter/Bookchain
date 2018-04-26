@@ -15,41 +15,41 @@
 {% endblock %}
 {% block content %}
 
-    <form class='container' id='searchbar'>
-        <div class="row s12 m12 l12 valign-wrapper">
-            <div class="col s10 m10 l10 input-field">
-                <input placeholder="Find a book you would like to read. eg: 'The Odyssey' or 'Shakespeare'" type="text" class="validate" id="circQuery" onkeyup="searchCirc()">
-            </div>
-            <div class = 'col s2 m2 l2'>
-                <button class="btn waves-effect waves-light" type="submit"><i class="large material-icons">search</i>
-                </button>
-            </div>
+<form id='searchbar'>
+    <div class="row s12 m12 l10 offset-l1 valign-wrapper">
+        <div class="col s10 m10 l10 input-field">
+            <input placeholder="Find a book you would like to read. eg: 'The Odyssey' or 'Shakespeare'" type="text" class="validate" id="circQuery" onkeyup="searchCirc()">
         </div>
-    </form>
-
-
-    <div class="books_in_circ">
-        <h4 class="header">Books in Circulation</h4>
-        {% for book in allBooks %}
-        <div class="card horizontal">
-            <div class="card-image col s2 m2 l2">
-                <img class="book_cover_thumbnail" src="{{book[4]}}">
-            </div>
-            <div class="card-stacked">
-                <div class="card-content s6 m7 l7 left-align">
-                    <h6><b>{{book[1]}}</b></h6>
-                    <p><i>{{book[2]}}</i></p>
-                    <div class="card-description line-clamp">
-                        <p>{{book[5]}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-action col s4 m3 l3">
-                    <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text bookdetails">search</i>
-                <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook active">book</i>
-            </div>
+        <div class = 'col s2 m2 l2 right-align'>
+            <button class="btn waves-effect waves-light" type="submit"><i class="large material-icons">search</i>
+            </button>
         </div>
-        {% endfor %}
     </div>
+</form>
+<div class="row">
+    <div id="tableHeader" class="col s12 m12 l12">SEARCH RESULTS
+    </div>
+</div>
+<div id="searchResults">
+
+    {% for book in allBooks %}
+    <div class = "row card horizontal s12 m12 l10 offset-l1 valign-wrapper">
+        <div class="col s3 m2 l2">
+                <img src="{{book[4]}}">
+        </div>
+        <div class="col s5 m7 l8 left-align">
+            <p><b>{{book[1]}}</b></p>
+            <p><i>{{book[2]}}</i></p>
+            <div class = "hide-on-small-only">
+                <p class="card-description">{{book[5]}}</p>
+            </div>
+        </div>
+        <div class="col s4 m3 l2 ">
+            <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text bookdetails">search</i>
+            <i data-bookid="{{book[0]}}" class="material-icons small ourBlue-text requestBook active">book</i>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

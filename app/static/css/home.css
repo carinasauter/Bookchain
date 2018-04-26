@@ -244,6 +244,8 @@ nav .brand-logo {
 	line-height: 70px;
 	padding-left: 1%;
 	padding-right:1%;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .nav-wrapper label {
