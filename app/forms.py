@@ -19,6 +19,7 @@ class SignUpForm(Form):
 	street = StringField('Street', validators=[DataRequired()])
 	city = StringField('City', validators=[DataRequired()])
 	state = StringField('State', validators=[DataRequired()])
-	country = StringField('Country', validators=[DataRequired()])
+	# we currently only accept users in U.S, so disable this field
+	# country = StringField('Country', validators=[DataRequired()])
 	zipcode = IntegerField('Zipcode', validators=[DataRequired()])
 	
