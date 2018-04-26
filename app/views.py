@@ -275,6 +275,18 @@ def addingRating():
     book.addRating(user, rating)
     return 'added rating'
 
+@app.route('/getRating', methods=['GET'])
+@login_required
+def getRatingForFrontend():
+    book_id = request.args['book_id']
+    book = getBookById(book_id)
+    rating = book.getAverageRating()
+    rating = format(rating, '.1f')
+    data = []
+    data.append(rating)
+    json_data = json.dumps(data)
+    return json_data
+
 @app.route('/receiveBook', methods=['GET', 'POST'])
 @login_required
 def receiveBook():
@@ -290,7 +302,6 @@ def receiveBook():
     data.append(book.registeredBy)
     json_data = json.dumps(data)
     return json_data
-
 
 @app.route('/removeBook', methods=['POST'])
 @login_required

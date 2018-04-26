@@ -198,6 +198,9 @@ nav .brand-logo {
 	position: relative;
 }
 
+button {
+	margin-top: 10px;
+}
 
 .bigButton .btn {
 	height: 65px;

@@ -126,6 +126,7 @@ $(document).one('click', '#1', function() {
   $("#1").addClass( "amber-text" );
   deactivateHover();
   disableClick();
+  updateRating();
 })
 
 
@@ -140,6 +141,7 @@ $(document).one('click', '#2', function() {
     $("#1").addClass( "amber-text" );
     deactivateHover();
     disableClick();
+    updateRating();
 })
 
 $(document).one('click', '#3', function() {
@@ -154,6 +156,7 @@ $(document).one('click', '#3', function() {
     $("#1").addClass( "amber-text" );
     deactivateHover();
     disableClick();
+    updateRating();
 })
 
 $(document).one('click', '#4', function() {
@@ -169,6 +172,7 @@ $(document).one('click', '#4', function() {
     $("#1").addClass( "amber-text" );
     deactivateHover();
     disableClick();
+    updateRating();
 })
 
 
@@ -186,10 +190,23 @@ $(document).one('click', '#5', function() {
     $("#1").addClass( "amber-text" );
     deactivateHover();
     disableClick();
+    updateRating();
 })
 
 function deactivateHover() {
   $(".star").unbind('mouseenter mouseleave');
+}
+
+function updateRating() {
+  $.ajax({
+    url: "/getRating",
+    data: {book_id: book_id, },
+    dataType: "json"
+  }).done(function(data) {
+      console.log(data[0]);
+      console.log($("#averageRating"));
+      $("#averageRating")[0].innerHTML = data[0];
+    });
 }
 
 
