@@ -1,11 +1,3 @@
-#header {
-    /* background: url("../img/header.svg") no-repeat center center;
-	height: 50%;
-	width: 50%;
-	/* margin: auto; */
-	/* height: 60%; */
-}
-
 body {
 	font-family: 'Nunito', sans-serif;
 }
@@ -37,13 +29,6 @@ p {
 	font-size: 14px;
 }
 
-/* below style is not effective */
-.container {
-	/* text-align: center; */
-	/* margin-top: 2%; */
-	width: 85%;
-}
-
 
 #search {
 	border-bottom-style: solid;
@@ -54,6 +39,8 @@ p {
 .card img {
 	width: 70px;
 	height: 110px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 
@@ -63,6 +50,7 @@ textarea.materialize-textarea.valid:focus {
 
 #tableHeader {
 	background-color: #0881A3;
+	padding: 10px 25px;
 
 }
 
@@ -109,7 +97,6 @@ td, th {
 	padding: 10px;
 	font-size: 14px;
 	font-weight: bold;
-	/* height: 10px; */
 }
 
 .hidden {
@@ -181,11 +168,6 @@ td img {
 
 }
 
-/*.card.horizontal {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-}*/
 
 .card .card-action {
 	border: none;
@@ -199,15 +181,6 @@ td img {
 	margin-left: 3%;
 	margin-right: 3%;
 }
-
-#searchResults {
-	color: grey;
-}
-
-.row .col {
-	padding: 10px 25px;
-}
-
 
 .row #tableHeader {
 	color: white;
@@ -225,18 +198,12 @@ nav .brand-logo {
 	position: relative;
 }
 
-/* .btn .labelprint, .btn .confirm-shippment {
-	height: 60px;
-	width: 150px;
-	margin-top: 5px;
-} */
 
 .bigButton .btn {
 	height: 65px;
 }
 
 .btn {
-	/*line-height: 15px; if this is active, it breaks the button spacing in book*/
     font-size: 13px;
 }
 
@@ -250,10 +217,6 @@ nav .brand-logo {
 	height: auto;
 	width: 200px;
 }
-/* 
-.bookDesc {
-	padding-left: 20px;
-} */
 
 .card.horizontal .card-image img{
 	width: 70px;

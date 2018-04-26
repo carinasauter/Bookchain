@@ -77,13 +77,6 @@ $(document).on('click', '#receive-book', function() {
 		 }); 	
 });
 
-
-// $(document).on('click', '.details', function() {
-// 	var bookID = $(this).parent().parent().children()[0].innerHTML;
-// 	var url = "/book/" + bookID;
-// 	window.open(url,"_self");
-// })
-
 // when "details" button is clicked in the booksincirc page, generates the book page
 $(document).on('click', '.bookdetails', function() {
 	var bookID = $(this).attr("data-bookid");
@@ -220,9 +213,9 @@ function parseQuery(data) {
 		} else {
 			thumbnail = "static/img/noImgFound.jpg"; 
 		}
-		var stringToAppend = "<div class = 'row card horizontal s12 m12 l12 valign-wrapper'>\
-		<p class= 'hidden'>" + bookID + "</p><div class='col s2 m2 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
-		</div><div class='col card-content s6 m7 l8 left-align'><p><b>" + title + "</b></p><p>\
+		var stringToAppend = "<div class = 'row card horizontal s12 m12 l10 offset-l1 valign-wrapper'>\
+		<p class= 'hidden'>" + bookID + "</p><div class='col s3 m2 l2'><img src='" + thumbnail + "' alt='coverThumbnail onerror='imgError(this)'>\
+		</div><div class='col s5 m7 l8 left-align'><p><b>" + title + "</b></p><p>\
 		" + author + "</p><p class = 'line-clamp hide-on-small-only'>" + short_description + "</p></div><div class='col s4 m3 l2'><button \
 		class='btn waves-effect waves-light registerThis' type='text'>Register</button></div></div></div>"
 		$("#searchResults").append(stringToAppend);
