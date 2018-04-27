@@ -101,7 +101,7 @@
                         <span class = "hide-on-med-and-down">Off</span>
                         {% if book[4] == "available" %}
                         <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}" checked>
-                        {% elif book[4] == "requested" %}
+                        {% elif book[4] == "requested" or book[4] == "in-transit"%}
                         <input disabled type="checkbox" checked>
                         {% else %}
                         <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}">
