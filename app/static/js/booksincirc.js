@@ -9,7 +9,7 @@ $(document).ready(
             data: {book_id: bookID},
             dataType: "json"
         })
-    $( this ).addClass(" grey-text ").removeClass(" requestBook ");
+    $( this ).addClass(" disabled ").removeClass(" requestBook ");
     $(this).html('Requested');
     })
 )

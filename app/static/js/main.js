@@ -53,6 +53,7 @@ $(document).ready(
 			data: JSON.stringify({book: bookID}),
 			dataType: "json"
 		});
+		$(this).addClass(" grey-text ");
 	})
 )
 
