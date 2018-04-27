@@ -57,10 +57,10 @@ $(document).ready(
 	})
 )
 
-// initializes the tooltips
-$(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-});
+// // initializes the tooltips
+// $(document).ready(function(){
+//     $('.tooltipped').tooltip({delay: 50});
+// });
 
 $(document).on('click', '.registerThis', function() {
 	var bookID = $(this).parent().parent().children()[0].innerHTML;
@@ -75,10 +75,22 @@ $(document).on('click', '.available', function() {
 	window.open(url,"_self");
 })
 
-$(document).on('mouseover', '.material-icons', function() {
+$(document).on('mouseover', '.removebook', function() {
 	$( this ).css( 'cursor', 'pointer' );
 })
 
+$(document).on('mouseover', '.bookdetails', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+$(document).on('mouseover', '#cancelRequest', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+$(document).on('mouseover', '.labelprint', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
+$(document).on('mouseover', '.shipBook', function() {
+	$( this ).css( 'cursor', 'pointer' );
+})
 
 
 // Function when user clicks "Received Book"
