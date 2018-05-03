@@ -237,8 +237,8 @@ function updateRating() {
     data: { book_id: book_id, },
     dataType: "json"
   }).done(function (data) {
-    console.log(data[0]);
-    console.log($("#averageRating"));
+    // console.log(data[0]);
+    // console.log($("#averageRating"));
     $("#averageRating")[0].innerHTML = data[0];
   });
 }
@@ -257,14 +257,12 @@ function createMap(data) {
     var marker = new mapboxgl.Marker()
       .setLngLat(data[entry])
       .addTo(map);
-    // console.log(data[entry])
   }
 
   latlngs = []
   for (entry in data) {
     latlngs.push(data[entry])
   }
-  console.log(latlngs)
 
   if (data.length > 1) {
     map.on('load', function (data) {

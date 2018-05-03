@@ -10,7 +10,7 @@
     } 
     // If a user visit the book page after requested the book, the button should change to 'cancel request' button
     else if (blockRequest == 2) {
-         console.log("already requested");
+        //  console.log("already requested");
          $( ".requestBook").remove();
          var button = document.createElement("button");
          button.innerHTML = "Cancel Request";
@@ -21,7 +21,6 @@
 
     // Books rating
     var userRating = {{ userRating }};
-    console.log(userRating);
     if (userRating != 0) {
         $( "#1").removeClass("grey-text lighten-1").addClass( "amber-text" );
         $(".star").unbind('mouseenter mouseleave');
