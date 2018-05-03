@@ -1,165 +1,169 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
+<!-- First row: Map Area -->
 <div class="row">
-    <div class="col s12 m12 l12">
-        <div id='mapMain' class = "hide-on-small-only" style='width: 100%; height: 40%;'></div>
-    </div>
+  <div class="col s12 m12 l12">
+    <div id='mapMain' class="hide-on-small-only" style='width: 100%; height: 40%;'></div>
+  </div>
 </div>
+<!-- Second row: My Requests & Requests From Others -->
 <div class="row">
-    <div class="col s12 m12 l6 left-align">
-          <h5>My Requests</h5>
-          <table>
-            <col width="15%">
-            <col width="40%">
-            <col class = "hide-on-small-only" width="30%">
-            <col width="15%">
-            <tr>
-              <th>Book</th>
-              <th>Requested Date</th>
-              <th class = "hide-on-small-only">Status</th>
-              <th>Action</th>
-            </tr>
-            {% for book in my_requests %}
-            <tr>
-              <td class = "hidden">{{book[4]}}</td>
-              <td><a href="/book/{{book[4]}}"><img src="{{book[2]}}"></a></td>
-              <td>{{book[5]}}</td>
-              <td class="tableContentStyle hide-on-small-only" >{{book[6]}}</td>
-              {% if book[6] == "requested" %}
-                <td>
-                    <i id = "cancelRequest" class="material-icons small ourBlue-text">cancel</i>
-                </td>            
-              {% else %}
-                <td><button class="btn" id="receive-book">Received Book</button></td>            
-              {% endif %}
-            </tr>
-            {% endfor %}
-           </table>
-    </div>
-    <div class="col s12 m12 l6 left-align">
-        <!-- <section class='request-from-others'> -->
-            <h5>Requests From Others</h5>
-            <table>
-                <col width="10%">
-                <col width="30%" class = "hide-on-small-only">
-                <col width="40%">
-                <col width="20%">
-                <tr>
-                    <th>Book</th>
-                    <th class = "hide-on-small-only">Requested By</th>
-                    <th>Ship By</th>
-                    <th>Action</th>
-                </tr>
-                {% for book in requests_from_others %}
-                <tr>
-                    <td class = "hidden">{{book[3]}}</td>
-                    <td><a href="/book/{{book[3]}}"><img src="{{book[2]}}"></a></td>
-                    <td class = "hide-on-small-only">{{book[4]}}</td>
-                    <td>{{book[5]}}</td>
-                    <td>
-                        <i class="material-icons ourBlue-text labelprint">print</i>
-                        <!-- <button class="btn labelprint">Print Shipping Label</button> -->
-                        <i class="material-icons ourBlue-text shipBook">send</i>
-                        <!-- <button class="btn confirm-shippment">Shipping Confirm</button> -->
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        <!-- </section> -->
-    </div> 
+  <div class="col s12 m12 l6 left-align">
+    <h5>My Requests</h5>
+    <table>
+      <col width="15%">
+      <col width="40%">
+      <col class="hide-on-small-only" width="30%">
+      <col width="15%">
+      <tr>
+        <th>Book</th>
+        <th>Requested Date</th>
+        <th class="hide-on-small-only">Status</th>
+        <th>Action</th>
+      </tr>
+      {% for book in my_requests %}
+      <tr>
+        <td class="hidden">{{book[4]}}</td>
+        <td>
+          <a href="/book/{{book[4]}}">
+            <img src="{{book[2]}}">
+          </a>
+        </td>
+        <td>{{book[5]}}</td>
+        <td class="tableContentStyle hide-on-small-only">{{book[6]}}</td>
+        {% if book[6] == "requested" %}
+        <td><i id="cancelRequest" class="material-icons small ourBlue-text">cancel</i></td>
+        {% else %}
+        <td><button class="btn" id="receive-book">Received Book</button></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col s12 m12 l6 left-align">
+    <h5>Requests From Others</h5>
+    <table>
+      <col width="10%">
+      <col width="30%" class="hide-on-small-only">
+      <col width="40%">
+      <col width="20%">
+      <tr>
+        <th>Book</th>
+        <th class="hide-on-small-only">Requested By</th>
+        <th>Ship By</th>
+        <th>Action</th>
+      </tr>
+      {% for book in requests_from_others %}
+      <tr>
+        <td class="hidden">{{book[3]}}</td>
+        <td><a href="/book/{{book[3]}}"><img src="{{book[2]}}"></a></td>
+        <td class="hide-on-small-only">{{book[4]}}</td>
+        <td>{{book[5]}}</td>
+        <td>
+          <i class="material-icons ourBlue-text labelprint">print</i>
+          <i class="material-icons ourBlue-text shipBook">send</i>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
+<!-- Third row: Books I Currently Have -->
 <div class="row">
-<!-- <div class="divider"></div> -->
-<div class="col s12 m12 l12 left-align">
+  <div class="col s12 m12 l12 left-align">
     <h5>Books I Currently Have</h5>
     <table id="borrowedAndContributed">
-        <col width="10%">
-        <col width="35%">
-        <col width="20%">
-        <col width="20%">
-        <col width="15%">
-        <tr>
-            <th>Title</th>
-            <th class = "hide-on-small-only"></th>
-            <th>Status</th>
-            <th class = "hide-on-small-only">Book Owner</th>
-            <th>Available</th>
-        </tr>
-        {% for book in owned_books %}
-        <tr>
-            <td class = "hidden">{{book[0]}}</td>
-            <td>
-                <a href="/book/{{book[0]}}"><img src="{{book[1]}}"></a>
-            </td>
-            <td class = "hide-on-small-only"><h6><b>{{book[2]}}</b></h6><p>{{book[3]}}</p></td>
-            <td class="tableContentStyle">{{book[4]}}</td>
-            <td class="tableContentStyle hide-on-small-only">{{book[5]}}</td>
-            <td>
-                <div class="switch">
-                    <label>
-                        <span class = "hide-on-med-and-down">Off</span>
-                        {% if book[4] == "available" %}
-                        <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}" checked>
-                        {% elif book[4] == "requested" or book[4] == "in-transit"%}
-                        <input disabled type="checkbox" checked>
-                        {% else %}
-                        <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}">
-                        {% endif %}
-                        <span class="lever"></span>
-                        <span class = "hide-on-med-and-down">On</span>
-                    </label>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
+      <col width="10%">
+      <col width="35%">
+      <col width="20%">
+      <col width="20%">
+      <col width="15%">
+      <tr>
+        <th>Title</th>
+        <th class="hide-on-small-only"></th>
+        <th>Status</th>
+        <th class="hide-on-small-only">Book Owner</th>
+        <th>Available</th>
+      </tr>
+      {% for book in owned_books %}
+      <tr>
+        <td class="hidden">{{book[0]}}</td>
+        <td><a href="/book/{{book[0]}}"><img src="{{book[1]}}"></a></td>
+        <td class="hide-on-small-only">
+          <h6><b>{{book[2]}}</b></h6>
+          <p>{{book[3]}}</p>
+        </td>
+        <td class="tableContentStyle">{{book[4]}}</td>
+        <td class="tableContentStyle hide-on-small-only">{{book[5]}}</td>
+        <td>
+          <div class="switch">
+            <label>
+              <span class="hide-on-med-and-down">Off</span>
+              {% if book[4] == "available" %}
+              <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}" checked> {% elif book[4] == "requested" or book[4] == "in-transit"%}
+              <input disabled type="checkbox" checked> {% else %}
+              <input class="available-checkbox" type="checkbox" id="bookID-{{book[0]}}"> {% endif %}
+              <span class="lever"></span>
+              <span class="hide-on-med-and-down">On</span>
+            </label>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
     </table>
-</div>
-<div class="col s12 m12 l12 left-align">
+  </div>
+  <!-- Fourth row: My Books -->
+  <div class="col s12 m12 l12 left-align">
     <h5>My Books</h5>
     <table>
-        <col width="10%">
-        <col class = "hide-on-small-only" width="30%">
-        <col class = "hide-on-small-only" width="20%">
-        <col width="15%">
-        <col width="15%">
-        <col width="10%">
-        <tr>
-            <th>Title</th>
-            <th class = "hide-on-small-only"></th>
-            <th class = "hide-on-small-only">Current Location</th>
-            <th>Average Rating</th>
-            <th>Action</th>
-
-        </tr>
-        {% for entry in uploaded_books %}
-        <tr>
-            <td class = "hidden">{{entry[5]}}</td>
-            <td>
-                <a href="/book/{{entry[5]}}"><img src="{{entry[2]}}"></a>
-            </td>
-            <td class = "hide-on-small-only"><h6><b>{{entry[0]}}</b></h6><p>{{entry[1]}}</p></td>
-            <td class = "hide-on-small-only">{{entry[3]}}</td>
-            <td>{% for num in entry[4] %}
-            <i class="material-icons tiny star amber-text lighten-1">star</i>
-            {% endfor %}
-            </td>
-            <td class = "right-align">
-                <!-- <button class = "btn details">Details</button> -->
-                <i data-bookid="{{entry[5]}}" class="material-icons small ourBlue-text bookdetails">search</i>
-                <!-- <button class = "btn removebook">Remove</button> -->
-                {% if entry[6] == "requested" %}
-                <i class="material-icons small grey-text">delete</i>
-                {% else %}
-                <i class="material-icons small ourBlue-text removebook">delete</i>
-                {% endif %}
-
-            </td>
-        </tr>
-        {% endfor %}
+      <col width="10%">
+      <col class="hide-on-small-only" width="30%">
+      <col class="hide-on-small-only" width="20%">
+      <col width="15%">
+      <col width="15%">
+      <col width="10%">
+      <tr>
+        <th>Title</th>
+        <th class="hide-on-small-only"></th>
+        <th class="hide-on-small-only">Current Location</th>
+        <th>Average Rating</th>
+        <th>Action</th>
+      </tr>
+      
+      {% for book in uploaded_books %}
+      <tr>
+        <td class="hidden">{{book[5]}}</td>
+        <td>
+          <a href="/book/{{book[5]}}">
+            <img src="{{book[2]}}">
+          </a>
+        </td>
+        <td class="hide-on-small-only">
+          <h6>
+            <b>{{book[0]}}</b>
+          </h6>
+          <p>{{book[1]}}</p>
+        </td>
+        <td class="hide-on-small-only">{{book[3]}}</td>
+        <td>{% for num in book[4] %}
+          <i class="material-icons tiny star amber-text lighten-1">star</i>
+          {% endfor %}
+        </td>
+        <td class="right-align">
+          <!-- <button class = "btn details">Details</button> -->
+          <i data-bookid="{{book[5]}}" class="material-icons small ourBlue-text bookdetails">search</i>
+          <!-- <button class = "btn removebook">Remove</button> -->
+          {% if book[6] == "requested" %}
+          <i class="material-icons small grey-text">delete</i>
+          {% else %}
+          <i class="material-icons small ourBlue-text removebook">delete</i>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
     </table>
-</div>  
-{% block additionallibraries %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-{% endblock %}  
+  </div>
+  
+  {% block additionallibraries %}
+  <script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script> 
+  {% endblock %} 
 {% endblock %}

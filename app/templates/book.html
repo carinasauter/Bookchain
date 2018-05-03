@@ -4,9 +4,11 @@
 <!-- this script needs to go here because this is a nice way to use flask variables for styling. -->
 <script type="text/javascript">
     var blockRequest = {{ blockRequest }};
+    // Disable the request button after the user click the button
     if (blockRequest == 1) {
         $( ".requestBook").addClass( "disabled" );
     } 
+    // If a user visit the book page after requested the book, the button should change to 'cancel request' button
     else if (blockRequest == 2) {
          console.log("already requested");
          $( ".requestBook").remove();
@@ -16,6 +18,8 @@
          button.id ='cancelRequest';
          document.getElementById("bookImgButton").appendChild(button);
      } 
+
+    // Books rating
     var userRating = {{ userRating }};
     console.log(userRating);
     if (userRating != 0) {
@@ -35,7 +39,6 @@
     if (userRating == 5) {
         $( "#5").removeClass("grey-text lighten-1").addClass( "amber-text" );
     }
-
 </script>
 {% endblock %}
 
