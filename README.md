@@ -1,5 +1,5 @@
 # Bookchain
-Final Project IO Lab Spring 2018
+Final Project [Full-Stack Web Development](https://www.ischool.berkeley.edu/courses/info/290t/fswd) Spring 2018
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for testing purposes.
