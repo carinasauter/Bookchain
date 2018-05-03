@@ -18,7 +18,6 @@ $(document).ready(
     $(".available-checkbox").change(function (event) {
         bookID = String(this.id).replace("bookID-", "");
         status_cell = $(event.target).parent().parent().parent().prev().prev();
-        console.log(status_cell);
         if (this.checked) {
             $.ajax({
                 type: "POST",
@@ -38,7 +37,6 @@ $(document).ready(
                 dataType: "json"
             });
             status_cell = status_cell.html("reading");
-            console.log("here");
         }
     }),
 
@@ -46,7 +44,6 @@ $(document).ready(
     // and grey out the shipping icon
     $(".shipBook").click(function (event) {
         var bookID = $(this).parent().parent().children()[0].innerHTML;
-        console.log(bookID);
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -97,7 +94,6 @@ $(document).on('mouseover', '.shipBook', function() {
 $(document).on('click', '#receive-book', function() {
     var bookID = $(this).parent().parent().children()[0].innerHTML;
     $(this).closest('tr').remove();
-    console.log(bookID);
          $.ajax({
              url: "/receiveBook",
              data: {bookID: bookID},
@@ -305,7 +301,6 @@ function searchCirc(event) {
     for (i = 0; i < bookList.length; i++) {
         title = bookList[i].getElementsByTagName("b")[0].innerHTML.toLowerCase();
         author = bookList[i].getElementsByTagName("i")[0].innerHTML.toLowerCase();
-        // console.log(a)
         if (title.indexOf(input) > -1 || author.indexOf(input) > -1) {
             bookList[i].style.display = "";
         } else {
