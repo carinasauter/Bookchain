@@ -139,20 +139,6 @@ class User(UserMixin):
 			result = cursor.execute("SELECT book_id, timestamp FROM books_users WHERE user_id = ? AND relationship = ?", (self.id, 'requester')).fetchall()
 		if result == []:
 			return result
-		# CY: if we disable request button of a book for the book uploader, we don't need to examine this logic again here
-		# lst = []
-		# for entry in result:
-		# 	book = getBookById(entry[0])
-		# 	uploader = book.getUploader()
-		# 	uploader = getUserByUsername(uploader)
-		# 	if uploader != self:
-		# 		lst.append(entry[0])
-		# 	info = []
-		# 	for entry in lst:
-		# 		book = getBookById(entry)
-		# 		avg_rating = book.getAverageRating()
-		# 		starRating = getStarRating(avg_rating)
-		# 		info.append([book.title, book.author, book.thumbnail, starRating, book.id])
 		info = []
 		for entry in result:
 			requested_date = datetime.strptime(entry[1], "%Y-%m-%d %H:%M:%S").strftime("%m/%d/%Y")
