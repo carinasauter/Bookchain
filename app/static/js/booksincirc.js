@@ -1,7 +1,6 @@
+// Register events to handle book requests. Request buttons will be disabled once users click 'request'.
 $(document).ready(
     $(document).on('click', '.requestBook', function() {
-        console.log("requested book");
-
         var bookID = $(this).attr("data-bookid");
         $.ajax({
             type: "POST",

@@ -58,15 +58,7 @@ textarea.materialize-textarea.valid:focus {
 	background-color: #FDE9DF;
 }
 
-#nav-img {
-	/* width: 15vw; */
-	width: auto;
-	height: 40px;
-	margin-left: 35px;
-	margin-top: 13px;
-	margin-bottom: 10px;
-	float: left;
-}
+
 
 .banner-img {
 	display: block;
@@ -102,10 +94,6 @@ td, th {
 .hidden {
 	display: none;
 }
-
-/*.requestBook {
-	vertical-align: middle;
-}*/
 
 .btn.disabled {
 	vertical-align: middle;
@@ -168,18 +156,12 @@ td img {
 
 }
 
-
 .card .card-action {
 	border: none;
 }
 
 .material-icons {
 	float: left;
-}
-
-.nav-wrapper {
-	margin-left: 3%;
-	margin-right: 3%;
 }
 
 .row #tableHeader {
@@ -192,10 +174,6 @@ td img {
 	margin-top: 4px;
 	font-size: 15px;
 	font-style: italic;
-}
-
-nav .brand-logo {
-	position: relative;
 }
 
 button {
@@ -230,10 +208,53 @@ button {
 	text-transform: capitalize;
 }
 
+.input-field .material-icons {
+	margin-top: 10px;
+}
+
+/* map style */
+#mapMain {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* navbar style */
 .nav {
 	text-align: right;
 	height: 70px;
 	line-height: 70px;
+}
+
+nav .brand-logo {
+	position: relative;
+}
+
+.nav-wrapper {
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+.nav-wrapper label {
+	margin: 0 40px 0 0;
+	font-size: 26px;
+	line-height: 70px;
+	display: none;
+	width: 26px;
+	float: right;
+}
+
+.nav-wrapper #toggle {
+	display: none;
+}
+
+#nav-img {
+	width: auto;
+	height: 40px;
+	margin-left: 35px;
+	margin-top: 13px;
+	margin-bottom: 10px;
+	float: left;
 }
 
 .menu {
@@ -251,19 +272,6 @@ button {
 	padding-bottom: 10px;
 }
 
-.nav-wrapper label {
-	margin: 0 40px 0 0;
-	font-size: 26px;
-	line-height: 70px;
-	display: none;
-	width: 26px;
-	float: right;
-}
-
-.nav-wrapper #toggle {
-	display: none;
-}
-
 .menu a:hover {
 	background-color: rgb(224, 224, 224);
 }
@@ -278,10 +286,16 @@ button {
 }
 
 @media only screen and (max-width: 850px) {
+	/* navbar style */
 	.nav-wrapper label {
 		display: block;
 		cursor: pointer;
 	}
+
+	.nav-wrapper #toggle:checked + .menu {
+		display: block;
+	}
+
 	.menu {
 		text-align: center;
 		width: 100%;
@@ -298,10 +312,7 @@ button {
 	.menu a:hover {
 		background-color: rgb(235, 235, 235);
 	}
-	.nav-wrapper #toggle:checked + .menu {
-		display: block;
-	}
-
+	
 	#login-name {
 		display: none;
 		float: none;
@@ -309,15 +320,4 @@ button {
 	#login-name-small {
 		display: block;
 	}
-}
-
-
-.input-field .material-icons {
-	margin-top: 10px;
-}
-
-#mapMain {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
 }
