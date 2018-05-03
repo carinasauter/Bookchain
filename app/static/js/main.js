@@ -314,16 +314,3 @@ function searchCirc(event) {
     }
 }
 
-// Register events to cancel requests when users click 'cancel request' buttons
-$(document).on('click', '#cancelRequest', function() {
-    var book_id = $(this).parent().parent().children()[0].innerHTML;
-    $.ajax({
-      // type: "POST",
-      url: "/cancelRequest",
-      data: {book_id: book_id},
-      dataType: "json"
-    })
-    $( this ).addClass(" disabled ");
-    $(this).closest('tr').remove();
-
-  })
